@@ -24,21 +24,10 @@
 - QNPlugin.py : test the plugin
 - data_utils.py : data processor
 
-## DONE
-- QNPlugin
-- data_utils
-    - load qn data
-    - process and save data by ID, QA and query
-    - split labelled query into test,valid and train for intent-slot NLU
-    - process query for auto labelling (tokenise, word2vec, abstract)
-- dataset
-    - build tools to help with labelling slot
-    - set-up excel for collaboration
-    - set-up template for labeling
+## WeChat service account. 
+- Every time someone sends a message to the public account, a POST request is sent out. The server is configured to recieve the request, decipher the message, then reply with a message.
 
 ## In progress
-- dataset
-    - manual label
 - feature
     - context
     - product details
