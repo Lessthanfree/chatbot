@@ -164,5 +164,27 @@
         "goodbye":[
             ["greet", "init"]
         ]
-    }
+    },
+    "menu_maps":[
+        {
+            "intent": "option_1",
+            "map": ["1", "一", "one"]
+        },
+        {
+            "intent": "option_2",
+            "map": ["2", "二"]
+        },
+        {
+            "intent": "option_3",
+            "map": ["3", "三"]
+        },
+        {
+            "intent": "option_4",
+            "map": ["4", "四"]
+        },
+        {
+            "intent": "option_5",
+            "map": ["5", "五"]
+        }
+    ]
 }

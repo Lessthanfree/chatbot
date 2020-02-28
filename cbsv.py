@@ -43,6 +43,7 @@ def NO_INTENT():
         "replies": DEFAULT_CONFUSED()
     }
 
+# STATE RELATED FUNCTIONS
 def state_key_dict(states):
     ks = states.keys()
     out = {}
@@ -50,9 +51,13 @@ def state_key_dict(states):
         out[k] = states[k]["key"]
     return out
 
-def getstatekey(state):
+def get_state_key(state):
     # print("SSAD",state)
     return state["key"]
+
+def state_is_menu(state):
+    assert isinstance(state, dict)
+    return state.get("is_menu", False)
 
 def CITY():
     return "city"

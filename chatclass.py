@@ -233,7 +233,7 @@ class ChatManager:
         return self.statethreader.get_curr_thread_state()
 
     def _get_csk(self):
-        return cbsv.getstatekey(self._get_curr_state())
+        return cbsv.get_state_key(self._get_curr_state())
 
     def _get_zones(self):
         return self.ztracker.get_zones()
@@ -444,8 +444,8 @@ class ChatManager:
 
      # Gets the next state according to policy
     def _policykeeper_parse(self, msg):
-        csk = self._get_csk()
-        return self.pkeeper.get_understanding(msg, csk)
+        csobj = self._get_curr_state()
+        return self.pkeeper.get_understanding(msg, csobj)
 
     # Asks iparser to parse the message
     def _parse_message_details(self, msg, intent, nums):
@@ -519,11 +519,12 @@ class ChatManager:
 # Keeps policies
 # Also deciphers messages
 class PolicyKeeper:
-    def __init__(self, policy_rules, crossroad_policies, intent_dict, state_lib,pp):
+    def __init__(self, policy_rules, crossroad_policies, intent_dict, state_lib, predictor, menu_maps):
         self.POLICY_RULES = policy_rules
         self.XROAD_POLICIES = crossroad_policies
         self.INTENT_DICT = intent_dict
         self.STATE_DICT = state_lib
+        self.MENU_MAPS = menu_maps
         self.predictor = pp
 
     def GET_INITIAL_STATE(self):
@@ -554,15 +555,31 @@ class PolicyKeeper:
         breakdown = pack["breakdown"]
         nums = pack["numbers"]
         return intent, breakdown, nums
+    
+    # When the state is a menu, this is called to figure out which option was chosen
+    def _option_predict(self, msg):
+        # Cases
+        for m in self.MENU_MAPS:
+            mapping = m.get("map")
+            if msg in mapping:
+                return m.get("intent")
+
+        return cbsv.NO_INTENT # THIS MAY NOT WORK
 
     # MAIN METHOD
     # Returns an understanding and NLP breakdown
-    def get_understanding(self, msg, curr_state):
-        # Call NLP Model predict
-        intent, breakdown, nums = self._NLP_predict(msg)
-        print("<GET UNDERSTANDING> NLP intent:",intent)
+    def get_understanding(self, msg, curr_state_obj):
+        csk = cbsv.get_state_key(curr_state_obj)
+        if cbsv.state_is_menu(curr_state_obj):
+            # Use option predict
+            intent = self._option_predict(msg)
+        else:
+            # Call NLP Model predict
+            intent, breakdown, nums = self._NLP_predict(msg)
+            print("<GET UNDERSTANDING> NLP intent:",intent)
+
         # Check intent against background info
-        uds = self.intent_to_next_state(curr_state, intent)
+        uds = self.intent_to_next_state(csk, intent)
         return uds, breakdown, nums
 
     def _create_state_obj(self, skey):
@@ -572,7 +589,8 @@ class PolicyKeeper:
         return state_obj
 
     # METHOD FOR NLP
-    def intent_to_next_state(self, csk, intent):
+    def intent_to_next_state(self, curr_state_key, intent):
+        csk = curr_state_key
         if intent in self.INTENT_DICT:
             intent_obj = self.INTENT_DICT[intent]
         else:

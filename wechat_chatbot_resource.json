@@ -2820,6 +2820,6 @@
             }
         }
     },
-    "policy_data_location": "policydata.json",
+    "policy_data_location": "wechat_policydata.json",
     "sideinfo_location": "sideinfo.json"
 }
