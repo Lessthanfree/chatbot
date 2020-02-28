@@ -1,0 +1,2825 @@
+{
+    "intents": {
+        "option_1":{
+            "key": "option_1",
+            "default_set": false,
+            "default_target": "NA",
+            "replies": []
+        },
+        "option_2":{
+            "key": "option_2",
+            "default_set": false,
+            "default_target": "NA",
+            "replies": []
+        },
+        "option_3":{
+            "key": "option_3",
+            "default_set": false,
+            "default_target": "NA",
+            "replies": []
+        },
+        "option_4":{
+            "key": "option_4",
+            "default_set": false,
+            "default_target": "NA",
+            "replies": []
+        },
+        "option_5":{
+            "key": "option_5",
+            "default_set": false,
+            "default_target": "NA",
+            "replies": []
+        },
+        "affirm": {
+            "key": "11 affirmation",
+            "default_set": false,
+            "slotfills": {
+                "wantnot":"yes",
+                "yesno":"yes",
+                "reverse_yesno_slot": "no"
+            },
+            "default_target": "NA",
+            "replies": []
+        },
+        "deny": {
+            "key": "10 denial",
+            "default_set": false,
+            "slotfills": {
+                "wantnot":"no",
+                "yesno":"no",
+                "reverse_yesno_slot": "yes"
+            },
+            "default_target": "NA",
+            "replies": []
+        },
+        "greet": {
+            "key": "100 greetings",
+            "default_set": false,
+            "humanify": true,
+            "default_target": "SAME_STATE",
+            "replies": [
+                "您好 有什么能帮助您的？"
+            ]
+        },
+        "complain":{
+            "key": "complain",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "SAME_STATE",
+            "replies": [
+                "不好意思亲，本人是新手。我有做错了什么可以告诉我"
+            ]
+        },
+        "unknown": {
+            "key": "1099 unknown",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "SAME_STATE",
+            "replies": [
+                "？？？","？"
+            ]
+        },
+        "no_intent": {
+            "key": "1000 no intent",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "SAME_STATE",
+            "replies": []
+        },
+        "inform":{
+            "key": "inform",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "SAME_STATE",
+            "replies": []
+        },
+        "send_link":{
+            "key": "send_link",
+            "default_set": true,
+            "default_target": "SAME_STATE",
+            "replies": [
+                "您好 有什么能帮助您的？",
+                "亲，有什么能帮助您的？"
+            ]
+        },
+        "unsupported_request": {
+            "key": "unsupported_request",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "SAME_STATE",
+            "replies": [
+                "抱歉哦亲😞，小店暂时不提供这项业务哦"
+            ]
+        },
+        "general_query":{
+            "key": "general_query",
+            "default_set": true,
+            "default_target": "SAME_STATE",
+            "replies": ["您好 有什么能帮助您的？"]
+        },
+        "define":{
+            "key": "define",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "give_defintion",
+            "replies": []
+        },
+        "doublecheck_value": {
+            "key": "107 doublecheck value",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "doublecheck_component_value",
+            "replies": []
+        },
+        "next_step": {
+            "key": "next_step",
+            "default_set": false,
+            "default_target": "NA",
+            "replies": []
+        },
+        "ask_name": {
+            "key": "ask_for_name",
+            "default_set": true,
+            "default_target": "SAME_STATE",
+            "replies": [
+                "我是客服机器人",
+                "他们叫我王俊杰！",
+                "我名客服，姓机器人"
+            ]
+        },
+        "ask_can_topup": {
+            "key": "ask_can_topup",
+            "default_set": true,
+            "default_target": "inform_topup",
+            "replies": []
+        },
+        "ask_can_topup_gjj": {
+            "key": "ask_can_topup_gjj",
+            "default_set": true,
+            "default_target": "inform_topup_gjj",
+            "replies": []
+        },
+        "ask_can_pay_later": {
+            "key": "ask_can_pay_later",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "SAME_STATE",
+            "replies": [
+                "不行，要先付款亲 😞"
+            ]
+        },
+        "ask_shebao_status": {
+            "key": "ask_shebao_status",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "complication_crossroad",
+            "replies": []
+        },
+        "ask_shebao_card_status": {
+            "key": "ask_shebao_card_status",
+            "default_set": true,
+            "default_target": "inform_shebao_card_status",
+            "replies": []
+        },
+        "ask_alt_payment_method": {
+            "key": "info_alt_payment",
+            "default_set": true,
+            "default_target": "SAME_STATE",
+            "replies": [
+                "淘宝付费，然后我们操作把你加到我们公司名下，每个月参保缴费"
+            ]
+        },
+        "ask_how_much": {
+            "key": "ask_how_much",
+            "default_set": true,
+            "default_target": "ask_how_much_crossroad",
+            "replies": []
+        },
+        "ask_turnaround_time":{
+            "key": "ask_turnaround_time",
+            "default_set": true,
+            "default_target": "turnaround_time_crossroad",
+            "replies": []
+        },  
+        "query_break":{
+            "key": "inform_break",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "inform_break_effects",
+            "replies": []
+        },
+        "query_bujiao": {
+            "key": "query_bujiao",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "SAME_STATE",
+            "replies": [
+                "补缴不算连续的，也不算正常缴纳，可以算累计缴纳的月份"
+            ]
+        },
+        "query_company_name": {
+            "key": "info company name",
+            "default_set": true,
+            "default_target": "inform_company_name",
+            "replies": [
+                "亲，小店有好几家单位的，会随机分配的哈"
+            ]
+        },
+        "query_current_month_options":{
+            "key": "info current month options",
+            "default_set": true,
+            "default_target": "inform_pay_deadline",
+            "replies": []
+        },
+        "query_fahuo": {
+            "key":"info_fahuo",
+            "default_set": true,
+            "default_target": "inform_fahuo",
+            "replies":[]
+        },
+        "query_delay_fahuo":{
+            "key":"query_delay_fahuo",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "SAME_STATE",
+            "replies":["不可以哦亲，我们在参保成功后，就会发货哦"]
+        },
+        "query_gjj_card": {
+            "key": "info_gjj_card",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "inform_gjj_card",
+            "replies": []
+        },
+        "query_guakao": {
+            "key": "info_guakao",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "SAME_STATE",
+            "replies": [
+                "对的，这边交是挂靠公司"
+            ]
+        },
+        "query_have_service_fee":{
+            "key": "info_service_fee",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "SAME_STATE",
+            "replies": [
+                "有啊亲，单缴社保或公积金是40, 双缴算80"
+            ]
+        },
+        "query_housing": {
+            "key": "info_housing",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "SAME_STATE",
+            "replies": [
+                "这个亲亲咨询下购房中介哦，小店只负责代缴哈"
+            ]
+        },
+        "query_how_check_gjj_status": {
+            "key": "info_how_check_gjj",
+            "default_set": true,
+            "default_target": "inform_how_check_gjj",
+            "replies": []
+        },
+        "query_how_check_shebao_status": {
+            "key": "info_how_check_shebao",
+            "default_set": true,
+            "default_target": "inform_how_check_shebao",
+            "replies": [
+                "{rep_ext[how_check_shebao]}"
+            ]
+        },
+        "query_how_settle": {
+            "key": "info_how_settle",
+            "default_set": true,
+            "default_target": "settlement_laoke_crossroad",
+            "replies": []
+        },
+        "query_jianyuan_status":{
+            "key": "query_jianyuan_status",
+            "default_set": true,
+            "default_target": "complication_crossroad",
+            "replies": []
+        },
+        "ask_to_jianyuan":{
+            "key": "ask_to_jianyuan",
+            "default_set": true,
+            "default_target": "complication_crossroad",
+            "replies": []
+        },
+        "query_multiple_locations":{
+            "key": "info_multiple_locations",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "SAME_STATE",
+            "replies": ["不建议亲亲同时缴纳两个地区哦，全国联网数据会有问题哦"]
+        },
+        "query_pay_deadline": {
+            "key": "info_pay_deadline",
+            "default_set": true,
+            "default_target": "inform_pay_deadline",
+            "replies": []
+        },
+        "query_pay_date":{
+            "key": "info_pay_date",
+            "default_set": true,
+            "default_target": "inform_pay_date",
+            "replies": []
+        },
+        "query_pay_part_only": {
+            "key": "query_pay_part_only",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "SAME_STATE",
+            "replies": [
+                "不可以哦亲 😞，必须5险一起缴纳哦"
+            ]
+        },
+        "query_pay_process": {
+            "key": "112 query_pay_process",
+            "default_set": true,
+            "default_target": "SAME_STATE",
+            "replies": [
+                "缴纳流程：和客服明确缴纳城市以及缴纳月份，拍下链接付款---小程序提供资料---申报参保手续---手续办理成功发货---确认收货请注意：参保手续完成后，不可以申请退款！！！"
+            ]
+        },
+        "query_phone": {
+            "key": "inform_phone_number",
+            "default_set": true,
+            "humanify": true,
+            "default_target": "SAME_STATE",
+            "replies": [
+                "亲亲在白天上班时间联系哦：4000801807"
+            ]
+        },
+        "query_pregnant": {
+            "key": "info_pregnant",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "SAME_STATE",
+            "replies": [
+                "怀孕的我们不接受代缴哦 😢"
+            ]
+        },
+        "query_req_resources": {
+            "key": "114 ziliao query",
+            "default_set": true,
+            "default_target": "inform_req_resources",
+            "replies": []
+        },
+        "query_topup":{
+            "key": "info_topup",
+            "default_set": true,
+            "default_target": "SAME_STATE",
+            "replies": ["补缴社保：补缴不算连续的，也不算正常缴纳，可以算累计缴纳的月份"]
+        },
+        "query_use_huabei":{
+            "key":"info_use_huabei",
+            "default_set": true,
+            "default_target": "SAME_STATE",
+            "replies":["小店还没有开通哦，亲可以自己尝试下哦，如果可以付款就没有问题哈"]
+        },
+        "query_weixin": {
+            "key": "info_weixin",
+            "default_set": true,
+            "default_target": "inform_weixin",
+            "replies": []
+        },
+        "query_when_check_shebao_status": {
+            "key": "info_when_check_shebao",
+            "default_set": true,
+            "default_target": "inform_when_check_shebao",
+            "replies": []
+        },
+        "query_shebao_card": {
+            "key": "info_shebao_card",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "inform_shebao_card_process",
+            "replies": []
+        },
+        "query_shebao_components": {
+            "key": "info_shebao_components",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "SAME_STATE",
+            "replies": [
+                "社保包括：养老保险、医疗保险、生育保险、工伤保险和失业保险"
+            ]
+        },
+        "query_sick_light":{
+            "key":"query_sick_light",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "SAME_STATE",
+            "replies":[
+                "亲，普通门诊可以在2个月后使用哦（限上海）"
+            ]
+        },
+        "query_sick":{
+            "key": "query_sick",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "SAME_STATE",
+            "replies": [
+                "亲，有大病不接受代缴哦"
+            ]
+        },
+        "query_region_coverage": {
+            "key": "info_region_coverage",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "inform_region_coverage",
+            "replies": []
+        },
+        "query_shengyubao":{
+            "key": "query_shengyubao",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "NA",
+            "replies": ["亲，我们不办理生育津贴哦，也不提供任何材料哈"]
+        },
+        "query_various_effects": {
+            "key": "query_various_effects",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "SAME_STATE",
+            "replies": [
+                "这个小店不太清楚哦，小店只负责代缴哈"
+            ]
+        },
+        "query_xufei": {
+            "key": "info_xufei",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "inform_xufei",
+            "replies": []
+        },
+        "query_what_this_for": {
+            "key": "info_whatis_gjj",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "inform_what_this_for",
+            "replies": []
+        },
+        "daikuan": {
+            "key": "daikuan (same as housing)",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "SAME_STATE",
+            "replies": [
+                "这个亲亲咨询下购房中介哦，小店只负责代缴哈"
+            ]
+        },
+        "question_reliability": {
+            "key": "question_reliability",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "SAME_STATE",
+            "replies": [
+                "亲，小店是正规的人力资源公司哦，挂靠公司，不会有代缴痕迹哦",
+                "我们是上海专业的代缴公司政府认定的百佳诚信企业 放心有保障公司持续稳定经营了10年信誉卓著没有任何信用污点办理公积金社保签证居住证积分落户等手续都不会因为公司资质和信用产生任何问题"
+            ]
+        },
+        "complicated": {
+            "key": "complicated",
+            "default_set": true,
+            "default_target": "complication_crossroad",
+            "replies": []
+        },
+        "luohu": {
+            "key": "4040 luohu complicated",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "complication_crossroad",
+            "replies": []
+        },
+        "request_link": {
+            "key": "request_link",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "provide_taobao_link",
+            "replies": []
+        },
+        "request_notify":{
+            "key": "request_notify",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "SAME_STATE",
+            "replies": ["恩恩，有问题我们会及时联系您的"]
+        },
+        "request_verification_code":{
+            "key": "request_verification_code",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "SAME_STATE",
+            "replies": ["亲可以用我们的小程序获取您的验证码"]
+        },
+        "inform_done":{
+            "key": "182 inform_done",
+            "default_set": false,
+            "default_target": "NA",
+            "replies": []
+        },
+        "inform_paid": {
+            "key": "180 inform_paid",
+            "default_set": true,
+            "default_target": "finished_payment",
+            "replies": []
+        },
+        "inform_payment_history": {
+            "key": "inform_payment_history",
+            "default_set": true,
+            "default_target": "SAME_STATE",
+            "replies": []
+        },
+        "purchase": {
+            "key": "purchase",
+            "default_set": false,
+            "default_target": "NA",
+            "replies": []
+        },
+        "ask_custom_jishu":{
+            "key": "ask_custom_jishu",
+            "default_set": true,
+            "default_target": "custom_jishu_crossroad",
+            "replies": []
+        },
+        "pay_shui": {
+            "key": "pay_shui",
+            "default_set": true,
+            "default_target": "SAME_STATE",
+            "replies": [
+                "小店不能补个税哦亲 😞"
+            ]
+        },
+        "hesitate": {
+            "key": "hesitate",
+            "default_set": true,
+            "default_target": "SAME_STATE",
+            "replies": [
+                "亲，小店的价格真的相当划算哦；亲有需要可以来找小店，期待亲亲的光顾哦 😊"
+            ]
+        },
+        "get_back_later": {
+            "key": "get_back_later",
+            "default_set": true,
+            "default_target": "SAME_STATE",
+            "replies": [
+                "期待亲亲的光顾哦 😊"
+            ]
+        },
+        "goodbye": {
+            "key": "195 goodbyes",
+            "default_set": true,
+            "default_target": "goodbye",
+            "replies": []
+        },
+        "thankyou": {
+            "key": "194 thankyou",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "SAME_STATE",
+            "replies": [
+                "不客气的亲 😊"
+            ]
+        },
+        "apology":{
+            "key": "apology",
+            "default_set": true,
+            "default_target": "SAME_STATE",
+            "replies": ["没事亲"]
+        },
+        "reset_chat": {
+            "key": 12345,
+            "default_set": true,
+            "default_target": "init",
+            "replies": [
+                "CHAT HAS BEEN RESET"
+            ]
+        }
+    },
+    "states": {
+        "init": {
+            "key": "init",
+            "gated": false,
+            "thread": "BASE",
+            "humanify": true,
+            "req_info": "",
+            "replies": []
+        },
+        "initplus": {
+            "key": "initplus",
+            "gated": false,
+            "thread": "BASE",
+            "humanify":true,
+            "req_info": "",
+            "replies": [
+                "{rep_ext[initplus_reply]}"
+            ]
+        },
+        "menu_base":{
+            "key": "initplus",
+            "gated": false,
+            "thread": "BASE",
+            "is_menu": true,
+            "humanify":false,
+            "req_info": "",
+            "replies": [
+                "请点击需要查询的内容：<>1. 如何缴纳社保；<>2. 社保缴纳费用；<>3. 社保缴纳时间；<>4. 缴纳所需材料；<>5.社保付费；<>6.获取验证码"
+            ]
+        },
+        "xufei_push_crossroad":{
+            "key": "xufei_push_crossroad",
+            "gated": false,
+            "transition_state": true,
+            "thread": "BASE",
+            "humanify": false,
+            "req_info": [["laokehu_flag", "DEFAULT_SV"]],
+            "replies": []
+        },
+        "purchase_laoke_crossroad":{
+            "key": "purchase_laoke_crossroad",
+            "gated": false,
+            "transition_state": true,
+            "thread": "BASE",
+            "humanify": false,
+            "req_info": [["laokehu_flag", "DEFAULT_SV"]],
+            "replies": []
+        },
+        "settlement_laoke_crossroad":{
+            "key": "settlement_laoke_crossroad",
+            "gated": false,
+            "transition_state": true,
+            "thread": "BASE",
+            "humanify": false,
+            "req_info": [["laokehu_flag", "DEFAULT_SV"]],
+            "replies": []
+        },
+        "push_xufei":{
+            "key": "push_xufei",
+            "gated": true,
+            "transition_state": true,
+            "thread": "BASE",
+            "humanify": false,
+            "req_info": [["city", "city"]],
+            "replies": ["{rep_ext[push_xufei_message]}"]
+        },
+        "city_crossroad":{
+            "key": "city_crossroad",
+            "gated": false,
+            "transition_state": true,
+            "thread": "t_presale",
+            "humanify": false,
+            "req_info": "",
+            "replies": ["亲是哪个城市呢？"]
+        },
+        "unsupported_city":{
+            "key": "unsupported_city",
+            "gated": true,
+            "thread": "BASE",
+            "humanify": true,
+            "req_info": [["city","city"]],
+            "replies": ["不好意思 亲 我们不贷款{city}"]
+        },
+        "complication_crossroad":{
+            "key": "complication_crossroad",
+            "gated": false,
+            "transition_state": true,
+            "thread": "EXIT",
+            "humanify": false,
+            "req_info": "",
+            "replies": []
+        },
+        "pass_to_human": {
+            "key": "pass_to_human",
+            "gated": false,
+            "thread": "EXIT",
+            "humanify": false,
+            "req_info": "",
+            "replies": [
+                "不好意思😞，我是新手，现在给你转到负责同事"
+            ]
+        },
+        "night_time_cannot": {
+            "key": "night_time_cannot",
+            "gated": false,
+            "thread": "EXIT",
+            "humanify": false,
+            "deactivate_state":true,
+            "req_info": "",
+            "replies": [
+                "亲 我是值班客服 看不到系统数据 您白天上班时间联系我们吧 谢谢亲"
+            ]
+        },
+        "ask_how_much_crossroad":{
+            "key": "ask_how_much_crossroad",
+            "gated": true,
+            "transition_state": true,
+            "thread": "t_howmuch",
+            "humanify": false,
+            "req_info": [
+                ["要社保","DEFAULT_SV"],
+                ["要公积金","DEFAULT_SV"],
+                ["首次", "yesno"],
+                ["chosen_fee","fee_slot"]
+            ],
+            "replies": []
+        },
+        "ctx_inform_how_much":{
+            "key": "ctx_inform_how_much",
+            "gated": true,
+            "thread": "t_howmuch",
+            "terminal_state": true,
+            "calcs":[
+                "fetch_spec_comp_val"
+            ],
+            "req_info": [
+                ["city","city"],
+                ["首次","DEFAULT_SV"],
+                ["要社保","DEFAULT_SV"],
+                ["要公积金","DEFAULT_SV"],
+                ["chosen_fee","fee_slot"]
+            ],
+            "replies": [
+                "{rep_ext[how_much_reply]}"
+            ]
+        },
+        "turnaround_time_crossroad":{
+            "key": "turnaround_time_crossroad",
+            "gated": true,
+            "thread": "t_turnaround",
+            "terminal_state": false,
+            "req_info": [["chosen_service", "DEFAULT_SV"]],
+            "replies": []
+        },
+        "ask_if_issue": {
+            "key": "251 whats wrong",
+            "gated": false,
+            "thread": "t_issue",
+            "terminal_state": true,
+            "req_info": "",
+            "replies": [
+                "有事吗？"
+            ]
+        },
+        "how_to_jiaona" : {
+            "key" : "how_to_jiaona",
+            "gated": false,
+            "thread": "t_issue",
+            "req_info": "t_menu",
+            "replies": [
+                "亲可以关注公众号“58社保”提交材料并支付，系统将自动生成服务单，缴纳成功后当前社保状态会显示“正常在缴”"
+            ]
+
+        },
+        "TMP_recv_info": {
+            "key": "TMP_recv_info",
+            "gated": true,
+            "transition_state": true,
+            "thread": "NONE",
+            "humanify": false,
+            "req_info": "",
+            "replies": [
+                "亲,{rep_ext[request_string]}"
+            ]
+        },
+        "give_defintion":{
+            "key": "give_definition",
+            "gated": false,
+            "humanify":false,
+            "terminal_state":true,
+            "req_info":[["spec_element", "terms_slot"]],
+            "thread": "t_define",
+            "replies":["{rep_ext[definition_info]}"]
+        },
+        "doublecheck_component_value": {
+            "key": "doublecheck_component_value",
+            "gated": true,
+            "humanify":false,
+            "terminal_state":true,
+            "thread": "t_doublecheck",
+            "req_info": [
+                ["city","city"],
+                ["chosen_fee","fee_slot"],
+                ["要社保", "DEFAULT_SV"],
+                ["要公积金", "DEFAULT_SV"],
+                ["首次", "DEFAULT_SV"],
+                ["exclude_svc_fee","DEFAULT_SV"]
+            ],
+            "clear_info":[
+                "given_amount"
+            ],
+            "calcs":[
+                "flag_component_value_match"
+            ],
+            "replies": ["{rep_ext[doublecheck_info]}"]
+        },
+        "purchase_type_crossroad":{
+            "key":"purchase_type_crossroad",
+            "gated": true,
+            "transition_state": true,
+            "thread": "t_purchase_type",
+            "humanify": false,
+            "req_info": [
+                ["city","city"],
+                ["ss_purchase_for_month","dummy_slot"],
+                ["purchase_type", "DEFAULT_SV"]
+            ],
+            "calcs":[
+                "flag_purchase_cmi",
+                "flag_normal_pay_cmi",
+                "flag_bujiao_month_cmi"
+            ],
+            "replies": []
+        },
+        "propose_plan": {
+            "key": "propose_plan",
+            "gated": true,
+            "humanify": true,
+            "thread": "t_presale",
+            "propose_plan_state": true,
+            "req_info": [
+                ["city","city"],
+                ["首次","reverse_yesno_slot"],
+                ["要公积金","wantnot"],
+                ["要社保", "DEFAULT_SV"]
+            ],
+            "calcs": [
+                "shebao_basic_calc"
+            ],
+            "replies": [
+                "{rep_ext[entire_plan_proposal]}"
+            ]
+        },
+        "custom_jishu_crossroad":{
+            "key":"custom_jishu_crossroad",
+            "gated": true,
+            "transition_state": true,
+            "thread": "t_howmuch",
+            "humanify": false,
+            "req_info": [
+                ["user_spec_jishu_amt", "DUMMY_SLOT"],
+                ["chosen_service","service_slot"],
+                ["city","city"]
+            ],
+            "replies": []
+        },
+        "propose_custom_gjj_jishu":{
+            "key": "propose_custom_gjj_jishu",
+            "gated": true,
+            "transition_state": true,
+            "humanify": false,
+            "prop_cust_jishu_state":true,
+            "thread": "t_presale",
+            "req_info": [
+                ["city","city"],
+                ["chosen_service","service_slot"],
+                ["要公积金", "default_yes"],
+                ["user_spec_jishu_amt", "DUMMY_SLOT"]
+            ],
+            "calcs":[
+                "calc_custom_gjj_fee"
+            ],
+            "replies": [
+                "{rep_ext[custom_gjj_fee_str]}"
+            ]
+        },
+        "propose_custom_sb_jishu":{
+            "key": "propose_custom_sb_jishu",
+            "gated": true,
+            "humanify": false,
+            "prop_cust_jishu_state":true,
+            "thread": "t_presale",
+            "req_info": [
+                ["city","city"],
+                ["chosen_service","service_slot"],
+                ["user_spec_jishu_amt", "DUMMY_SLOT"]
+            ],
+            "calcs":[
+                "log_custom_sb",
+                "flag_custom_sb",
+                "calc_custom_sb_fee"
+            ],
+            "replies": [
+                "{rep_ext[custom_sb_fee_str]}"
+            ]
+        },
+        "goodbye": {
+            "key": "STATE 209 bye",
+            "gated": false,
+            "thread": "NONE",
+            "req_info": "",
+            "deactivate_state": true,
+            "calcs":["flag_bill_settled"],
+            "replies": [
+                "好的，谢谢光临 😘"
+            ]
+        },
+        "provide_taobao_link":{
+            "key": "provide_taobao_link",
+            "gated": true,
+            "thread": "t_give_link",
+            "terminal_state": true,
+            "req_info": [
+                ["city","city"],
+                ["首次", "DEFAULT_SV"],
+                ["要社保", "DEFAULT_SV"],
+                ["要公积金", "DEFAULT_SV"]
+            ],
+            "calcs":[
+                "calc_flag_sb_gjj"
+            ],
+            "replies": [
+                "{rep_ext[raw_taobao_link]}"
+            ]
+        },
+        "month_crossroad":{
+            "key": "month_crossroad",
+            "gated": true,
+            "transition_state": true,
+            "thread": "t_month",
+            "humanify": false,
+            "req_info": [["ss_purchase_for_month","DUMMY_SLOT"]],
+            "replies": []
+        },
+        "inform_company_name":{
+            "key": "inform_company_name",
+            "gated": true,
+            "thread": "t_company_name",
+            "terminal_state": true,
+            "req_info": [["city","city"]],
+            "replies": [
+                "上海: 忠彧企业咨询管理有限公司 杭州: 分公司"
+            ]
+        },
+        "inform_current_month_options":{
+            "key": "inform_current_month_options",
+            "gated": true,
+            "thread": "t_company_name",
+            "terminal_state": true,
+            "req_info": [["ss_purchase_for_month","DUMMY_SLOT"]],
+            "replies": [
+                "{rep_ext[curr_mth_option_info]}"
+            ]
+        },
+        "inform_break_effects":{
+            "key": "inform_break_effects",
+            "gated": true,
+            "thread": "t_break_effects",
+            "terminal_state": true,
+            "req_info": [["chosen_service","service_slot"]],
+            "replies":["{rep_ext[break_info]}"]
+        },
+        "inform_fahuo":{
+            "key": "inform_fahuo",
+            "gated": false,
+            "thread": "t_fahuo",
+            "terminal_state": true,
+            "req_info": [],
+            "replies":["亲，我们在参保成功后发货哦"]
+        },
+        "inform_fahuo_assure":{
+            "key": "inform_fahuo_assure",
+            "gated": false,
+            "thread": "t_fahuo",
+            "terminal_state": true,
+            "req_info": [],
+            "replies":["亲，交易都是在平台上进行的，对于买家是很有保障的哦，这个您完全可以放心哈"]
+        },
+        "inform_gjj_card": {
+            "key": "inform_gjj_card",
+            "gated": true,
+            "thread": "t_gjj_card",
+            "terminal_state": true,
+            "req_info": [["city","city"]],
+            "replies": [
+                "{rep_ext[gjj_card_process_info]}"
+            ]
+        },
+        "inform_how_check_shebao": {
+            "key": "inform_how_check_shebao",
+            "gated": true,
+            "humanify": false,
+            "thread": "t_howcheck",
+            "terminal_state": true,
+            "req_info": [["city","city"]],
+            "replies": [
+                "{rep_ext[how_check_shebao]}"
+            ]
+        },
+        "inform_how_check_gjj": {
+            "key": "inform_how_check_gjj",
+            "gated": true,
+            "thread": "t_howcheck",
+            "terminal_state": true,
+            "req_info": [["city","city"]],
+            "replies": [
+                "{rep_ext[how_check_gjj]}"
+            ]
+        },
+        "inform_how_pai": {
+            "key": "260 inform_how_pai",
+            "gated": false,
+            "thread": "t_pai",
+            "req_info": "",
+            "replies": [
+                "直接拍宝贝，然后通过weixin小程序（58人才服务中心）提交参保信息。参保完成后，直接通过小程序查看参保成功截图，简单可靠。"
+            ]
+        },
+        "inform_pay_date":{
+            "key": "inform_pay_date",
+            "gated": true,
+            "thread": "t_pay_deadline",
+            "terminal_state": true,
+            "humanify":false,
+            "req_info": [
+                ["city","city"]
+            ],
+            "replies": [
+                "{rep_ext[pay_date_info]}"
+            ]
+        },
+        "inform_pay_deadline": {
+            "key": "inform_pay_deadline",
+            "gated": true,
+            "thread": "t_pay_deadline",
+            "terminal_state": true,
+            "humanify":false,
+            "calcs": [
+                "get_payment_deadline_date",
+                "format_specified_month",
+                "flag_normal_pay_cmi",
+                "flag_bujiao_month_cmi"
+            ],
+            "req_info": [
+                ["ss_purchase_for_month","DUMMY_SLOT"],
+                ["city","city"]
+            ],
+            "replies": [
+                "{rep_ext[pay_deadline_info]}"
+            ]
+        },
+        "inform_region_coverage": {
+            "key": "inform_region_coverage",
+            "gated": true,
+            "thread": "t_region_cover",
+            "terminal_state": true,
+            "req_info": [
+                ["city","city"]
+            ],
+            "replies": [
+                "{rep_ext[region_coverage_info]}"
+            ]
+        },
+        "inform_req_resources": {
+            "key": "inform_req_resources",
+            "gated": true,
+            "thread": "t_req_resources",
+            "terminal_state": true,
+            "req_info": [["city","city"]],
+            "replies": [
+                "{rep_ext[req_resource_info]}"
+            ]
+        },
+        "inform_shebao_card_process": {
+            "key": "inform_shebao_card_process",
+            "gated": true,
+            "thread": "t_shebao_card",
+            "terminal_state": true,
+            "req_info": [["city","city"]],
+            "replies": [
+                "{rep_ext[shebao_card_process_info]}"
+            ]
+        },        
+        "inform_shebao_card_status":{
+            "key": "inform_shebao_card_status",
+            "gated": true,
+            "thread": "t_shebao_card",
+            "terminal_state": true,
+            "req_info": [["city","city"]],
+            "replies": [
+                "亲，{rep_ext[shebao_card_status_info]}"
+            ]
+        },
+        "inform_topup": {
+            "key": "inform_topup",
+            "gated": true,
+            "thread": "t_topup",
+            "terminal_state": true,
+            "humanify":false,
+            "req_info": [
+                ["city","city"],
+                ["ss_purchase_for_month","DUMMY_SLOT"]
+            ],
+            "calcs":["flag_bujiao_month_cmi"],
+            "replies": [
+                "{rep_ext[topup_info]}"
+            ]
+        },
+        "inform_topup_gjj": {
+            "key": "inform_topup_gjj",
+            "gated": true,
+            "thread": "t_topup",
+            "terminal_state": true,
+            "req_info": [["city","city"]],
+            "replies": [
+                "亲，{rep_ext[topup_gjj_info]}"
+            ]
+        },
+        "inform_weixin": {
+            "key": "inform_weixin",
+            "gated": true,
+            "thread": "t_weixin",
+            "humanify": false,
+            "terminal_state": true,
+            "req_info": [["city","city"]],
+            "replies": [
+                "{rep_ext[weixin_info]}"
+            ]
+        },
+        "inform_what_this_for":{
+            "key": "inform_what_this_for",
+            "gated": true,
+            "thread": "t_whatfor",
+            "terminal_state": true,
+            "req_info": [["chosen_service","service_slot"]],
+            "replies": [
+                "{rep_ext[what_this_for_info]}"
+            ]
+        },
+        "inform_when_check_shebao": {
+            "key": "inform_when_check_shebao",
+            "gated": true,
+            "thread": "t_whencheck",
+            "terminal_state": true,
+            "req_info": [["city","city"]],
+            "replies": [
+                "{rep_ext[when_check_shebao]}"
+            ]
+        },
+        "inform_xufei": {
+            "key": "inform_xufei",
+            "gated": true,
+            "thread": "t_xufei",
+            "terminal_state": true,
+            "req_info": [["city","city"]],
+            "replies": [
+                "{rep_ext[xufei_info]}"
+            ]
+        },        
+        "finished_payment": {
+            "key": "finished_payment",
+            "gated": true,
+            "thread": "t_pai",
+            "terminal_state": true,
+            "req_info": [["city","city"],["purchase_type","DEFAULT_SV"]],
+            "calcs":[
+                "get_payment_deadline_date",
+                "flag_bill_settled"
+            ],
+            "replies": ["{rep_ext[finish_payment_info]}"]
+        }
+    },
+    "reply_formatting": {
+        "msg_formats": [
+            {
+                "writeto": "push_xufei_message",
+                "states": [
+                    "push_xufei"
+                ],
+                "lookfor":[
+                    "state_month",
+                    "ls_bill_name_list",
+                    "ls_bill_total_amt"
+                ],
+                "if_present":{
+                    "state_month":["您好，要续费吗？<>"]
+                },
+                "if_value":{
+                    "ls_bill_name_list":{
+                        "":"",
+                        "0":"",
+                        "DEFAULT":["参保人：{ls_bill_name_list}<>"]
+                    },
+                    "ls_bill_total_amt": {
+                        "":"",
+                        "0":"",
+                        "DEFAULT":["本月({state_month}月)共需付款¥{ls_bill_total_amt}<>"]
+                    }
+                }
+            },
+            {
+                "writeto": "request_string",
+                "states": [
+                    "TMP_recv_info"
+                ],
+                "lookfor": [
+                    "requested_info"
+                ],
+                "if_value": {
+                    "requested_info": {
+                        "city": ["您是哪个城市呢？","想交哪个城市？"],
+                        "首次": ["之前有交过吗？","以前有代缴过吗？"],
+                        "要公积金": "交公积金吗？",
+                        "苏州区": "是市区还是园区呢？",
+                        "北京农城": "是城镇还是农业呢？",
+                        "chosen_fee": "哪个部分？（比如：社保/公积金/服务费）",
+                        "spec_element": "问哪个呢？",
+                        "ss_purchase_for_month": ["要缴哪月？","想交哪月呢？"],
+                        "given_amount": "要什么基数？",
+                        "chosen_service":"指的是社保还是公积金？",
+                        "user_spec_jishu_amt": "要按照什么基数？",
+                        "purchase_type": "是正常缴还是补缴？"
+                    }
+                }
+            },
+            {
+                "writeto": "raw_taobao_link",
+                "states": [
+                    "provide_taobao_link"
+                ],
+                "lookfor": [
+                    "city_district",
+                    "要社保",
+                    "要公积金",
+                    "首次",
+                    "flag_sb_gjj",
+                    ["city_info",["link_sb","link_gjj"]],
+                    ["general_info",["link_fuwu"]]
+                ],
+                "if_value": {
+                    "要社保":{
+                        "yes":"{city_district}社保：{city_info[link_sb]} ",
+                        "no": ""
+                    },
+                    "要公积金":{
+                        "yes":"{city_district}公积金：{city_info[link_gjj]} ",
+                        "no": ""
+                    },
+                    "city_district": {
+                        "DEFAULT":"服务费：https://item.taobao.com/item.htm?id=598104660990"
+                    },
+                    "flag_sb_gjj":{
+                        "11": "亲，服务费40元要拍两次 ",
+                        "1": "亲，服务费40元要拍一次 ",
+                        "10": "亲，服务费40元要拍一次 "
+                    },
+                    "首次":{
+                        "yes": "首次的话服务费链接50元的也要拍哦！",
+                        "no":""
+                    }
+                }
+            },
+            {
+                "writeto": "break_info",
+                "states": [
+                    "inform_break_effects"
+                ],
+                "lookfor": [
+                    "chosen_service"
+                ],
+                "if_value": {
+                    "chosen_service": {
+                        "社保":"这个小店不太清楚哦，小店只负责代缴哈",
+                        "公积金":"断公积金主要是影响贷款"
+                    }
+                }
+            },
+            {
+                "writeto":"definition_info",
+                "states":["give_definition"],
+                "lookfor":[
+                    "spec_element"
+                ],
+                "if_value":{
+                    "spec_element":{
+                        "减员":"减员是您上家公司把关系转出来。因为只有一家公司可以帮你交社保，所以先要减员我们才能帮你交",
+                        "挂靠":"就是说跟可以借用我们公司的名字"
+                    }
+                }
+            },
+            {
+                "writeto": "finish_payment_info",
+                "states": [
+                    "finished_payment"
+                ],
+                "lookfor": [
+                    "city_district",
+                    "payment_deadline_date"
+                ],
+                "if_value": {
+                    "city_district": {
+                        "DEFAULT":"好滴亲亲"
+                    }
+                }
+            },
+            {
+                "writeto": "req_resource_info",
+                "states": [
+                    "inform_req_resources"
+                ],
+                "lookfor": [
+                    "city"
+                ],
+                "if_value": {
+                    "city": {
+                        "DEFAULT": "亲拍好宝贝后，在weixin小程序（58人才服务中心）提交参保信息哦，包括姓名、身份证号及身份证照片等基本资料",
+                        "上海": "亲拍好宝贝后，在weixin小程序（58人才服务中心）提交参保信息哦，包括姓名、身份证号及身份证照片等基本资料",
+                        "杭州": "亲拍好宝贝后，在weixin小程序（58人才服务中心）提交参保信息哦，包括姓名、身份证号及身份证照片等基本资料",
+                        "苏州": "新开户公司办理市民卡，制卡周期6个月左右，需要2寸白底电子照片。<>近期2寸白底正面免冠照片,不着制式服装或白色上衣,常戴眼镜的人员应配戴眼镜。<>格式为jpg或jpeg,照片大小在10-40K之间,长宽分别为441像素(高)*385像素(宽),<>以姓名+身份证命名,不符合条件的相片会导致制卡失败。",
+                        "北京": "1、 员工一寸白底免冠照片；（要求：jpg格式，宽度：358像素，高度：441像素，不小于9KB，不大于20KB；白底免冠，头部占照片2/3，不佩戴眼镜，衣服和背景反差大<>2、 身份证复印件（1：1大小）清晰有底纹；（要求：身份证复印件要跟原件大小一致、身份证复印件有边框、有底纹、身份证复印件字迹、照片清晰、复印件正反面顺序一致）；<>3、 员工的【北京当地】银行卡信息，借记卡卡号和银行名称（必须和参保人信息保持一致）。用于社保局记录向员工支付打款用；（可选：工商银行、光大银行、华夏银行、建设银行、交通银行、民生银行、农业银行、邮政储蓄银行、招商银行、中国银行、中信银行、兴业银行12家）<>4、 告知户口性质（城镇/农业）；<>5、 新参人员的资料准备时间截止至每月13日。"
+                    }
+                }
+            },
+            {
+                "writeto": "turnaround_time_info",
+                "states": [
+                    "inform_turnaround_time"
+                ],
+                "lookfor": [
+                    "city_district"
+                ],
+                "if_value": {
+                    "city_district": {
+                        "杭州市": "社保系统审核成功后，一般1-3天可以在支付宝查询参保状态以及参保公司。社保到账记录在正常参保月的次月底左右。公积金在正常参保月的当月底左右到账。① 0571-12333选择人工服务或自动语音信息查询；②支付宝城市服务查询；③柜面查询",
+                        "DEFAULT": "亲 不好意思，暂时没有那边的微信"
+                    }
+                }
+            },
+            {
+                "writeto": "weixin_info",
+                "states": [
+                    "inform_weixin"
+                ],
+                "lookfor": [
+                    "city_district"
+                ],
+                "if_value": {
+                    "city_district": {
+                        "上海市": "上海wei信号：iHR-7531，备注填写：店铺名称+上海+淘宝会员名",
+                        "北京市": "北京wei信号：iHR-8091， 备注填写：唯洛+北京+淘宝会员名",
+                        "杭州市": "杭州wei信号：iHR-8091， 备注填写：唯洛+杭州+淘宝会员名",
+                        "DEFAULT": "亲 不好意思，暂时没有那边的微信"
+                    }
+                }
+            },
+            {
+                "writeto":"what_this_for_info",
+                "states": [
+                    "inform_what_this_for"
+                ],
+                "lookfor": [
+                    "chosen_service"
+                ],
+                "if_value": {
+                    "chosen_service": {
+                        "公积金": "亲 大部分客户是用来公积金贷款的哈",
+                        "社保": "亲 社保是社会保险 帮助公民面对某些社会风险如：失业、疾病、事故、衰老、死亡等，或是保障基本得生存资源如：教育、医疗等。"
+                    }
+                }
+            },
+            {
+                "writeto": "how_check_shebao",
+                "states": [
+                    "inform_how_check_shebao"
+                ],
+                "lookfor": [
+                    "city_district"
+                ],
+                "if_value": {
+                    "city_district":{
+                        "上海市": "上海社保查询：<>次月15日官网上能查询到上月的社保应缴款; 社保中心可打印上月的视同缴费；次次月15日可以在网上查询到实缴款；<>社保中心可打印正常缴费（首次查询之前需要持身份证先到附近的社保中心开通网上查询功能）http://www.12333sh.gov.cn/sbsjb/wzb/226.jsp. 公积金缴费查询：次月中旬左右完成汇缴 ， 次月18-23日 网上可查 http://www.shgjj.com/（公积金查询可以通过公积金账号及身份证在网上开通。）",
+                        "杭州市": "社保系统审核成功后，一般1-3天可以在支付宝查询参保状态以及参保公司。社保到账记录在正常参保月的次月底左右。公积金在正常参保月的当月底左右到账。<>① 0571-12333选择人工服务或自动语音信息查询；<>②支付宝市服务查询；<>③柜面查询；",
+                        "苏州市区": "苏州市区: <>正常参保月的当月底到账，次月可查；苏州市社会保险基金管理中心。<>左侧下拉可以看到有个网上办事大厅，输入社保编号，身份证号码和验证码就可以看到个人的社保记录；也可以在网上打印参保记录证明",
+                        "苏州园区": "亲 不好意思，目前没有信息 😢",
+                        "北京市": "北京社保查询：① 进入http://www.bjrbj.gov.cn/csibiz/indinfo/login.jsp →“城镇职工个人用户登录”→个人基本信息查询→5险状态显示正常缴费→参保成功；② 缴费明细隔月可查，如4月份的社保明细，6月后可查到账 → 个人缴费信息查询",
+                        "广州市": "广州社保查询：正常参保月的当月底或次月初可查，可以通过广州市人力资源社保保障局网上服务大厅查询，账号为身份证号，初始密码为社保号；<>或者可以通过微信-钱包-城市服务 - 广东社保查询。",
+                        "DEFAULT": "亲 不好意思，目前没有信息 😢"
+                    }
+                }
+            },
+            {
+                "writeto": "how_check_gjj",
+                "states": [
+                    "inform_how_check_gjj"
+                ],
+                "lookfor": [
+                    "city"
+                ],
+                "if_value": {
+                    "city": {
+                        "上海": "上海公积金缴费查询：次月中旬左右完成汇缴 ， 次月18-23日 网上可查 http://www.shgjj.com/（公积金查询可以通过公积金账号及身份证在网上开通。）",
+                        "北京": "北京公积金查询： http://gjj.beijing.gov.cn/  ，<>→“个人信息查询” <>→“个人住房公积金查询” <>→输入自己的账号和密码然后选择查询。<>（如果没有联名卡可以去银行办理一张，如果没有联名卡可以选择其他的登录方式）<>→在缴存单位的地方“单击” <>→这时就能看到公积金的状态，在下面也可以选择打印公积金信息。",
+                        "DEFAULT": "亲 不好意思，目前没有信息 😢"
+                    }
+                }
+            },
+            {
+                "writeto": "when_check_shebao",
+                "states": [
+                    "inform_when_check_shebao"
+                ],
+                "lookfor": [
+                    "city"
+                ],
+                "if_value": {
+                    "city": {
+                        "上海": "社保查询: <>次月15日官网上能查询到上月的社保应缴款; 社保中心可打印上月的视同缴费<>次次月15日可以在网上查询到实缴款;<>社保中心可打印正常缴费（首次查询之前需要持身份证先到附近的社保中心开通网上查询功能）http://www.12333sh.gov.cn/sbsjb/wzb/226.jsp <>公积金缴费查询：<>次月中旬左右完成汇缴 ， 次月18-23日 网上可查 http:<>www.shgjj.com/（公积金查询可以通过公积金账号及身份证在网上开通。",
+                        "苏州": "参保月的次月7日前到账，可以打电话0512-62888222 人工服务查询；参保公司名字：苏州英格玛服务外包股份有限公司园区分公司",
+                        "杭州": "社保系统审核成功后，一般1-3天可以在支付宝查询参保状态以及参保公司。社保到账记录在正常参保月的次月底左右。<>公积金在正常参保月的当月底左右到账。① 0571-12333选择人工服务或自动语音信息查询；②支付宝城市服务查询；③柜面查询；",
+                        "广州": "正常参保月的当月底或次月初可查，可以通过广州市人力资源社保保障局网上服务大厅查询，账号为身份证号，初始密码为社保号；<>或者可以通过微信-钱包-城市服务 - 广东社保查询。",
+                        "DEFAULT": "亲 不好意思，目前没有信息 😢"
+                    }
+                }
+            },
+            {
+                "writeto": "首次ext",
+                "states": [
+                    "propose_plan"
+                ],
+                "lookfor": [
+                    "首次"
+                ],
+                "if_value": {
+                    "首次": {
+                        "yes": "首次缴纳额外收取{city_info[shouci_fee]}元开户费 ",
+                        "no": ""
+                    }
+                }
+            },
+            {
+                "writeto": "minmax_fee_ext", 
+                "states": ["propose_custom_sb_jishu","propose_custom_gjj_jishu"],
+                "lookfor": [
+                    ["ctx_slots",["jishu_amt"]]
+                ],
+                "if_value":{
+                    "jishu_amt":{
+                        "ctx_max": "最高",
+                        "ctx_min": "最低",
+                        "DEFAULT": ""
+                    }
+                }
+
+            },
+            {
+                "writeto": "custom_gjj_fee_str",
+                "states": ["propose_custom_gjj_jishu"],
+                "lookfor": [
+                    "city_district",
+                    "gjj_jishu",
+                    "w_custom_gjj_fee",
+                    "custom_gjj_flag",
+                    ["rep_ext", "minmax_fee_ext"],
+                    ["city_info",["base_gjj_jishu","base_gjj_jishu_max_limit"]]
+                ],
+                "if_value": {
+                    "custom_gjj_flag":{
+                        "1":"亲 公积金按照{rep_ext[minmax_fee_ext]}{gjj_jishu}基数，应缴{w_custom_gjj_fee}元 不包括服务费，开户费哦",
+                        "0":"亲 {city_info[base_gjj_jishu]}是{city_district}公积金的最低缴纳基数了哦",
+                        "2":"亲 {city_info[base_gjj_jishu_max_limit]}是{city_district}公积金的最高缴纳基数了哦"
+                    }
+                }
+            },
+            {
+                "writeto": "custom_sb_fee_str",
+                "states": ["propose_custom_sb_jishu"],
+                "lookfor": [
+                    "city_district",
+                    "shebao_jishu",
+                    "w_custom_sb_fee",
+                    "custom_sb_flag",
+                    ["rep_ext", "minmax_fee_ext"],
+                    ["city_info",["base_sb_jishu","base_sb_jishu_max_limit"]]
+                ],
+                "if_value": {
+                    "custom_sb_flag":{
+                        "1":"亲 社保按照{rep_ext[minmax_fee_ext]}{shebao_jishu}基数，应缴{w_custom_sb_fee}元 不包括服务费，开户费哦",
+                        "0":"亲 {city_info[base_sb_jishu]}是{city_district}社保的最低缴纳基数了哦",
+                        "2":"亲 {city_info[base_sb_jishu_max_limit]}是{city_district}社保的最高缴纳基数了哦"
+                    }
+                }
+            },
+            {
+                "writeto": "product",
+                "states": [
+                    "propose_plan",
+                    "ctx_inform_how_much"
+                ],
+                "lookfor": [
+                    "flag_sb_gjj"
+                ],
+                "if_value": {
+                    "flag_sb_gjj": {
+                        "1": "社保",
+                        "10": "公积金",
+                        "11": "社保"
+                    }
+                }
+            },
+            {
+                "writeto":"str_gjj_jishu",
+                "states": ["propose_plan"],
+                "lookfor":[
+                    "custom_gjj_flag",
+                    "gjj_jishu",
+                    ["city_info",["base_gjj_jishu"]]
+                ],
+                "if_value":{
+                    "custom_gjj_flag":{
+                        "1": "（按照{gjj_jishu}基数）",
+                        "DEFAULT":{
+                            "base_gjj_jishu": {
+                                "0": "",
+                                "DEFAULT": "（按照最低基数为{city_info[base_gjj_jishu]}元）"
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "writeto":"str_sb_jishu",
+                "states": ["propose_plan"],
+                "lookfor":[
+                    "custom_sb_flag",
+                    "shebao_jishu",
+                    ["city_info",["base_sb_jishu"]]
+                ],
+                "if_value":{
+                    "custom_sb_flag":{
+                        "1": "（按照{shebao_jishu}基数）",
+                        "DEFAULT":{
+                            "base_sb_jishu": {
+                                "0": "",
+                                "DEFAULT": "（按照最低基数为{city_info[base_sb_jishu]}元）"
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "writeto": "proposal",
+                "states": [
+                    "propose_plan"
+                ],
+                "lookfor": [
+                    "flag_sb_gjj",
+                    "w_shebao_payment",
+                    "w_gjj_fee",
+                    [
+                        "rep_ext",
+                        [
+                            "str_gjj_jishu",
+                            "str_sb_jishu"
+                        ]
+                    ]
+                ],
+                "if_value": {
+                    "flag_sb_gjj": {
+                        "1": "应缴{w_shebao_payment}元 {rep_ext[str_sb_jishu]}",
+                        "10": "公积金{w_gjj_fee}元 {rep_ext[str_gjj_jishu]}",
+                        "11": "应缴{w_shebao_payment}元 {rep_ext[str_sb_jishu]}，公积金{w_gjj_fee}元 {rep_ext[str_gjj_jishu]}"
+                    }
+                }
+            },
+            {
+                "writeto": "topup_info_extra",
+                "states": [
+                    "inform_topup",
+                    "inform_pay_deadline"
+                ],
+                "lookfor": [
+                    "city_district"
+                ],
+                "if_value": {
+                    "city_district": {
+                        "上海市": "",
+                        "杭州市": "补缴费30元/月；<>（不做跨年补缴）<>有补缴的请注意：补缴的月份：个人查不到生育工伤，社保局只收个人部分，地税收取单位部分，地税扣缴时五险是一并征收的，还有疑问可0571-12366确认。<>且补缴不算连续哦！",
+                        "北京市": "补缴费40元/月；不能单独缴纳公积金，必须与社保一起操作，不能只补缴；参保办理成功后，所缴保费无法退回，拍下前请考虑清楚。",
+                        "苏州园区": "不能单独缴纳公积金，必须与社保一起操作，不能只补缴；<>参保办理成功后，所缴保费无法退回，拍下前请考虑清楚。",
+                        "苏州市区": "不能单独缴纳公积金，必须与社保一起操作，不能只补缴；<>参保办理成功后，所缴保费无法退回，拍下前请考虑清楚。",
+                        "广州市": "额外收取补缴费40元/月；可以单独缴纳公积金；<>参保办理成功后，所缴保费无法退回，拍下前请考虑清楚。",
+                        "DEFAULT": ""
+                    }
+                }
+            },
+            {
+                "writeto": "topup_window_info",
+                "states": [
+                    "inform_topup",
+                    "inform_pay_deadline"
+                ],
+                "lookfor": [
+                    "city_district",
+                    ["city_info",["bujiao_period"]],
+                    ["calc_ext", ["w_bujiao_earliest_mth"]]
+                ],
+                "if_present":{
+                    "city_district":"{city_district}可以补缴最近{city_info[bujiao_period]}个月的社保公积金。现在最多能补到{calc_ext[w_bujiao_earliest_mth]}月"
+                }
+            },
+            {
+                "writeto": "topup_can_not_msg",
+                "states": [
+                    "inform_topup",
+                    "inform_pay_deadline"
+                ],
+                "lookfor": [
+                    ["calc_ext",["w_bujiao_cmi_flag"]],
+                    ["rep_ext",["topup_window_info","topup_info_extra"]]
+                ],
+                "if_value": {
+                    "w_bujiao_cmi_flag": {
+                        "1":[
+                                "可以补缴，补缴不算连续哈 {rep_ext[topup_info_extra]}",
+                                "可以补缴 请注意：补缴不算连续哦，望知悉哦 {rep_ext[topup_info_extra]}"
+                            ],
+                        "0":"不可以补 {rep_ext[topup_window_info]}"
+                    }
+                }
+            },
+            {
+                "writeto": "topup_info",
+                "states": [
+                    "inform_topup"
+                ],
+                "lookfor": [
+                    "ss_purchase_for_month",
+                    ["calc_ext",["w_bujiao_cmi_flag"]],
+                    ["rep_ext",["topup_can_not_msg","topup_info_extra"]]
+                ],
+                "if_value": {
+                    "w_bujiao_cmi_flag":{
+                        "DEFAULT":"亲 {ss_purchase_for_month}月{rep_ext[topup_can_not_msg]}"
+                    }
+                }
+            },
+            {
+                "writeto": "topup_gjj_info",
+                "states": [
+                    "inform_gjj_topup"
+                ],
+                "lookfor": [
+                    "city_district"
+                ],
+                "if_value": {
+                    "city_district": {
+                        "杭州市": "可补缴最近3个月的社保公积金，补缴费30元/月；（不做跨年补缴）有补缴的请注意：补缴的月份：个人查不到生育工伤，社保局只收个人部分，地税收取单位部分，地税扣缴时五险是一并征收的，还有疑问可0571-12366确认。且补缴不算连续哦！",
+                        "上海市": "补充公积金需要和基本公积金一起缴纳，基数保持一致；补充公积金服务费80元每月",
+                        "DEFAULT": "亲 不好意思，目前没有信息 😢"
+                    }
+                }
+            },
+            {
+                "writeto": "gjj_card_process_info",
+                "states": [
+                    "inform_gjj_card_process"
+                ],
+                "lookfor": [
+                    "city_district"
+                ],
+                "if_value": {
+                    "city_district": {
+                        "DEFAULT": "亲 {city_district}目前没有公积金卡",
+                        "北京市": "北京公积金联名卡办理，员工本人持身份证原件前往北京任意一家名下无个人储蓄卡的银行。十五家银行包括：工商银行、邮储银行、建设银行、中信银行、中国银行、交通银行、北京银行、广发银行、农商银行、农业银行、光大银行、招商银行、民生银行、兴业银行、浦发银行"
+                    }
+                }
+            },
+            {
+                "writeto": "shebao_card_process_info",
+                "states": [
+                    "inform_shebao_card_process"
+                ],
+                "lookfor": [
+                    "city_district"
+                ],
+                "if_value": {
+                    "city_district": {
+                        "DEFAULT": "亲 {city_district}目前没有社保卡",
+                        "广州市": "社保卡公司办，周期6个月左右，正常现在微信个人也可以申领了，可以关注微信号“广州社保卡”自己领领看",
+                        "成都市": "携带有效身份证件原件及复印件、近期2寸证件照一张备用（正面免冠、深色上衣、白色背景）。在市本级、区（市）县社保服务大厅、全市街道（乡镇）劳动就业社会保障服务中心和部分社区（村）劳动就业社会保障服务站，以及悬挂“社会保障卡成都市服务网点”标牌的银行网点（工商银行、农业银行、建设银行、邮储银行、成都银行、成都农商银行）都可以办理。"
+                    }
+                }
+            },
+            {
+                "writeto": "shebao_card_status_info",
+                "states": [
+                    "inform_shebao_card_status"
+                ],
+                "lookfor": [
+                    "city_district"
+                ],
+                "if_value": {
+                    "city_district": {
+                        "苏州园区": "亲，关于密码函或者社保卡的领取进度麻烦添加我们的weixin客服咨询哦，WEIXIN号：iHR-7531， 备注填写：唯洛+淘宝会员名",
+                        "DEFAULT": "亲 不好意思，暂时没有提供那边的服务"
+                    }
+                }
+            },
+            {
+                "writeto": "pay_date_info",
+                "states": [
+                    "inform_pay_date",
+                    "inform_pay_deadline"
+                ],
+                "lookfor": [
+                    "city_district",
+                    ["city_info",[
+                        "laoke_pay_deadline",
+                        "xinke_pay_deadline"
+                        ]
+                    ],
+                    "payment_deadline_date"
+                ],
+                "if_value": {
+                    "city_district":{
+                        "苏州市区": "每月10日前拍下次月费用，最晚不能超过20号，老客户20号前未付款系统自动减员。凡是超出时间未续费的客户，我司有权利停止参保，未及时续费造成损失由客户个人承担。",
+                        "DEFAULT":"{city_district}最好在{payment_deadline_date}号前拍下宝贝，在小程序上提交参保资料哦"
+                    }
+                }
+
+            },
+            {
+                "writeto": "normal_pay_can_not_msg",
+                "states": [
+                    "inform_topup",
+                    "inform_pay_deadline",
+                    "month_crossroad"
+                ],
+                "lookfor": [
+                    "w_normal_cmi_flag",
+                    ["rep_ext",["pay_date_info"]]
+                ],
+                "if_value": {
+                    "w_normal_cmi_flag":{
+                        "1": "现在可以正常交 {rep_ext[pay_date_info]}",
+                        "0": "现在来不及正常交"
+                    }
+                }
+            },
+            {
+                "writeto":"pay_deadline_info",
+                "states": [
+                    "inform_pay_deadline"
+                ],
+                "lookfor": [
+                    "ss_purchase_for_month",
+                    "spec_month",
+                    "w_normal_cmi_flag",
+                    ["rep_ext",[
+                        "topup_can_not_msg",
+                        "normal_pay_can_not_msg"
+                        ]
+                    ]
+                ],
+                "if_present":{
+                    "ss_purchase_for_month": "{ss_purchase_for_month}月"
+                },
+                "if_value": {
+                    "spec_month":{
+                        "1":{
+                            "w_normal_cmi_flag":{
+                                "1":"{rep_ext[normal_pay_can_not_msg]}",
+                                "0":"{rep_ext[normal_pay_can_not_msg]}，只{rep_ext[topup_can_not_msg]}"
+                            }
+                        },
+                        "0":"{rep_ext[normal_pay_can_not_msg]}",
+                        "2":"{rep_ext[topup_can_not_msg]}"
+                    }
+                }
+            },
+            {
+                "writeto": "xufei_info",
+                "states": [
+                    "inform_xufei"
+                ],
+                "lookfor": [
+                    "city_district",
+                    ["city_info",["xufei_deadline"]]
+                ],
+                "if_value": {
+                    "city_district": {
+                        "上海市": "{city_district}：<>1.每个月的{city_info[xufei_deadline]}号前，来淘宝缴费，不要更改淘宝ID和缴费基数；<>2.如果要停缴或已入职新单位，请提前通知我们。<>在小程序提交停止服务的申请，或者拍下1元停缴宝贝、留言备注好退工日期，以防影响你下家单位交金；如不备注一律以我司办理为准，谢谢亲的配合。<>（PS. 只缴社保和公积金是没有个税记录的哦，且不配合提供任何材料，如需我司配合提供材料请和客服说明具体需求并且办理个税）",
+                        "苏州市区": "市区续费说明：每月10日前拍下次月费用，最晚不能超过20号，老客户20号前未付款系统自动减员。<>凡是超出时间未续费的客户，我司有权利停止参保，未及时续费造成损失由客户个人承担。",
+                        "DEFAULT": "{city_district}：续费说明：每月{city_info[xufei_deadline]}日前拍下宝贝，老客户{city_info[xufei_deadline]}号前未付款系统自动减员。<>凡是超出时间未续费的客户，我司有权利停止参保，未及时续费造成损失由客户个人承担。"
+                    }
+                }
+            },
+            {
+                "writeto": "region_coverage_info",
+                "states": [
+                    "inform_region_coverage"
+                ],
+                "lookfor": [
+                    "city_district"
+                ],
+                "if_value": {
+                    "city_district": {
+                        "杭州市": "默认缴纳西湖区；如需缴纳上城区或省直公积金（需留言备注以及服务费每个月额外多收20元）",
+                        "广州市": "黄埔区哦，亲亲",
+                        "苏州市区": "市区默认是缴纳在姑苏区，如需缴纳在高新区或吴中区或相城区，需留言备注以及服务费每月多加20元",
+                        "成都市": "默认缴纳锦江区，如需缴纳高新西区或天府新区（需留言备注以及服务费每个月额外加20元）天府新区的公积金是8%+8%，锦江、高新的公积金比例是6%+6%",
+                        "DEFAULT": "亲 不好意思，目前没有信息 😢"
+                    }
+                }
+            },
+            {
+                "writeto": "entire_plan_proposal",
+                "states": [
+                    "propose_plan"
+                ],
+                "lookfor": [
+                    "city",
+                    "city_district",
+                    "svc_fee_total",
+                    "shebao_basic_total",
+                    [
+                        "rep_ext",
+                        [
+                            "product",
+                            "proposal",
+                            "首次ext"
+                        ]
+                    ]
+                ],
+                "if_present": {
+                    "city_district":"{city_district}目前{rep_ext[product]}{rep_ext[proposal]}，服务费{svc_fee_total}元，{rep_ext[首次ext]} 每月一共是{shebao_basic_total}元。"
+                }
+            }, 
+            {
+                "writeto": "how_much_reply",
+                "states": [
+                    "ctx_inform_how_much"
+                ],
+                "lookfor": [
+                    "chosen_fee",
+                    "user_spec_comp_val",
+                    "svc_fee_total"
+                ],
+                "if_value": {
+                    "chosen_fee":{
+                        "服务费":"服务费：单缴社保或公积金是{city_info[svc_fee]}元 代缴双服务费就等于80元",
+                        "DEFAULT":"{chosen_fee}是{user_spec_comp_val}"
+                    }
+                }
+            },
+            {
+                "writeto":"component_val_correction",
+                "states": [
+                    "doublecheck_component_value"
+                ],
+                "lookfor": [
+                    "chosen_fee",
+                    "user_spec_comp_val",
+                    "w_spec_component_value",
+                    "w_fee_type_flag",
+                    "exclude_svc_fee",
+                    ["calc_ext",["component_val_match_flag"]]
+                ],
+                "if_value": {
+                    "component_val_match_flag":{
+                        "DEFAULT":["{chosen_fee}算{w_spec_component_value} ", "{chosen_fee}是{w_spec_component_value}的 "]
+                    },
+                    "w_fee_type_flag":{
+                        "2":"",
+                        "1":["已经包括了服务费", "已经加上了服务费", "服务费已经算在里面"],
+                        "0":{
+                            "exclude_svc_fee":{
+                                "not_mentioned": "",
+                                "exclude": "包括服务费要多加{svc_fee_total}哦",
+                                "include": "不包括服务费是{user_spec_comp_val}"
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "writeto":"doublecheck_info",
+                "states": [
+                    "doublecheck_component_value"
+                ],
+                "lookfor": [
+                    ["rep_ext",["component_val_correction"]],
+                    ["calc_ext",["component_val_match_flag"]]
+                ],
+                "if_value": {
+                    "component_val_match_flag":{
+                        "1":"是的亲 {rep_ext[component_val_correction]}",
+                        "0":"不是啊亲 {rep_ext[component_val_correction]}",
+                        "-1":"{rep_ext[component_val_correction]}"
+                    }
+                }
+            },
+            {
+                "writeto":"initplus_reply",
+                "states": ["initplus"],
+                "lookfor":[
+                    "bill_settled_flag"
+                ],
+                "if_value":{
+                    "bill_settled_flag":{
+                        "1":"",
+                        "DEFAULT":[""]
+                    }
+                }
+            }
+        ]
+    },
+    "formulae": {
+        "flag_purchase_cmi":{
+            "writeto": "purchase_cmi_flag",
+            "persist_value": true,
+            "type": "tree",
+            "req_vars":[
+                "purchase_type",
+                "w_normal_cmi_flag",
+                "w_bujiao_cmi_flag"
+            ],
+            "search_tree": {
+                "purchase_type": {
+                    "normal": {
+                        "w_normal_cmi_flag":{
+                            "1": "still_can",
+                            "0": "too_late"
+                        }
+                    },
+                    "bujiao": {
+                        "w_bujiao_cmi_flag":{
+                            "1": "still_can",
+                            "0": "too_late"
+                        }
+                    }   
+                }
+            }
+        },
+        "get_payment_deadline_date":{
+            "writeto": "payment_deadline_date",
+            "persist_value": true,
+            "type": "tree",
+            "req_vars":[
+                "laokehu_flag",
+                "city_info.xinke_pay_deadline",
+                "city_info.laoke_pay_deadline"
+            ],
+            "search_tree": {
+                "laokehu_flag": {
+                    "yes": ["city_info.laoke_pay_deadline"],
+                    "no": ["city_info.xinke_pay_deadline"]
+                }   
+            }
+        },
+        "format_specified_month":{
+            "writeto":"spec_month",
+            "persist_value": true,
+            "conditions":[],
+            "req_vars":[
+                "ss_purchase_for_month",
+                "state_month"
+            ],
+            "steps":{
+                "0,equals": [
+                    ["state_month","ss_purchase_for_month"],
+                    "w_is_curr_month"
+                ],
+                "1,isgreater": [
+                    ["state_month","ss_purchase_for_month"],
+                    "w_is_next_month"
+                ],
+                "2,multi":[
+                    ["w_is_next_month",2],
+                    "w_is_next_month"
+                ],
+                "3,add":[
+                    ["w_is_curr_month", "w_is_next_month"],
+                    "OUTCOME"
+                ]
+            }
+        },
+        "fetch_spec_comp_val": {
+            "writeto": "user_spec_comp_val",
+            "type":"tree",
+            "persist_value": true,
+            "req_vars": [
+                "shebao_basic_total",
+                "w_shebao_payment",
+                "w_gjj_fee",
+                "svc_fee_total"
+            ],
+            "search_tree":{
+                "chosen_fee":{
+                    "一共": ["shebao_basic_total"],
+                    "社保缴纳":["w_shebao_payment"],
+                    "社保基数":["city_info.sb_jishu"],
+                    "公积金缴纳":["w_gjj_fee"],
+                    "公积金基数":["city_info.base_gjj_jishu"],
+                    "首次费":["city_info.shouci_fee"],
+                    "服务费":["svc_fee_total"]
+                }
+            }
+        },
+        "fetch_jishu_amount": {
+            "writeto": "user_spec_jishu_amt",
+            "persist_value": true,
+            "search_tree":{
+                "chosen_service":{
+                    "社保":{
+                        "ctx_slots.jishu_amt":{
+                            "ctx_min":["city_info.base_sb_jishu"],
+                            "ctx_max":["city_info.base_sb_jishu_max_limit"]
+                        }
+                    },
+                    "公积金":{
+                        "ctx_slots.jishu_amt":{
+                            "ctx_min":["city_info.base_gjj_jishu"],
+                            "ctx_max":["city_info.base_gjj_jishu_max_limit"]
+                        }
+                    }
+                },
+                "given_amount":{
+                    "_ANY":["given_amount"]
+                }
+            }
+        },
+        "calc_flag_sb_gjj": {
+            "writeto": "flag_sb_gjj",
+            "persist_value": true,
+            "conditions": [
+                ["要社保","yes",["w_sb",1,0]],
+                ["要公积金","yes",["w_gjj",10,0]]
+            ],
+            "req_vars": [
+                "要社保",
+                "要公积金"
+            ],
+            "steps": {
+                "1,add": [
+                    [
+                        "w_sb","w_gjj"
+                    ],
+                    "OUTCOME"
+                ]
+            }
+        },
+        "flag_shouci": {
+            "conditions": [
+                [
+                    "首次","yes",["w_sc",1,0]
+                ]
+            ],
+            "req_vars": [
+                "首次",
+                "city_info.shouci_fee"
+            ],
+            "steps": {
+                "1,multi": [
+                    [
+                        "shouci_fee",
+                        "w_sc"
+                    ],
+                    "OUTCOME"
+                ]
+            },
+            "writeto": "w_shouci_fee"
+        },
+        "flag_normal_pay_cmi":{
+            "writeto": "w_normal_cmi_flag",
+            "conditions": [],
+            "persist_value":true,
+            "req_vars": [
+                "state_month",
+                "ss_purchase_for_month",
+                "state_curr_day",
+                "payment_deadline_date"
+            ],
+            "steps": {
+                "1,isgreater": [
+                    ["ss_purchase_for_month","state_month"],
+                    "w_is_next_month"
+                ],
+                "2,equals":[
+                    ["ss_purchase_for_month","state_month"],
+                    "w_is_this_month"
+                ],
+                "3,isgreater":[
+                    ["state_curr_day","payment_deadline_date"],
+                    "w_past_date"
+                ],
+                "4,sub":[
+                    [1,"w_past_date"],
+                    "w_not_past_date"
+                ],
+                "6,multi":[
+                    ["w_is_this_month", "w_not_past_date"],
+                    "w_this_month_ok"
+                ],
+                "7,OR":[
+                    ["w_is_next_month", "w_this_month_ok"],
+                    "OUTCOME"
+                ]
+
+            }
+        },
+        "flag_bujiao_month_cmi":{
+            "writeto": [
+                ["w_bujiao_cmi_flag","OUTCOME"],
+                ["w_bujiao_earliest_mth","w_final_lower_limit", 0]
+            ],
+            "conditions": [],
+            "req_vars": [
+                "state_month",
+                "ss_purchase_for_month",
+                "city_info.bujiao_period"
+            ],
+            "steps": {
+                "1,sub":[
+                    ["state_month","bujiao_period"],
+                    "w_lower_limit"
+                ],
+                "2,isgreater":[
+                    [0,"w_lower_limit"],"w_year_topup"
+                ],
+                "3,multi":[
+                    [12,"w_year_topup"],"w_year_topup_val"
+                ],
+                "4,add":[
+                    ["w_lower_limit","w_year_topup_val"],
+                    "w_final_lower_limit"
+                ],
+                "5,isgreater": [
+                    ["w_final_lower_limit","ss_purchase_for_month"],
+                    "OUTCOME"
+                ],
+                "6,sub":[
+                    [1,"OUTCOME"],
+                    "OUTCOME"
+                ]
+            }
+        },
+        "sum_svc_fee": {
+            "writeto": "svc_fee_total",
+            "persist_value":true,
+            "conditions": [["flag_sb_gjj",11,["w_dual_svc_multi",1,0]]],
+            "req_vars": [
+                "city_info.svc_fee",
+                "city_info.dual_svc_fee",
+                "flag_sb_gjj"
+            ],
+            "steps": {
+                "1,sub": [
+                    [1,"w_dual_svc_multi"],
+                    "w_single_fee"
+                ],
+                "2,multi": [
+                    ["w_single_fee", "svc_fee"],
+                    "w_single_fee_amt"
+                ],
+                "3,multi": [
+                    ["w_dual_svc_multi", "dual_svc_fee"],
+                    "w_dual_fee_amt"
+                ],
+                "4,add": [
+                    ["w_single_fee_amt", "w_dual_fee_amt"],
+                    "OUTCOME"
+                ]
+            }
+        },
+        "shebao_fee_amt": {
+            "writeto": "w_shebao_payment",
+            "conditions": [
+                ["custom_sb_flag",1,["use_custom_sb",1,0]]
+            ],
+            "persist_value": true,
+            "req_vars": [
+                "city_info.shebao_payment"
+            ],
+            "optional_vars": [
+                "w_custom_sb_fee",
+                "custom_sb_flag"
+            ],
+            "steps": {
+                "1,sub": [
+                    [1,"use_custom_sb"],
+                    "use_default_sb"
+                ],
+                "2,multi": [
+                    ["use_custom_sb","w_custom_sb_fee"],
+                    "w_custom_sb_sum"
+                ],
+                "3,multi": [
+                    ["use_default_sb","shebao_payment"],
+                    "w_default_sb_sum"
+                ],
+                "9,add":[
+                    ["w_custom_sb_sum", "w_default_sb_sum"],
+                    "OUTCOME"
+                ]
+            }
+        },
+        "gongjijin_fee_amt": {
+            "writeto": "w_gjj_fee",
+            "conditions": [
+                ["custom_gjj_flag",1,["use_custom_gjj",1,0]]
+            ],
+            "persist_value": true,
+            "req_vars": [
+                "city_info.gongjijin_fee"
+            ],
+            "optional_vars": [
+                "w_custom_gjj_fee",
+                "custom_gjj_flag"
+            ],
+            "steps": {
+                "1,sub": [
+                    [1,"use_custom_gjj"],
+                    "use_default_gjj"
+                ],
+                "2,multi": [
+                    ["use_custom_gjj","w_custom_gjj_fee"],
+                    "w_custom_gjj_sum"
+                ],
+                "3,multi": [
+                    ["use_default_gjj","gongjijin_fee"],
+                    "w_default_gjj_sum"
+                ],
+                "9,add":[
+                    ["w_custom_gjj_sum", "w_default_gjj_sum"],
+                    "OUTCOME"
+                ]
+            }
+        },
+        "shebao_basic_calc": {
+            "writeto":[
+                ["shebao_basic_total","OUTCOME"],
+                ["shebao_jiaona_total","w_jiaona_total"]
+            ],
+            "conditions": [
+                ["flag_sb_gjj",1,["w_sb_flag",1,0]],
+                ["flag_sb_gjj",10,["w_gjj_flag",1,0]],
+                ["flag_sb_gjj",11,["both_flag",1,0]]
+            ],
+            "persist_value": true,
+            "req_vars": [
+                "flag_sb_gjj",
+                "svc_fee_total",
+                "w_gjj_fee",
+                "w_shebao_payment",
+                "calc_ext.w_shouci_fee"
+            ],
+            "steps": {
+                "1,add": [
+                    [
+                        "both_flag",
+                        "w_sb_flag"
+                    ],
+                    "w_sb_flag"
+                ],
+                "2,add": [
+                    [
+                        "both_flag",
+                        "w_gjj_flag"
+                    ],
+                    "w_gjj_flag"
+                ],
+                "10,multi": [
+                    [
+                        "w_gjj_fee",
+                        "w_gjj_flag"
+                    ],
+                    "w_gjj_jiaona"
+                ],
+                "11,multi": [
+                    [
+                        "w_shebao_payment",
+                        "w_sb_flag"
+                    ],
+                    "w_sb_jiaona"
+                ],
+                "12,add": [
+                    [
+                        "w_sb_jiaona",
+                        "w_gjj_jiaona"
+                    ],
+                    "w_jiaona_total"
+                ],
+                "13,add": [
+                    [
+                        "w_jiaona_total",
+                        "svc_fee_total",
+                        "w_shouci_fee"
+                    ],
+                    "OUTCOME"
+                ]
+            }
+        },
+        "log_custom_gjj": {
+            "writeto": [
+                ["temp_gjj_jishu","OUTCOME"]
+            ],
+            "conditions": [],
+            "persist_value": false,
+            "req_vars": [],
+            "optional_vars":[
+                "user_spec_jishu_amt"
+            ],
+            "steps": {
+                "3,add": [
+                    ["user_spec_jishu_amt", 0],
+                    "OUTCOME"
+                ]
+            }
+        },
+        "flag_custom_gjj": {
+            "writeto": [
+                ["custom_gjj_flag","OUTCOME"],
+                ["gjj_jishu", "w_gjj_jishu_figure"]
+            ],
+            "conditions": [],
+            "persist_value": true,
+            "req_vars": [
+                "city_info.base_gjj_jishu",
+                "city_info.base_gjj_jishu_max_limit"
+            ],
+            "optional_vars":[
+                "gjj_jishu",
+                "calc_ext.temp_gjj_jishu"
+            ],
+            "steps": {
+                "0,equals":[
+                    ["temp_gjj_jishu",0],
+                    "w_no_new_gjj_jishu"
+                ],
+                "1,add":[
+                    [1,0],
+                    "w_is_valid"
+                ],
+                "3,multi":[
+                    ["gjj_jishu","w_no_new_gjj_jishu"],
+                    "w_spec_gjj_jishu"
+                ],
+                "4,add":[
+                    ["temp_gjj_jishu", "w_spec_gjj_jishu"],
+                    "w_gjj_jishu_figure"
+                ],
+                "5,isgreater": [
+                    ["w_gjj_jishu_figure","base_gjj_jishu_max_limit"],
+                    "w_over"
+                ],
+                "6,add":[
+                    ["w_is_valid", "w_over"],
+                    "w_is_valid"
+                ],
+                "7,isgreater":[
+                    ["base_gjj_jishu","w_gjj_jishu_figure"],
+                    "w_under"
+                ],
+                "8,sub":[
+                    ["w_is_valid", "w_under"],
+                    "OUTCOME"
+                ]
+            }
+        },
+        "calc_custom_gjj_fee": {
+            "writeto": "w_custom_gjj_fee",
+            "conditions": [],
+            "persist_value": true,
+            "req_vars": [
+                "city_info.base_gjj_jishu_multi"
+            ],
+            "optional_vars":[
+                "gjj_jishu"
+            ],
+            "steps": {
+                "5,multi": [
+                    ["gjj_jishu","base_gjj_jishu_multi"],
+                    "OUTCOME"
+                ]
+            }
+        },
+        "log_custom_sb": {
+            "writeto": [
+                ["temp_sb_jishu","OUTCOME"]
+            ],
+            "conditions": [],
+            "persist_value": false,
+            "req_vars": [],
+            "optional_vars":[
+                "user_spec_jishu_amt"
+            ],
+            "steps": {
+                "3,add": [
+                    ["user_spec_jishu_amt", 0],
+                    "OUTCOME"
+                ]
+            }
+        },
+        "flag_custom_sb": {
+            "writeto": [
+                ["custom_sb_flag","OUTCOME"],
+                ["shebao_jishu", "w_sb_jishu_figure"]
+            ],
+            "conditions": [],
+            "persist_value": true,
+            "req_vars": [
+                "city_info.base_sb_jishu",
+                "city_info.base_sb_jishu_max_limit"
+            ],
+            "optional_vars":[
+                "shebao_jishu",
+                "calc_ext.temp_sb_jishu"
+            ],
+            "steps": {
+                "0,equals":[
+                    ["temp_sb_jishu",0],
+                    "w_no_new_sb_jishu"
+                ],
+                "1,add":[
+                    [1,0],
+                    "w_is_valid"
+                ],
+                "3,multi":[
+                    ["shebao_jishu","w_no_new_sb_jishu"],
+                    "w_spec_sb_jishu"
+                ],
+                "4,add":[
+                    ["temp_sb_jishu", "w_spec_sb_jishu"],
+                    "w_sb_jishu_figure"
+                ],
+                "5,isgreater": [
+                    ["w_sb_jishu_figure","base_sb_jishu_max_limit"],
+                    "w_over"
+                ],
+                "6,add":[
+                    ["w_is_valid", "w_over"],
+                    "w_is_valid"
+                ],
+                "7,isgreater":[
+                    ["base_sb_jishu","w_sb_jishu_figure"],
+                    "w_under"
+                ],
+                "8,sub":[
+                    ["w_is_valid", "w_under"],
+                    "OUTCOME"
+                ]
+            }
+        },
+        "calc_custom_sb_fee": {
+            "writeto": "w_custom_sb_fee",
+            "conditions": [],
+            "persist_value": true,
+            "req_vars": [
+                "city_info.base_sb_jishu_multi"
+            ],
+            "optional_vars":[
+                "shebao_jishu"
+            ],
+            "steps": {
+                "5,multi": [
+                    ["shebao_jishu","base_sb_jishu_multi"],
+                    "OUTCOME"
+                ]
+            }
+        },
+        "calc_component_value":{
+            "writeto":[
+                ["w_spec_component_value", "OUTCOME"],
+                ["w_fee_type_flag", "w_is_main_wo_svc"]
+            ],
+            "persist_value": true,
+            "conditions":[
+                ["chosen_fee", ["服务费","首次费","一共"], ["w_dont_calc_svc", 0, 1]],
+                ["chosen_fee", ["服务费","首次费"],["w_is_a_side",1,0]],
+                ["exclude_svc_fee", "include", ["w_inc_exc_svc_fee", 1, 0]]
+                ],
+            "req_vars": [
+                "given_amount",
+                "svc_fee_total",
+                "chosen_fee",
+                "exclude_svc_fee",
+                "user_spec_comp_val"
+            ],
+            "steps":{
+                "2,multi":[
+                    ["svc_fee_total","w_dont_calc_svc"],
+                    "w_svc_fee_amt"
+                ],
+                "3,multi":[
+                    ["w_svc_fee_amt", "w_inc_exc_svc_fee"],
+                    "ww_svc_fee_amt"
+                ],
+                "7,add":[
+                    ["user_spec_comp_val", "ww_svc_fee_amt"],
+                    "OUTCOME"
+                ],
+                "9,sub":[
+                    [1,"w_dont_calc_svc"],
+                    "ww_dont_calc_svc"
+                ],
+                "10,add":[
+                    ["w_is_a_side", "ww_dont_calc_svc"],
+                    "w_is_main_wo_svc"
+                ]
+            }
+        },
+        "flag_component_value_match":{
+            "writeto":"component_val_match_flag",
+            "persist_value": false,
+            "conditions":[],
+            "req_vars":[
+                "w_spec_component_value"
+            ],
+            "optional_vars":[
+                "given_amount"
+            ],
+            "steps":{
+                "0,equals":[
+                    ["given_amount",0],
+                    "w_no_given_amt"
+                ],
+                "1,add": [
+                    ["given_amount",1],
+                    "w_upper"
+                ],
+                "2,sub": [
+                    ["given_amount",1],
+                    "w_lower"
+                ],
+                "3,isgreater": [
+                    ["w_upper","w_spec_component_value"],
+                    "w_upper_true"
+                ],
+                "4,isgreater": [
+                    ["w_spec_component_value","w_lower"],
+                    "w_lower_true"
+                ],
+                "5,add":[
+                    ["w_upper_true","w_lower_true"],
+                    "w_sum_true"
+                ],
+                "6,equals":[
+                    ["w_sum_true",2],
+                    "OUTCOME"
+                ],
+                "7,sub":[
+                    ["OUTCOME","w_no_given_amt"],
+                    "OUTCOME"
+                ]
+            }
+        },
+        "flag_bill_settled":{
+            "writeto":"bill_settled_flag",
+            "persist_value": true,
+            "conditions": [],
+            "req_vars":[],
+            "steps":{
+                "1,add":[[1,0],"OUTCOME"]
+            }
+        }
+    },
+    "list_string_templates":{
+        "bills":[
+            {
+                "collection": "seq",
+                "delimiter": "，",
+                "single_template": "{0}",
+                "element_template": "{0}(¥{1})",
+                "writeto":"ls_bill_name_list"
+            },
+            {
+                "collection": "sum",
+                "indexes": [1],
+                "writeto": "ls_bill_total_amt"
+            }
+        ]
+    },
+    "vault_info": {
+        "database_protocol":{
+            "_on_find":{
+                "slotname":"laokehu_flag",
+                "on_true": "yes",
+                "on_false": "no"
+            }
+        },
+        "general_info":{
+            "link_fuwu": "https://item.taobao.com/item.htm?id=598104660990"
+        },
+        "lookup_info":{
+            "city_district":{
+                "writeto":"city_info",
+                "上海市": {
+                    "base_sb_jishu": 4927,
+                    "base_sb_jishu_multi": 0.3932,
+                    "base_sb_jishu_max_limit": 24633,
+                    "base_gjj_jishu": 2420,
+                    "base_gjj_jishu_multi":0.14,
+                    "base_gjj_jishu_max_limit": 24633,
+                    "shebao_payment": 1937.7,
+                    "svc_fee": 40,
+                    "dual_svc_fee": 80,
+                    "shouci_fee": 50,
+                    "xinke_pay_deadline": 15,
+                    "pay_deadline_weekday_only": true,
+                    "laoke_pay_deadline": 26,
+                    "gongjijin_fee": 338,
+                    "bujiao_period": 6,
+                    "xufei_deadline": 15,
+                    "link_sb": "https://item.taobao.com/item.htm?id=598103220826",
+                    "link_gjj":"https://item.taobao.com/item.htm?id=598525470715"
+                },
+                "北京城镇": {
+                    "base_sb_jishu": 3613,
+                    "base_sb_jishu_multi": 0.452544,
+                    "shebao_payment": 1636.4,
+                    "base_sb_jishu_max_limit": 23565,
+                    "base_gjj_jishu": 2409,
+                    "base_gjj_jishu_multi":0.206725,
+                    "base_gjj_jishu_max_limit": 37786,
+                    "svc_fee": 40,
+                    "dual_svc_fee": 80,
+                    "shouci_fee": 50,
+                    "xinke_pay_deadline": 18,
+                    "laoke_pay_deadline": 24,
+                    "gongjijin_fee": 498,
+                    "bujiao_period": 3,
+                    "xufei_deadline": 15,
+                    "link_sb": "https://item.taobao.com/item.htm?id=598975115885",
+                    "link_gjj":"https://item.taobao.com/item.htm?id=598365788936"
+                },
+                "北京农业": {
+                    "base_sb_jishu": 3613,
+                    "base_sb_jishu_multi": 0.450544,
+                    "shebao_payment": 1629.17,
+                    "base_sb_jishu_max_limit": 23565,
+                    "base_gjj_jishu": 2409,
+                    "base_gjj_jishu_multi":0.206725,
+                    "gongjijin_fee": 498,
+                    "base_gjj_jishu_max_limit": 37786,
+                    "svc_fee": 40,
+                    "dual_svc_fee": 80,
+                    "shouci_fee": 50,
+                    "xinke_pay_deadline": 18,
+                    "laoke_pay_deadline": 24,
+                    "bujiao_period": 3,
+                    "xufei_deadline": 15,
+                    "link_sb": "https://item.taobao.com/item.htm?id=598975115885",
+                    "link_gjj":"https://item.taobao.com/item.htm?id=598365788936"
+                },
+                "苏州市区": {
+                    "base_sb_jishu": 3368,
+                    "base_gjj_jishu_multi":0.50,
+                    "base_sb_jishu_multi": 0.50,
+                    "base_gjj_jishu": 0,
+                    "shebao_payment": 1277.57,
+                    "base_sb_jishu_max_limit": 25000,
+                    "base_gjj_jishu_max_limit": 30000,
+                    "svc_fee": 40,
+                    "dual_svc_fee": 80,
+                    "shouci_fee": 50,
+                    "xinke_pay_deadline": 22,
+                    "laoke_pay_deadline": 24,
+                    "gongjijin_fee": 540,
+                    "bujiao_period": 3,
+                    "xufei_deadline": 10,
+                    "link_sb": "https://item.taobao.com/item.htm?id=598369140516",
+                    "link_gjj":"https://item.taobao.com/item.htm?id=598791558411"
+                },
+                "苏州园区": {
+                    "base_sb_jishu": 3125,
+                    "base_gjj_jishu": 0,
+                    "shebao_payment": 878.14,
+                    "base_sb_jishu_max_limit": 25000,
+                    "base_gjj_jishu_max_limit": 30000,
+                    "base_gjj_jishu_multi":0.50,
+                    "base_sb_jishu_multi": 0.50,
+                    "svc_fee": 40,
+                    "dual_svc_fee": 80,
+                    "shouci_fee": 50,
+                    "xinke_pay_deadline": 10,
+                    "laoke_pay_deadline": 14,
+                    "gongjijin_fee": 540,
+                    "bujiao_period": 2,
+                    "xufei_deadline": 10,
+                    "late_xufei_deadline": 20,
+                    "jianyuan_date": 24,
+                    "link_sb": "https://item.taobao.com/item.htm?id=598601949473",
+                    "link_gjj":"https://item.taobao.com/item.htm?id=598601929883"
+                },
+                "杭州市": {
+                    "base_sb_jishu_max_limit": 25000,
+                    "base_sb_jishu": 3321.6,
+                    "shebao_payment": 1286,
+                    "base_sb_jishu_multi": 0.387,
+                    "base_gjj_jishu_max_limit": 30000,
+                    "base_gjj_jishu": 2010,
+                    "base_gjj_jishu_multi":0.50,
+                    "svc_fee": 40,
+                    "dual_svc_fee": 80,
+                    "shouci_fee": 50,
+                    "xinke_pay_deadline": 18,
+                    "laoke_pay_deadline": 14,
+                    "gongjijin_fee": 482,
+                    "bujiao_period": 3,
+                    "xufei_deadline": 12,
+                    "link_sb": "https://item.taobao.com/item.htm?id=598232088077",
+                    "link_gjj":"https://item.taobao.com/item.htm?id=598525470715"
+                },
+                "深圳市": {
+                    "base_sb_jishu": 2335,
+                    "base_gjj_jishu": 1101,
+                    "shebao_payment": 0,
+                    "base_sb_jishu_max_limit": 25000,
+                    "base_gjj_jishu_max_limit": 30000,
+                    "base_gjj_jishu_multi":0.50,
+                    "base_sb_jishu_multi": 0.50,
+                    "svc_fee": 40,
+                    "dual_svc_fee": 80,
+                    "shouci_fee": 50,
+                    "xinke_pay_deadline": 10,
+                    "laoke_pay_deadline": 12,
+                    "gongjijin_fee": 100,
+                    "bujiao_period": 0,
+                    "xufei_deadline": 10,
+                    "link_sb": "https://item.taobao.com/item.htm?id=598103220826",
+                    "link_gjj":"https://item.taobao.com/item.htm?id=598232148577"
+                },
+                "广州市": {
+                    "base_sb_jishu": 2100,
+                    "shebao_payment": 1437.56,
+                    "base_gjj_jishu": 0,
+                    "gongjijin_fee": 210,
+                    "base_sb_jishu_max_limit": 25000,
+                    "base_gjj_jishu_max_limit": 30000,
+                    "base_gjj_jishu_multi":0.50,
+                    "base_sb_jishu_multi": 0.50,
+                    "svc_fee": 40,
+                    "dual_svc_fee": 80,
+                    "shouci_fee": 50,
+                    "xinke_pay_deadline": 10,
+                    "laoke_pay_deadline": 14,
+                    "bujiao_period": 1,
+                    "xufei_deadline": 10,
+                    "link_sb": "https://item.taobao.com/item.htm?id=598977567857",
+                    "link_gjj":"https://item.taobao.com/item.htm?id=598790626078"
+                },
+                "成都市": {
+                    "base_sb_jishu": 2697,
+                    "base_gjj_jishu": 1780,
+                    "shebao_payment": 1022.01,
+                    "base_sb_jishu_max_limit": 25000,
+                    "base_gjj_jishu_max_limit": 30000,
+                    "base_gjj_jishu_multi":0.50,
+                    "base_sb_jishu_multi": 0.50,
+                    "svc_fee": 40,
+                    "dual_svc_fee": 80,
+                    "shouci_fee": 50,
+                    "bujiao_period": 1,
+                    "xinke_pay_deadline": 12,
+                    "laoke_pay_deadline": 14,
+                    "gongjijin_fee": 214,
+                    "xufei_deadline": 10,
+                    "link_sb": "https://item.taobao.com/item.htm?id=598598289750",
+                    "link_gjj":"https://item.taobao.com/item.htm?id=598368160061"
+                },
+                "昆山市": {
+                    "base_sb_jishu": 2940,
+                    "base_gjj_jishu": 0,
+                    "shebao_payment": 1037.82,
+                    "base_sb_jishu_max_limit": 25000,
+                    "base_gjj_jishu_max_limit": 30000,
+                    "base_gjj_jishu_multi":0.50,
+                    "base_sb_jishu_multi": 0.50,
+                    "svc_fee": 60,
+                    "dual_svc_fee": 80,
+                    "shouci_fee": 50,
+                    "xinke_pay_deadline": 12,
+                    "laoke_pay_deadline": 15,
+                    "bujiao_period": 6,
+                    "gongjijin_fee": 472,
+                    "xufei_deadline": 10,
+                    "link_sb":"https://item.taobao.com/item.htm?id=598983643235",
+                    "link_gjj":"https://item.taobao.com/item.htm?id=598373592789"
+                },
+                "长沙":{
+                    "gongjijin_fee":316.0,
+                    "xufei_deadline": 10,
+                    "bujiao_period": 3,
+                    "xinke_pay_deadline": 10,
+                    "laoke_pay_deadline": 12,
+                    "svc_fee": 40,
+                    "dual_svc_fee": 80,
+                    "base_sb_jishu_max_limit": 25000,
+                    "base_gjj_jishu_max_limit": 30000,
+                    "base_gjj_jishu_multi":0.50,
+                    "base_sb_jishu_multi": 0.50,
+                    "link_sb":"https://item.taobao.com/item.htm?id=600094668462",
+                    "link_gjj":"https://item.taobao.com/item.htm?id=598603797664"
+                }
+            }
+        }
+    },
+    "policy_data_location": "policydata.json",
+    "sideinfo_location": "sideinfo.json"
+}

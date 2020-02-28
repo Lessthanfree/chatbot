@@ -1,0 +1,168 @@
+{
+    "COMMENTS":"File to decide state transition logic. Called policies. CONSIDER: Changing from list of pairs to dict",
+    "crossroad_policies":{
+        "xufei_push_crossroad":[
+            "customer_status",{
+                "Active_Bill": "push_xufei",
+                "Active_NoBill": "push_xufei",
+                "Inactive_Bill": "init",
+                "Inactive_NoBill": "init",
+                "DEFAULT":"init"
+            }  
+        ],
+        "purchase_laoke_crossroad":[
+            "laokehu_flag",{
+                "yes": "provide_taobao_link",
+                "no": "purchase_type_crossroad"
+            }
+        ],
+        "settlement_laoke_crossroad":[
+            "laokehu_flag",{
+                "yes": "provide_taobao_link",
+                "no": "inform_how_pai"
+            }
+        ],
+        "city_crossroad":[
+            "city",{
+                "湖南": "unsupported_city",
+                "聊城": "unsupported_city",
+                "DEFAULT": "propose_plan"
+            }
+        ],
+        "complication_crossroad":[
+            "work_hrs_flag",{
+                "yes":"pass_to_human",
+                "no":"night_time_cannot"
+            }
+        ],
+        "ask_how_much_crossroad":[
+            "chosen_fee",{
+                "一共": "city_crossroad",
+                "两个": "city_crossroad",
+                "DEFAULT": "ctx_inform_how_much"
+            }
+        ],
+        "custom_jishu_crossroad":[
+            "chosen_service",{
+                "公积金":"propose_custom_gjj_jishu",
+                "社保":"propose_custom_sb_jishu"
+            }
+        ],
+        "purchase_type_crossroad":[
+            "purchase_cmi_flag",{
+                "still_can": "city_crossroad",
+                "too_late": "inform_pay_deadline"
+            }
+        ],
+        "turnaround_time_crossroad": [
+            "chosen_service",{
+                "社保":"inform_when_check_shebao",
+                "DEFAULT": "inform_when_check_shebao"
+            }
+        ]
+    },
+    "class_policy_rules":{
+        "terminal_state":[
+            ["affirm", "initplus"],
+            ["thankyou", "initplus"],
+            ["goodbye", "goodbye"],
+            ["purchase", "purchase_laoke_crossroad"]
+        ],
+        "propose_plan_state":[
+            ["affirm", "initplus"],
+            ["purchase", "city_crossroad"],
+            ["inform", "city_crossroad"],
+            ["next_step", "initplus"]
+        ],
+        "prop_cust_jishu_state":[
+            ["inform", "SAME_STATE"],
+            ["purchase", "city_crossroad"],
+            ["next_step","city_crossroad"],
+            ["affirm", "city_crossroad"],
+            ["thankyou","initplus"]
+        ]
+    },
+    "policy_rules":{  
+        "push_xufei":[
+            ["affirm","provide_taobao_link"],
+            ["next_step","provide_taobao_link"],
+            ["purchase", "provide_taobao_link"],
+            ["query_how_settle","provide_taobao_link"],
+            ["query_pay_process", "provide_taobao_link"],
+            ["query_xufei", "provide_taobao_link"],
+            ["purchase_xufei", "provide_taobao_link"],
+            ["inform_paid","finished_payment"],
+            ["greet", "init"],
+            ["deny", "initplus"]
+        ],
+        "init": [
+            ["greet","menu_base"],
+            ["purchase", "purchase_laoke_crossroad"],
+            ["purchase_xufei", "purchase_laoke_crossroad"],
+            ["inform","purchase_laoke_crossroad"],
+            ["affirm", "initplus"],
+            ["deny", "goodbye"]
+        ],
+        "initplus": [
+            ["greet", "xufei_push_crossroad"],
+            ["purchase", "purchase_laoke_crossroad"],
+            ["purchase_xufei", "purchase_laoke_crossroad"],
+            ["inform","purchase_laoke_crossroad"],
+            ["deny", "goodbye"]
+        ],
+        "menu_base":[
+            ["option_1", "how_to_jiaona"],
+            ["option_2", "ask_how_much"],
+            ["option_3", "deadline_information"],
+            ["option_4", "inform_req_resources"],
+            ["option_5", "request_verification_code"]
+        ],
+        "provide_taobao_link": [
+            ["inform","city_crossroad"],
+            ["purchase","city_crossroad"],
+            ["next_step","inform_how_pai"],
+            ["affirm", "finished_payment"],
+            ["inform_done","finished_payment"],
+            ["inform_paid","finished_payment"],
+            ["thankyou", "finished_payment"],
+            ["deny","initplus"]
+        ],
+        "inform_how_pai": [
+            ["inform", "city_crossroad"],
+            ["purchase","city_crossroad"],
+            ["affirm", "finished_payment"],
+            ["next_step", "finished_payment"],
+            ["inform_done", "finished_payment"],
+            ["inform_paid","finished_payment"],
+            ["thankyou","finished_payment"]
+        ],
+        "finished_payment": [
+            ["inform", "city_crossroad"],
+            ["purchase","city_crossroad"],
+            ["affirm", "initplus"],
+            ["thankyou","initplus"],
+            ["inform_done", "initplus"],
+            ["goodbye", "goodbye"]
+        ],
+        "inform_fahuo":[
+            ["question_reliability","inform_fahuo_assure"],
+            ["affirm", "initplus"]
+        ],
+        "inform_fahuo_assure":[
+            ["affirm", "initplus"]
+        ],
+        "pass_to_human": [
+            ["affirm","initplus"],
+            ["purchase", "purchase_type_crossroad"],
+            ["deny", "goodbye"]
+        ],
+        "night_time_cannot": [
+            ["affirm","initplus"],
+            ["purchase", "purchase_type_crossroad"],
+            ["thankyou","initplus"]
+        ],
+        "goodbye":[
+            ["greet", "init"]
+        ]
+    }
+}
