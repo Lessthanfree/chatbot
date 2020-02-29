@@ -4,7 +4,7 @@ import time
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from http_utils import decode_post
 from urllib import parse
-# from chatbot import Chatbot
+from chatbot import Chatbot
 
 
 # ! NOTE ! http.server security is low
@@ -15,10 +15,12 @@ from urllib import parse
 ENCODING_USED = "utf-8"
 
 class ChatbotServer(BaseHTTPRequestHandler):
+    chatbot_resource_filename = "wechat_chatbot_resource.json"
     def start_chatbot(self):
         print("Starting the chatbot")
-        print("disabled for now")
-        # self.chatbot = Chatbot()
+        # print("disabled for now")
+        self.chatbot = Chatbot()
+        self.chatbot.start_bot(self.chatbot_resource_filename)
 
     def format_reply_xml(self, msg_info, content):
         reply = (
@@ -35,15 +37,15 @@ class ChatbotServer(BaseHTTPRequestHandler):
         time.gmtime(),
         content
         )
+        # Because its a reply, the from and to are swapped
         return reply.encode(ENCODING_USED)
 
     def _get_bot_reply(self, info_dict):
         uid = info_dict.get("FromUserName", "")
         msg = info_dict.get("Content", "")
         logging.info("<SERVER GET BOT REPLY> USER <{}>:{}".format(uid, msg))
-        # reply_obj = self.chatbot.get_bot_reply(uid, msg)
+        reply_obj = self.chatbot.get_bot_reply(uid, msg)
         reply_text = "You ({}) said: '{}'".format(uid, msg)
-        reply_obj = (reply_text, {"A":50.0})
         return reply_obj
         
     def _set_response(self):
@@ -65,7 +67,6 @@ class ChatbotServer(BaseHTTPRequestHandler):
         query_dict = parse.parse_qs(query)
 
         d = flatten_qd(query_dict)
-        print("gud FINAL DICT", d)
         return d
     
     def do_GET(self):

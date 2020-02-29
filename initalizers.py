@@ -1,9 +1,10 @@
 import json
 import os
 from cbsv import read_json
-from embedding.nlp_api import Predictor
+from embedding.nlp_api import NLP_Predictor
 from chatbot_supp import SIP, Policy, InfoVault, InfoParser, ReqGatekeeper, Humanizer, Calculator, Announcer, ListPrinter
 from chatclass import DetailManager, ReplyGenerator, PolicyKeeper
+from regex_predictor import Regex_Predictor
 
 def init_calculator(jdata):
     formulae = jdata["formulae"]
@@ -119,7 +120,9 @@ def init_policykeeper(jdata, pdata):
     menu_map = pdata.get("menu_maps", []) # This is using get because it is optional
 
     ## INITALIZE NLP_API here
-    pp = Predictor() 
+    # pp = NLP_Predictor() # DISABLED because I have no NLP model ATM
+
+    pp = Regex_Predictor() # This is functionally a Dud
 
     return PolicyKeeper(POLICY_RULES, XROAD_POLICIES, INTENTS, STATES, pp, menu_map)
 
@@ -142,13 +145,11 @@ def init_replygen(jdata, inf):
     return ReplyGenerator(FORMAT_DB,hz,an,lp,DEFAULT_RESPONSE)
 
 
-def master_initalize(filename = ""):
+def master_initalize(filename = "chatbot_resource.json"):
     # INTENTS = jdata["intents"]
     # STATE_KEYS = jdata["state_keys"]
     # MATCH_DB = jdata["match_db"]
     direct = os.getcwd()
-    if filename == "":
-        filename = os.path.join(direct,"chatbot_resource.json")
 
     print("<master initalize> reading from ",filename)
     jdata = read_json(filename)

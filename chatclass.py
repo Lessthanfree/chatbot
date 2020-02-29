@@ -12,7 +12,6 @@ from datetime import datetime
 from chatbot_supp import *
 from chatbot_utils import dive_for_dot_values, dive_for_values, cbround, dotpop, get_yearmonth
 
-
 SUPER_DEBUG = 0
 DEBUG = 1
 
@@ -525,7 +524,7 @@ class PolicyKeeper:
         self.INTENT_DICT = intent_dict
         self.STATE_DICT = state_lib
         self.MENU_MAPS = menu_maps
-        self.predictor = pp
+        self.predictor = predictor
 
     def GET_INITIAL_STATE(self):
         initstate = self.STATE_DICT['init']

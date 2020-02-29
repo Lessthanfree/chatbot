@@ -38,7 +38,7 @@ def read_json(json_filename):
     except Exception as e:
         print("Exception opening{}".format(json_filename), e)
 
-class Predictor:
+class NLP_Predictor:
     def __init__(self, mf = model_filename):
         self.max_review_length = 32
         print("Initalizing Predictor...")
@@ -210,5 +210,5 @@ if MAIN:
         nmf = "trained.h5"
         print("No name given,using", nmf)
     
-    pp = Predictor(nmf)
+    pp = NLP_Predictor(nmf)
     pp.test_predictor(test_set)

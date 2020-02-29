@@ -65,8 +65,8 @@ class Chatbot():
         makeCM = lambda c: ChatManager(c, self.cl, self.ip, self.pk, self.rg, self.dm, self.gk)
         return makeCM(chat)
 
-    def start(self):
-        comps = master_initalize()
+    def start_bot(self, cb_resource_filename = ""):
+        comps = master_initalize(cb_resource_filename)
         self.cl = comps['calculator']
         self.dm = comps['dmanager']
         self.ip = comps['iparser']
@@ -116,13 +116,20 @@ class Chatbot():
             self.make_new_chat(chatid)
         return self.chat_dict[chatid]
 
-    def get_bot_reply(self,chatID,msg):
+    # Returns a tuple of (text reply, intent breakdown, current info)
+    def _get_reply_obj(self, chatID, msg):
         self.trigger_backup()
-        curr_chat_mgr = self._switch_chat_manager(chatID)
+        curr_chat_mgr = self._switch_chat_manager(chatID)s
         if DEBUG: print("Current chat manager is for", chatID)
         f_msg = self.clean_message(msg)
         reply = curr_chat_mgr.respond_to_message(f_msg)
         return reply
+
+    # Returns a string
+    def get_bot_reply(self,chatID,msg):
+        reply_obj = self._get_reply_obj(chatID, msg)
+        reply_text = reply_obj[0]
+        return reply_text
 
     # Asks chatmanager to read the long history and parse selectively.
     def parse_transferred_messages(self, chatID, history):
@@ -133,7 +140,7 @@ class Chatbot():
 if __name__ == "__main__":
     # Local running
     bot = Chatbot()
-    bot.start()
+    bot.start_bot()
     # while 1:
     if 1:
         incoming_msg = input()
