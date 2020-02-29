@@ -3,7 +3,27 @@ import os
 import pymssql as msql # Ignore the error message from this. But it means this is lib incompatible with Python 3.8 and above.
 import threading
 import chatbot_utils as cu
-from localfiles.details import get_read_details, get_write_details
+# from localfiles.details import get_read_details, get_write_details
+
+def get_read_details():
+    details = {
+        "sql_address": "some IP",
+        "sql_port": 443,
+        "username": "xiaozhang",
+        "pass": "ihr123",
+        "dbname": "read database"
+    }
+    return details
+
+def get_write_details():
+    details = {
+        "sql_address": "some IP",
+        "sql_port": 443,
+        "username": "xiaozhang",
+        "pass": "ihr123",
+        "dbname": "write database"
+    }
+    return details
 
 write_info = get_write_details()
 read_info = get_read_details()

@@ -245,7 +245,7 @@ class ChatManager:
     
     ############### PRIMARY METHOD ###############
     # Takes in a message, returns (text reply, intent breakdown, current info)
-    def respond_to_message(self, msg):
+    def respond_to_message(self, msg, op_print = True):
         if self.is_inactive():
             no_reply = ""
             return (no_reply, {}, self._get_current_info())
@@ -264,7 +264,7 @@ class ChatManager:
         self._post_process(uds, topup)
 
         curr_info = self._get_current_info()
-        print("回复: \r\n'{}' \r\n智能理解:\r\n{} \r\n信息:{}".format(reply, NLP_bd, curr_info)) # Operational Printout
+        if op_print: print("回复: \r\n'{}' \r\n智能理解:\r\n{} \r\n信息:{}".format(reply, NLP_bd, curr_info)) # Operational Printout
         return (reply, NLP_bd, curr_info)
 
     def goto_next_state(self, understanding, msg, nums):
@@ -548,11 +548,11 @@ class PolicyKeeper:
         out = SIP(ig_state, cs=False)
         return out
 
-    def _NLP_predict(self,msg):
+    def _freetext_predict(self,msg):
         pack = self.predictor.predict(msg)
         intent = pack["prediction"]
-        breakdown = pack["breakdown"]
-        nums = pack["numbers"]
+        breakdown = pack.get("breakdown","NULL")
+        nums = pack.get("numbers", [])
         return intent, breakdown, nums
     
     # When the state is a menu, this is called to figure out which option was chosen
@@ -572,9 +572,10 @@ class PolicyKeeper:
         if cbsv.state_is_menu(curr_state_obj):
             # Use option predict
             intent = self._option_predict(msg)
+            breakdown, nums = "", []
         else:
             # Call NLP Model predict
-            intent, breakdown, nums = self._NLP_predict(msg)
+            intent, breakdown, nums = self._freetext_predict(msg)
             print("<GET UNDERSTANDING> NLP intent:",intent)
 
         # Check intent against background info

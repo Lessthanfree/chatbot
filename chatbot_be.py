@@ -1,5 +1,4 @@
 # Chatbot Backend
-
 import os
 import threading
 from copy import deepcopy
@@ -17,9 +16,11 @@ READ_FROM_JSON = 1
 WRITE_TO_JSON = 1
 
 class DatabaseRunner():
-    def __init__(self):
+    def __init__(self, read_sql = True, write_to_sql = False):
         self.backup_delay = 30
         self.timer_on = False
+        self.read_sql = read_sql
+        self.write_to_sql = write_to_sql
         
         if READ_FROM_JSON:
             self.database = self._read_json_db()
@@ -231,17 +232,21 @@ class DatabaseRunner():
             return
 
         def _fetch_from_SQL(user):
-            status, fetch = self.SQLrw.fetch_user_info_from_sqltable(user)
-            found = status[0] # (exists, has bill)
-            if found:
-                ndic = self.repackage_sql_fetched(fetch, status)
-                self.database[user] = ndic
-            else:
-                _fetch_from_JSON(user)
+            found = False
+            if self.read_sql:
+                status, fetch = self.SQLrw.fetch_user_info_from_sqltable(user)
+                found = status[0] # (exists, has bill)
+                if found:
+                    ndic = self.repackage_sql_fetched(fetch, status)
+                    self.database[user] = ndic                
 
             return found
 
         found_in_sql = _fetch_from_SQL(user)
+
+        if not found_in_sql: 
+            _fetch_from_JSON(user)
+        
         return (found_in_sql, self.database[user])
 
     def trigger_backup(self):
@@ -274,7 +279,7 @@ class DatabaseRunner():
         destroy_local_empty_records()
         if WRITE_TO_JSON:
             dump_to_json(self.dbfilepath, self.database)
-        else:
+        elif self.write_to_sql:
             self.SQLrw.write_to_sqltable(self.database)
         self.timer_on = False
 

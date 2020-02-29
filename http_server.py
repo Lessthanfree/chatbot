@@ -44,9 +44,8 @@ class ChatbotServer(BaseHTTPRequestHandler):
         uid = info_dict.get("FromUserName", "")
         msg = info_dict.get("Content", "")
         logging.info("<SERVER GET BOT REPLY> USER <{}>:{}".format(uid, msg))
-        reply_obj = self.chatbot.get_bot_reply(uid, msg)
-        reply_text = "You ({}) said: '{}'".format(uid, msg)
-        return reply_obj
+        reply_text = self.chatbot.get_bot_reply(uid, msg)
+        return reply_text
         
     def _set_response(self):
         self.send_response(200)
@@ -110,7 +109,7 @@ class ChatbotServer(BaseHTTPRequestHandler):
                 str(self.path), str(self.headers), request_info)
 
         self._set_response()
-        chatbot_reply_str, breakdown = self._get_bot_reply(request_info)
+        chatbot_reply_str = self._get_bot_reply(request_info)
         post_reply = self.format_reply_xml(request_info, chatbot_reply_str)
         logging.info("POST reponse:\n{}".format(chatbot_reply_str))
         self.wfile.write(post_reply)

@@ -1,7 +1,7 @@
 import json
 import os
 from cbsv import read_json
-from embedding.nlp_api import NLP_Predictor
+# from embedding.nlp_api import NLP_Predictor
 from chatbot_supp import SIP, Policy, InfoVault, InfoParser, ReqGatekeeper, Humanizer, Calculator, Announcer, ListPrinter
 from chatclass import DetailManager, ReplyGenerator, PolicyKeeper
 from regex_predictor import Regex_Predictor

@@ -511,13 +511,6 @@
             "default_target": "SAME_STATE",
             "replies": ["恩恩，有问题我们会及时联系您的"]
         },
-        "request_verification_code":{
-            "key": "request_verification_code",
-            "default_set": true,
-            "humanify": false,
-            "default_target": "SAME_STATE",
-            "replies": ["亲可以用我们的小程序获取您的验证码"]
-        },
         "inform_done":{
             "key": "182 inform_done",
             "default_set": false,
@@ -937,6 +930,13 @@
                 "{rep_ext[raw_taobao_link]}"
             ]
         },
+        "provide_verification_code":{
+            "key": "provide_verification_code",
+            "default_set": true,
+            "humanify": false,
+            "default_target": "SAME_STATE",
+            "replies": ["亲可以用我们的小程序获取您的验证码"]
+        },
         "month_crossroad":{
             "key": "month_crossroad",
             "gated": true,
@@ -973,6 +973,14 @@
             "terminal_state": true,
             "req_info": [["chosen_service","service_slot"]],
             "replies":["{rep_ext[break_info]}"]
+        },
+        "inform_deadline_aslist":{
+            "key": "inform_deadline_aslist",
+            "gated": true,
+            "thread": "t_deadline",
+            "terminal_state": true,
+            "req_info": [["city","city"]],
+            "replies":["{rep_ext[deadline_list_info]}"]
         },
         "inform_fahuo":{
             "key": "inform_fahuo",
@@ -1300,6 +1308,17 @@
                         "减员":"减员是您上家公司把关系转出来。因为只有一家公司可以帮你交社保，所以先要减员我们才能帮你交",
                         "挂靠":"就是说跟可以借用我们公司的名字"
                     }
+                }
+            },
+            {
+                "writeto":"deadline_list_info",
+                "states":["inform_deadline_aslist"],
+                "lookfor":[
+                    "city_district",
+                    ["city_info",["laoke_pay_deadline","xinke_pay_deadline", "transaction_date"]]
+                ],
+                "if_present":{
+                "city_district":"{city_district}:<>社保续费：{city_info[laoke_pay_deadline]}号<>社保新参：{city_info[xin_pay_deadline]}号<>社保转入：{city_info[transaction_date]}号"
                 }
             },
             {
@@ -2614,7 +2633,7 @@
                     "base_sb_jishu_multi": 0.3932,
                     "base_sb_jishu_max_limit": 24633,
                     "base_gjj_jishu": 2420,
-                    "base_gjj_jishu_multi":0.14,
+                    "base_gjj_jishu_multi": 0.14,
                     "base_gjj_jishu_max_limit": 24633,
                     "shebao_payment": 1937.7,
                     "svc_fee": 40,
@@ -2622,12 +2641,13 @@
                     "shouci_fee": 50,
                     "xinke_pay_deadline": 15,
                     "pay_deadline_weekday_only": true,
+                    "transaction_date": 20,
                     "laoke_pay_deadline": 26,
                     "gongjijin_fee": 338,
                     "bujiao_period": 6,
                     "xufei_deadline": 15,
                     "link_sb": "https://item.taobao.com/item.htm?id=598103220826",
-                    "link_gjj":"https://item.taobao.com/item.htm?id=598525470715"
+                    "link_gjj": "https://item.taobao.com/item.htm?id=598525470715"
                 },
                 "北京城镇": {
                     "base_sb_jishu": 3613,
@@ -2635,18 +2655,19 @@
                     "shebao_payment": 1636.4,
                     "base_sb_jishu_max_limit": 23565,
                     "base_gjj_jishu": 2409,
-                    "base_gjj_jishu_multi":0.206725,
+                    "base_gjj_jishu_multi": 0.206725,
                     "base_gjj_jishu_max_limit": 37786,
                     "svc_fee": 40,
                     "dual_svc_fee": 80,
                     "shouci_fee": 50,
                     "xinke_pay_deadline": 18,
+                    "transaction_date": 20,
                     "laoke_pay_deadline": 24,
                     "gongjijin_fee": 498,
                     "bujiao_period": 3,
                     "xufei_deadline": 15,
                     "link_sb": "https://item.taobao.com/item.htm?id=598975115885",
-                    "link_gjj":"https://item.taobao.com/item.htm?id=598365788936"
+                    "link_gjj": "https://item.taobao.com/item.htm?id=598365788936"
                 },
                 "北京农业": {
                     "base_sb_jishu": 3613,
@@ -2654,22 +2675,23 @@
                     "shebao_payment": 1629.17,
                     "base_sb_jishu_max_limit": 23565,
                     "base_gjj_jishu": 2409,
-                    "base_gjj_jishu_multi":0.206725,
+                    "base_gjj_jishu_multi": 0.206725,
                     "gongjijin_fee": 498,
                     "base_gjj_jishu_max_limit": 37786,
                     "svc_fee": 40,
                     "dual_svc_fee": 80,
                     "shouci_fee": 50,
                     "xinke_pay_deadline": 18,
+                    "transaction_date": 20,
                     "laoke_pay_deadline": 24,
                     "bujiao_period": 3,
                     "xufei_deadline": 15,
                     "link_sb": "https://item.taobao.com/item.htm?id=598975115885",
-                    "link_gjj":"https://item.taobao.com/item.htm?id=598365788936"
+                    "link_gjj": "https://item.taobao.com/item.htm?id=598365788936"
                 },
                 "苏州市区": {
                     "base_sb_jishu": 3368,
-                    "base_gjj_jishu_multi":0.50,
+                    "base_gjj_jishu_multi": 0.50,
                     "base_sb_jishu_multi": 0.50,
                     "base_gjj_jishu": 0,
                     "shebao_payment": 1277.57,
@@ -2679,12 +2701,13 @@
                     "dual_svc_fee": 80,
                     "shouci_fee": 50,
                     "xinke_pay_deadline": 22,
+                    "transaction_date": 20,
                     "laoke_pay_deadline": 24,
                     "gongjijin_fee": 540,
                     "bujiao_period": 3,
                     "xufei_deadline": 10,
                     "link_sb": "https://item.taobao.com/item.htm?id=598369140516",
-                    "link_gjj":"https://item.taobao.com/item.htm?id=598791558411"
+                    "link_gjj": "https://item.taobao.com/item.htm?id=598791558411"
                 },
                 "苏州园区": {
                     "base_sb_jishu": 3125,
@@ -2692,12 +2715,13 @@
                     "shebao_payment": 878.14,
                     "base_sb_jishu_max_limit": 25000,
                     "base_gjj_jishu_max_limit": 30000,
-                    "base_gjj_jishu_multi":0.50,
+                    "base_gjj_jishu_multi": 0.50,
                     "base_sb_jishu_multi": 0.50,
                     "svc_fee": 40,
                     "dual_svc_fee": 80,
                     "shouci_fee": 50,
                     "xinke_pay_deadline": 10,
+                    "transaction_date": 20,
                     "laoke_pay_deadline": 14,
                     "gongjijin_fee": 540,
                     "bujiao_period": 2,
@@ -2705,7 +2729,7 @@
                     "late_xufei_deadline": 20,
                     "jianyuan_date": 24,
                     "link_sb": "https://item.taobao.com/item.htm?id=598601949473",
-                    "link_gjj":"https://item.taobao.com/item.htm?id=598601929883"
+                    "link_gjj": "https://item.taobao.com/item.htm?id=598601929883"
                 },
                 "杭州市": {
                     "base_sb_jishu_max_limit": 25000,
@@ -2714,17 +2738,18 @@
                     "base_sb_jishu_multi": 0.387,
                     "base_gjj_jishu_max_limit": 30000,
                     "base_gjj_jishu": 2010,
-                    "base_gjj_jishu_multi":0.50,
+                    "base_gjj_jishu_multi": 0.50,
                     "svc_fee": 40,
                     "dual_svc_fee": 80,
                     "shouci_fee": 50,
                     "xinke_pay_deadline": 18,
+                    "transaction_date": 20,
                     "laoke_pay_deadline": 14,
                     "gongjijin_fee": 482,
                     "bujiao_period": 3,
                     "xufei_deadline": 12,
                     "link_sb": "https://item.taobao.com/item.htm?id=598232088077",
-                    "link_gjj":"https://item.taobao.com/item.htm?id=598525470715"
+                    "link_gjj": "https://item.taobao.com/item.htm?id=598525470715"
                 },
                 "深圳市": {
                     "base_sb_jishu": 2335,
@@ -2732,18 +2757,19 @@
                     "shebao_payment": 0,
                     "base_sb_jishu_max_limit": 25000,
                     "base_gjj_jishu_max_limit": 30000,
-                    "base_gjj_jishu_multi":0.50,
+                    "base_gjj_jishu_multi": 0.50,
                     "base_sb_jishu_multi": 0.50,
                     "svc_fee": 40,
                     "dual_svc_fee": 80,
                     "shouci_fee": 50,
                     "xinke_pay_deadline": 10,
+                    "transaction_date": 20,
                     "laoke_pay_deadline": 12,
                     "gongjijin_fee": 100,
                     "bujiao_period": 0,
                     "xufei_deadline": 10,
                     "link_sb": "https://item.taobao.com/item.htm?id=598103220826",
-                    "link_gjj":"https://item.taobao.com/item.htm?id=598232148577"
+                    "link_gjj": "https://item.taobao.com/item.htm?id=598232148577"
                 },
                 "广州市": {
                     "base_sb_jishu": 2100,
@@ -2752,17 +2778,18 @@
                     "gongjijin_fee": 210,
                     "base_sb_jishu_max_limit": 25000,
                     "base_gjj_jishu_max_limit": 30000,
-                    "base_gjj_jishu_multi":0.50,
+                    "base_gjj_jishu_multi": 0.50,
                     "base_sb_jishu_multi": 0.50,
                     "svc_fee": 40,
                     "dual_svc_fee": 80,
                     "shouci_fee": 50,
                     "xinke_pay_deadline": 10,
+                    "transaction_date": 20,
                     "laoke_pay_deadline": 14,
                     "bujiao_period": 1,
                     "xufei_deadline": 10,
                     "link_sb": "https://item.taobao.com/item.htm?id=598977567857",
-                    "link_gjj":"https://item.taobao.com/item.htm?id=598790626078"
+                    "link_gjj": "https://item.taobao.com/item.htm?id=598790626078"
                 },
                 "成都市": {
                     "base_sb_jishu": 2697,
@@ -2770,18 +2797,19 @@
                     "shebao_payment": 1022.01,
                     "base_sb_jishu_max_limit": 25000,
                     "base_gjj_jishu_max_limit": 30000,
-                    "base_gjj_jishu_multi":0.50,
+                    "base_gjj_jishu_multi": 0.50,
                     "base_sb_jishu_multi": 0.50,
                     "svc_fee": 40,
                     "dual_svc_fee": 80,
                     "shouci_fee": 50,
                     "bujiao_period": 1,
                     "xinke_pay_deadline": 12,
+                    "transaction_date": 20,
                     "laoke_pay_deadline": 14,
                     "gongjijin_fee": 214,
                     "xufei_deadline": 10,
                     "link_sb": "https://item.taobao.com/item.htm?id=598598289750",
-                    "link_gjj":"https://item.taobao.com/item.htm?id=598368160061"
+                    "link_gjj": "https://item.taobao.com/item.htm?id=598368160061"
                 },
                 "昆山市": {
                     "base_sb_jishu": 2940,
@@ -2789,33 +2817,35 @@
                     "shebao_payment": 1037.82,
                     "base_sb_jishu_max_limit": 25000,
                     "base_gjj_jishu_max_limit": 30000,
-                    "base_gjj_jishu_multi":0.50,
+                    "base_gjj_jishu_multi": 0.50,
                     "base_sb_jishu_multi": 0.50,
                     "svc_fee": 60,
                     "dual_svc_fee": 80,
                     "shouci_fee": 50,
                     "xinke_pay_deadline": 12,
+                    "transaction_date": 20,
                     "laoke_pay_deadline": 15,
                     "bujiao_period": 6,
                     "gongjijin_fee": 472,
                     "xufei_deadline": 10,
-                    "link_sb":"https://item.taobao.com/item.htm?id=598983643235",
-                    "link_gjj":"https://item.taobao.com/item.htm?id=598373592789"
+                    "link_sb": "https://item.taobao.com/item.htm?id=598983643235",
+                    "link_gjj": "https://item.taobao.com/item.htm?id=598373592789"
                 },
-                "长沙":{
-                    "gongjijin_fee":316.0,
+                "长沙": {
+                    "gongjijin_fee": 316.0,
                     "xufei_deadline": 10,
                     "bujiao_period": 3,
                     "xinke_pay_deadline": 10,
+                    "transaction_date": 20,
                     "laoke_pay_deadline": 12,
                     "svc_fee": 40,
                     "dual_svc_fee": 80,
                     "base_sb_jishu_max_limit": 25000,
                     "base_gjj_jishu_max_limit": 30000,
-                    "base_gjj_jishu_multi":0.50,
+                    "base_gjj_jishu_multi": 0.50,
                     "base_sb_jishu_multi": 0.50,
-                    "link_sb":"https://item.taobao.com/item.htm?id=600094668462",
-                    "link_gjj":"https://item.taobao.com/item.htm?id=598603797664"
+                    "link_sb": "https://item.taobao.com/item.htm?id=600094668462",
+                    "link_gjj": "https://item.taobao.com/item.htm?id=598603797664"
                 }
             }
         }

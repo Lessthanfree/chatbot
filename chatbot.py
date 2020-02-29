@@ -65,7 +65,7 @@ class Chatbot():
         makeCM = lambda c: ChatManager(c, self.cl, self.ip, self.pk, self.rg, self.dm, self.gk)
         return makeCM(chat)
 
-    def start_bot(self, cb_resource_filename = ""):
+    def start_bot(self, cb_resource_filename = "" , backend_read = True, backend_write = False):
         comps = master_initalize(cb_resource_filename)
         self.cl = comps['calculator']
         self.dm = comps['dmanager']
@@ -73,7 +73,7 @@ class Chatbot():
         self.pk = comps['pkeeper']
         self.rg = comps['replygen']
         self.gk = comps['gkeeper']
-        self.dbr = DatabaseRunner()
+        self.dbr = DatabaseRunner(read_sql=backend_read, write_to_sql=backend_write)
         self.dm.set_runner(self.dbr)
         print("SHEBAO chatbot started!")
         return
@@ -117,17 +117,17 @@ class Chatbot():
         return self.chat_dict[chatid]
 
     # Returns a tuple of (text reply, intent breakdown, current info)
-    def _get_reply_obj(self, chatID, msg):
+    def _get_reply_obj(self, chatID, msg, op_print):
         self.trigger_backup()
-        curr_chat_mgr = self._switch_chat_manager(chatID)s
+        curr_chat_mgr = self._switch_chat_manager(chatID)
         if DEBUG: print("Current chat manager is for", chatID)
         f_msg = self.clean_message(msg)
-        reply = curr_chat_mgr.respond_to_message(f_msg)
+        reply = curr_chat_mgr.respond_to_message(f_msg, op_print = op_print)
         return reply
 
     # Returns a string
-    def get_bot_reply(self,chatID,msg):
-        reply_obj = self._get_reply_obj(chatID, msg)
+    def get_bot_reply(self, chatID, msg, op_print = True):
+        reply_obj = self._get_reply_obj(chatID, msg, op_print)
         reply_text = reply_obj[0]
         return reply_text
 
@@ -139,10 +139,16 @@ class Chatbot():
 
 if __name__ == "__main__":
     # Local running
+    cbrfn = "wechat_chatbot_resource.json"
     bot = Chatbot()
-    bot.start_bot()
-    # while 1:
-    if 1:
-        incoming_msg = input()
-        reply = bot.get_bot_reply("MyUserId",incoming_msg)
-        print(reply)
+    bot.start_bot(cb_resource_filename = cbrfn, backend_read = False)
+    while 1:
+        try:
+            incoming_msg = input()
+            reply = bot.get_bot_reply("MyUserId",incoming_msg, op_print = False)
+            print("REPLY 机器人: ",reply)
+        except KeyboardInterrupt:
+            print("Exiting...")
+            exit()
+            break
+        

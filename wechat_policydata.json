@@ -104,7 +104,7 @@
             ["deny", "goodbye"]
         ],
         "initplus": [
-            ["greet", "xufei_push_crossroad"],
+            ["greet", "menu_base"],
             ["purchase", "purchase_laoke_crossroad"],
             ["purchase_xufei", "purchase_laoke_crossroad"],
             ["inform","purchase_laoke_crossroad"],
@@ -112,10 +112,10 @@
         ],
         "menu_base":[
             ["option_1", "how_to_jiaona"],
-            ["option_2", "ask_how_much"],
-            ["option_3", "deadline_information"],
+            ["option_2", "ask_how_much_crossroad"],
+            ["option_3", "inform_deadline_aslist"],
             ["option_4", "inform_req_resources"],
-            ["option_5", "request_verification_code"]
+            ["option_5", "provide_verification_code"]
         ],
         "provide_taobao_link": [
             ["inform","city_crossroad"],
