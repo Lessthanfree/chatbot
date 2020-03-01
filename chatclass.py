@@ -518,16 +518,17 @@ class ChatManager:
 # Keeps policies
 # Also deciphers messages
 class PolicyKeeper:
-    def __init__(self, policy_rules, crossroad_policies, intent_dict, state_lib, predictor, menu_maps):
+    def __init__(self, policy_rules, crossroad_policies, intent_dict, state_lib, predictor, menu_maps, initial_state_name = "init"):
         self.POLICY_RULES = policy_rules
         self.XROAD_POLICIES = crossroad_policies
         self.INTENT_DICT = intent_dict
         self.STATE_DICT = state_lib
         self.MENU_MAPS = menu_maps
         self.predictor = predictor
+        self.isn = initial_state_name
 
     def GET_INITIAL_STATE(self):
-        initstate = self.STATE_DICT['init']
+        initstate = self.STATE_DICT[self.isn]
         return initstate
 
     def GET_INFORM_INTENT(self):

@@ -1318,7 +1318,7 @@
                     ["city_info",["laoke_pay_deadline","xinke_pay_deadline", "transaction_date"]]
                 ],
                 "if_present":{
-                "city_district":"{city_district}:<>社保续费：{city_info[laoke_pay_deadline]}号<>社保新参：{city_info[xin_pay_deadline]}号<>社保转入：{city_info[transaction_date]}号"
+                "city_district":"{city_district}:<>社保续费：{city_info[laoke_pay_deadline]}号<>社保新参：{city_info[xinke_pay_deadline]}号<>社保转入：{city_info[transaction_date]}号"
                 }
             },
             {

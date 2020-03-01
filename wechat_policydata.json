@@ -82,6 +82,7 @@
             ["thankyou","initplus"]
         ]
     },
+    "initial_state":"menu_base",
     "policy_rules":{  
         "push_xufei":[
             ["affirm","provide_taobao_link"],

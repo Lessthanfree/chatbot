@@ -1,6 +1,28 @@
 from xml.etree import ElementTree
 import logging
 
+# Class to carry message contents and flags for special cases like starting chat.
+class WechatMessage():
+    def __init__(self, sender, contents):
+        self.sender = sender
+        self.contents = contents
+        self.chat_start_flag = False
+        
+    def is_chat_start(self):
+        return self.chat_start_flag
+
+    def _mark_chat_start(self):
+        self.chat_start_flag = True
+    
+    @staticmethod
+    def make_chat_start_msg(cls, sender, contents):
+        new = cls(sender, contents)
+        new._mark_chat_start()
+        return new
+
+    def get_contents(self):
+        return self.contents
+
 # Wechat can send data in the form of XML or JSON
 def decode_post(data):
     decoded_str = data.decode('utf-8')

@@ -117,6 +117,8 @@ def init_policykeeper(jdata, pdata):
 
     XROAD_POLICIES = pdata["crossroad_policies"]
 
+    initial_state_name = pdata.get("initial_state", "init") # DEFAULTS TO INIT
+
     menu_map = pdata.get("menu_maps", []) # This is using get because it is optional
 
     ## INITALIZE NLP_API here
@@ -124,7 +126,7 @@ def init_policykeeper(jdata, pdata):
 
     pp = Regex_Predictor() # This is functionally a Dud
 
-    return PolicyKeeper(POLICY_RULES, XROAD_POLICIES, INTENTS, STATES, pp, menu_map)
+    return PolicyKeeper(POLICY_RULES, XROAD_POLICIES, INTENTS, STATES, pp, menu_map, initial_state_name=initial_state_name)
 
 def init_replygen(jdata, inf):
     def _init_listprinter(info):
