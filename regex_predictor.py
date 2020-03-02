@@ -12,5 +12,5 @@ class Regex_Predictor:
         return pred_dict
     
     def get_intent(self, msg):
-        intent = "greet"
+        intent = "inform"
         return intent

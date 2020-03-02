@@ -6,6 +6,7 @@ import os
 import re
 import random
 import string
+import logging
 
 import chatbot_be
 from datetime import datetime
@@ -566,11 +567,19 @@ class PolicyKeeper:
 
         return cbsv.NO_INTENT # THIS MAY NOT WORK
 
+    
     # MAIN METHOD
     # Returns an understanding and NLP breakdown
     def get_understanding(self, msg, curr_state_obj):
+        def state_is_menu():
+            if len(msg) == 1:
+                return True
+            if cbsv.state_is_menu(curr_state_obj):
+                return True
+            return False
+
         csk = cbsv.get_state_key(curr_state_obj)
-        if cbsv.state_is_menu(curr_state_obj):
+        if state_is_menu():
             # Use option predict
             intent = self._option_predict(msg)
             breakdown, nums = "", []
@@ -686,7 +695,7 @@ class DetailManager:
         return
 
     def log_detail(self, new_info, OVERWRITE = 1, DEBUG = 0):
-        if DEBUG: print("Logging：", new_info)
+        logging.info("New Detail: {}".format(new_info))
         for d in new_info:
             deet = new_info[d]
             # Check to make sure its not empty
