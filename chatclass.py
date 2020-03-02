@@ -563,7 +563,8 @@ class PolicyKeeper:
         for m in self.MENU_MAPS:
             mapping = m.get("map")
             if msg in mapping:
-                return m.get("intent")
+                intent = m.get("intent")
+                return intent
 
         return cbsv.NO_INTENT # THIS MAY NOT WORK
 
@@ -572,10 +573,10 @@ class PolicyKeeper:
     # Returns an understanding and NLP breakdown
     def get_understanding(self, msg, curr_state_obj):
         def is_digit(s):
-            digits = cbsv.DIGITSET
+            digits = cbsv.DIGITSET()
             return len(s) == 1 and s in digits 
 
-        def state_is_menu():
+        def use_option_interpreter():
             if is_digit(msg):
                 return True
             if cbsv.state_is_menu(curr_state_obj):
@@ -583,7 +584,7 @@ class PolicyKeeper:
             return False
 
         csk = cbsv.get_state_key(curr_state_obj)
-        if state_is_menu():
+        if use_option_interpreter():
             # Use option predict
             intent = self._option_predict(msg)
             breakdown, nums = "", []
