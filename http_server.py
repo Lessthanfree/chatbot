@@ -14,17 +14,17 @@ from chatbot import Chatbot
 
 ENCODING_USED = "utf-8"
 
+def start_chatbot():
+    print("Starting the chatbot")
+    chatbot_resource_filename = "wechat_chatbot_resource.json"
+    # print("disabled for now")
+    chatbot = Chatbot()
+    chatbot.start_bot(chatbot_resource_filename, backend_read=False)
+    return chatbot
+
 class ChatbotServer(BaseHTTPRequestHandler):
     # This cannot be put in 
-    chatbot_started = False
-    def start_chatbot(self):
-        print("Starting the chatbot")
-        chatbot_resource_filename = "wechat_chatbot_resource.json"
-        # print("disabled for now")
-        self.chatbot = Chatbot()
-        self.chatbot.start_bot(chatbot_resource_filename, backend_read=False)
-        self.chatbot_started = True
-
+    chatbot = start_chatbot()
     def format_reply_xml(self, msg_info, content):
         reply = (
             "<xml>"
@@ -44,8 +44,6 @@ class ChatbotServer(BaseHTTPRequestHandler):
         return reply.encode(ENCODING_USED)
 
     def _get_bot_reply(self, info_dict):
-        if not self.chatbot_started:
-            self.start_chatbot()
         uid = info_dict.get("FromUserName", "")
         msg = info_dict.get("Content", "")
         logging.info("<SERVER GET BOT REPLY> USER <{}>:{}".format(uid, msg))
