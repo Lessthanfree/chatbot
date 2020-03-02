@@ -571,8 +571,12 @@ class PolicyKeeper:
     # MAIN METHOD
     # Returns an understanding and NLP breakdown
     def get_understanding(self, msg, curr_state_obj):
+        def is_digit(s):
+            digits = cbsv.DIGITSET
+            return len(s) == 1 and s in digits 
+
         def state_is_menu():
-            if len(msg) == 1:
+            if is_digit(msg):
                 return True
             if cbsv.state_is_menu(curr_state_obj):
                 return True

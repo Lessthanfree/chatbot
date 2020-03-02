@@ -74,7 +74,8 @@
             ["option_2", "city_crossroad"],
             ["option_3", "inform_deadline_aslist"],
             ["option_4", "inform_req_resources"],
-            ["option_5", "provide_verification_code"]
+            ["option_5", "purchase_laoke_crossroad"],
+            ["option_6", "provide_verification_code"]
         ],
         "inform_fahuo":[
             ["question_reliability","inform_fahuo_assure"],
@@ -117,6 +118,18 @@
         {
             "intent": "option_5",
             "map": ["5", "五"]
+        },
+        {
+            "intent": "option_6",
+            "map": ["6", "六"]
+        },
+        {
+            "intent": "option_7",
+            "map": ["7", "七"]
+        },
+        {
+            "intent": "option_8",
+            "map": ["8", "八"]
         },
         {
             "intent": "option_0",

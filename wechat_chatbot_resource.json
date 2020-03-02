@@ -689,22 +689,13 @@
                 "亲 我是值班客服 看不到系统数据 您白天上班时间联系我们吧 谢谢亲"
             ]
         },
-        "ctx_inform_how_much":{
-            "key": "ctx_inform_how_much",
-            "gated": true,
-            "thread": "t_howmuch",
-            "terminal_state": true,
-            "calcs":[
-                "fetch_spec_comp_val"
-            ],
-            "req_info": [
-                ["city","city"],
-                ["要社保","DEFAULT_SV"],
-                ["要公积金","DEFAULT_SV"],
-                ["chosen_fee","fee_slot"]
-            ],
+        "how_to_jiaona" : {
+            "key" : "how_to_jiaona",
+            "gated": false,
+            "base_menu_branch": true,
+            "thread": "t_menu",
             "replies": [
-                "{rep_ext[how_much_reply]}"
+                "亲可以关注公众号“58社保”提交材料并支付，系统将自动生成服务单，缴纳成功后当前社保状态会显示“正常在缴”"
             ]
         },
         "turnaround_time_crossroad":{
@@ -714,26 +705,6 @@
             "terminal_state": false,
             "req_info": [["chosen_service", "DEFAULT_SV"]],
             "replies": []
-        },
-        "ask_if_issue": {
-            "key": "251 whats wrong",
-            "gated": false,
-            "thread": "t_issue",
-            "terminal_state": true,
-            "req_info": "",
-            "replies": [
-                "有事吗？"
-            ]
-        },
-        "how_to_jiaona" : {
-            "key" : "how_to_jiaona",
-            "gated": false,
-            "base_menu_branch": true,
-            "thread": "t_menu",
-            "replies": [
-                "亲可以关注公众号“58社保”提交材料并支付，系统将自动生成服务单，缴纳成功后当前社保状态会显示“正常在缴”"
-            ]
-
         },
         "TMP_recv_info": {
             "key": "TMP_recv_info",
@@ -900,6 +871,7 @@
             "key": "provide_verification_code",
             "default_set": true,
             "humanify": false,
+            "thread":"t_verification",
             "default_target": "SAME_STATE",
             "replies": ["亲可以用我们的小程序获取您的验证码"]
         },
@@ -920,16 +892,6 @@
             "req_info": [["city","city"]],
             "replies": [
                 "上海: 忠彧企业咨询管理有限公司 杭州: 分公司"
-            ]
-        },
-        "inform_current_month_options":{
-            "key": "inform_current_month_options",
-            "gated": true,
-            "thread": "t_company_name",
-            "terminal_state": true,
-            "req_info": [["ss_purchase_for_month","DUMMY_SLOT"]],
-            "replies": [
-                "{rep_ext[curr_mth_option_info]}"
             ]
         },
         "inform_break_effects":{
@@ -1480,8 +1442,7 @@
             {
                 "writeto": "product",
                 "states": [
-                    "propose_plan",
-                    "ctx_inform_how_much"
+                    "propose_plan"
                 ],
                 "lookfor": [
                     "flag_sb_gjj"
@@ -1792,36 +1753,19 @@
                     "city_district",
                     "svc_fee_total",
                     "shebao_basic_total",
+                    
                     [
                         "rep_ext",
                         [
                             "product",
-                            "proposal",
-                            "首次ext"
+                            "proposal"
                         ]
                     ]
                 ],
                 "if_present": {
-                    "city_district":"{city_district}目前{rep_ext[product]}{rep_ext[proposal]}，服务费{svc_fee_total}元，{rep_ext[首次ext]} 每月一共是{shebao_basic_total}元。"
+                    "city_district":"{city_district}：<>{rep_ext[product]}{rep_ext[proposal]}<>服务费{svc_fee_total}元<>一共：{shebao_basic_total}元<>如果以前没交过要加上{city_info[shouci_fee]}元首次费"
                 }
             }, 
-            {
-                "writeto": "how_much_reply",
-                "states": [
-                    "ctx_inform_how_much"
-                ],
-                "lookfor": [
-                    "chosen_fee",
-                    "user_spec_comp_val",
-                    "svc_fee_total"
-                ],
-                "if_value": {
-                    "chosen_fee":{
-                        "服务费":"服务费：单缴社保或公积金是{city_info[svc_fee]}元 代缴双服务费就等于80元",
-                        "DEFAULT":"{chosen_fee}是{user_spec_comp_val}"
-                    }
-                }
-            },
             {
                 "writeto":"component_val_correction",
                 "states": [
