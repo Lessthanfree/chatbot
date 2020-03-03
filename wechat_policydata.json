@@ -10,35 +10,11 @@
                 "DEFAULT":"init"
             }  
         ],
-        "purchase_laoke_crossroad":[
-            "laokehu_flag",{
-                "yes": "provide_taobao_link",
-                "no": "purchase_type_crossroad"
-            }
-        ],
-        "settlement_laoke_crossroad":[
-            "laokehu_flag",{
-                "yes": "provide_taobao_link",
-                "no": "inform_how_pai"
-            }
-        ],
         "city_crossroad":[
             "city",{
                 "湖南": "unsupported_city",
                 "聊城": "unsupported_city",
                 "DEFAULT": "propose_plan"
-            }
-        ],
-        "complication_crossroad":[
-            "work_hrs_flag",{
-                "yes":"pass_to_human",
-                "no":"night_time_cannot"
-            }
-        ],
-        "custom_jishu_crossroad":[
-            "chosen_service",{
-                "公积金":"propose_custom_gjj_jishu",
-                "社保":"propose_custom_sb_jishu"
             }
         ],
         "purchase_type_crossroad":[
@@ -58,13 +34,6 @@
         "base_menu_branch":[
             ["inform", "menu_base"],
             ["option_0", "menu_base"]
-        ],
-        "prop_cust_jishu_state":[
-            ["inform", "SAME_STATE"],
-            ["purchase", "city_crossroad"],
-            ["next_step","city_crossroad"],
-            ["affirm", "city_crossroad"],
-            ["thankyou","initplus"]
         ]
     },
     "initial_state":"menu_base",
@@ -74,25 +43,8 @@
             ["option_2", "city_crossroad"],
             ["option_3", "inform_deadline_aslist"],
             ["option_4", "inform_req_resources"],
-            ["option_5", "purchase_laoke_crossroad"],
+            ["option_5", "wechat_purchase"],
             ["option_6", "provide_verification_code"]
-        ],
-        "inform_fahuo":[
-            ["question_reliability","inform_fahuo_assure"],
-            ["affirm", "initplus"]
-        ],
-        "inform_fahuo_assure":[
-            ["affirm", "initplus"]
-        ],
-        "pass_to_human": [
-            ["affirm","initplus"],
-            ["purchase", "purchase_type_crossroad"],
-            ["deny", "goodbye"]
-        ],
-        "night_time_cannot": [
-            ["affirm","initplus"],
-            ["purchase", "purchase_type_crossroad"],
-            ["thankyou","initplus"]
         ],
         "goodbye":[
             ["greet", "init"]
