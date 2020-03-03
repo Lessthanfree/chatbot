@@ -627,6 +627,26 @@
                 "亲，{rep_ext[topup_gjj_info]}"
             ]
         },
+        "inform_user_pay_deadline": {
+            "key": "inform_user_pay_deadline",
+            "gated": true,
+            "thread": "t_pay_deadline",
+            "terminal_state": true,
+            "humanify":false,
+            "calcs": [
+                "get_payment_deadline_date",
+                "format_specified_month",
+                "flag_normal_pay_cmi",
+                "flag_bujiao_month_cmi"
+            ],
+            "req_info": [
+                ["ss_purchase_for_month","DUMMY_SLOT"],
+                ["city","city"]
+            ],
+            "replies": [
+                "{rep_ext[pay_deadline_info]}"
+            ]
+        },
         "inform_weixin": {
             "key": "inform_weixin",
             "gated": true,
@@ -1108,8 +1128,8 @@
                 }
             },
             {
-                "writeto":"pay_deadline_info OBSOLETE",
-                "states": [],
+                "writeto":"pay_deadline_info",
+                "states": ["inform_user_pay_deadline"],
                 "lookfor": [
                     "ss_purchase_for_month",
                     "spec_month",

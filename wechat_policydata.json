@@ -5,9 +5,9 @@
             "customer_status",{
                 "Active_Bill": "push_xufei",
                 "Active_NoBill": "push_xufei",
-                "Inactive_Bill": "init",
-                "Inactive_NoBill": "init",
-                "DEFAULT":"init"
+                "Inactive_Bill": "purchase_type_crossroad",
+                "Inactive_NoBill": "purchase_type_crossroad",
+                "DEFAULT":"purchase_type_crossroad"
             }  
         ],
         "city_crossroad":[
@@ -20,7 +20,7 @@
         "purchase_type_crossroad":[
             "purchase_cmi_flag",{
                 "still_can": "city_crossroad",
-                "too_late": "inform_pay_deadline"
+                "too_late": "inform_user_pay_deadline"
             }
         ],
         "turnaround_time_crossroad": [
@@ -40,14 +40,14 @@
     "policy_rules":{  
         "menu_base":[
             ["option_1", "how_to_jiaona"],
-            ["option_2", "city_crossroad"],
+            ["option_2", "purchase_type_crossroad"],
             ["option_3", "inform_deadline_aslist"],
             ["option_4", "inform_req_resources"],
             ["option_5", "wechat_purchase"],
             ["option_6", "provide_verification_code"]
         ],
         "goodbye":[
-            ["greet", "init"]
+            ["inform", "menu_base"]
         ]
     },
     "menu_maps":[

@@ -75,7 +75,15 @@ def init_policykeeper(jdata, pdata):
                 pair = (intname, target)
                 out.append(create_policy_tuple(pair))
         return out
-        
+    
+    def check_xroad_policies(p, state_dict):
+        for xroad, contents in p.items():
+            relevant_detail, branches = contents
+            for detail_value, destination_state in branches.items():
+                if not destination_state in state_dict:
+                    raise Exception("Illegal state in policy <{}>: {}->{}".format(xroad, detail_value, destination_state))
+        return
+
     policy_rules = pdata["policy_rules"] # This is true for now. Might change
     policy_states = list(policy_rules.keys())
 
@@ -115,8 +123,12 @@ def init_policykeeper(jdata, pdata):
             continue # Don't overwrite existing policy lookup values
         POLICY_RULES[k] = make_policy([])
 
-    XROAD_POLICIES = pdata["crossroad_policies"]
-
+    try:
+        XROAD_POLICIES = pdata["crossroad_policies"]
+        check_xroad_policies(XROAD_POLICIES, STATES)
+    except Exception as e:
+        raise Exception("Init exception! {}".format(e))
+    
     initial_state_name = pdata.get("initial_state", "init") # DEFAULTS TO INIT
 
     menu_map = pdata.get("menu_maps", []) # This is using get because it is optional
