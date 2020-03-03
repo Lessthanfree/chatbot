@@ -497,7 +497,7 @@
             "base_menu_branch":true,
             "thread":"t_verification",
             "default_target": "SAME_STATE",
-            "replies": ["亲可以用我们的小程序获取您的验证码"]
+            "replies": ["亲可以用我们的《58社保》小程序获取您的验证码"]
         },
         "month_crossroad":{
             "key": "month_crossroad",
@@ -713,43 +713,6 @@
                 }
             },
             {
-                "writeto": "raw_taobao_link",
-                "states": [
-                    "provide_taobao_link"
-                ],
-                "lookfor": [
-                    "city_district",
-                    "要社保",
-                    "要公积金",
-                    "首次",
-                    "flag_sb_gjj",
-                    ["city_info",["link_sb","link_gjj"]],
-                    ["general_info",["link_fuwu"]]
-                ],
-                "if_value": {
-                    "要社保":{
-                        "yes":"{city_district}社保：{city_info[link_sb]} ",
-                        "no": ""
-                    },
-                    "要公积金":{
-                        "yes":"{city_district}公积金：{city_info[link_gjj]} ",
-                        "no": ""
-                    },
-                    "city_district": {
-                        "DEFAULT":"服务费：https://item.taobao.com/item.htm?id=598104660990"
-                    },
-                    "flag_sb_gjj":{
-                        "11": "亲，服务费40元要拍两次 ",
-                        "1": "亲，服务费40元要拍一次 ",
-                        "10": "亲，服务费40元要拍一次 "
-                    },
-                    "首次":{
-                        "yes": "首次的话服务费链接50元的也要拍哦！",
-                        "no":""
-                    }
-                }
-            },
-            {
                 "writeto":"deadline_list_info",
                 "states":["inform_deadline_aslist"],
                 "lookfor":[
@@ -861,21 +824,6 @@
                         "杭州": "社保系统审核成功后，一般1-3天可以在支付宝查询参保状态以及参保公司。社保到账记录在正常参保月的次月底左右。<>公积金在正常参保月的当月底左右到账。① 0571-12333选择人工服务或自动语音信息查询；②支付宝城市服务查询；③柜面查询；",
                         "广州": "正常参保月的当月底或次月初可查，可以通过广州市人力资源社保保障局网上服务大厅查询，账号为身份证号，初始密码为社保号；<>或者可以通过微信-钱包-城市服务 - 广东社保查询。",
                         "DEFAULT": "亲 不好意思，目前没有信息 😢"
-                    }
-                }
-            },
-            {
-                "writeto": "首次ext",
-                "states": [
-                    "propose_plan"
-                ],
-                "lookfor": [
-                    "首次"
-                ],
-                "if_value": {
-                    "首次": {
-                        "yes": "首次缴纳额外收取{city_info[shouci_fee]}元开户费 ",
-                        "no": ""
                     }
                 }
             },
@@ -1215,7 +1163,7 @@
                     "city_district",
                     "svc_fee_total",
                     "shebao_basic_total",
-                    
+                    ["city_info","shouci_fee"],
                     [
                         "rep_ext",
                         [
@@ -1225,7 +1173,7 @@
                     ]
                 ],
                 "if_present": {
-                    "city_district":"{city_district}：<>{rep_ext[product]}{rep_ext[proposal]}<>服务费{svc_fee_total}元<>一共：{shebao_basic_total}元<>如果以前没交过要加上{city_info[shouci_fee]}元首次费"
+                    "city_district":"{city_district}：<>{rep_ext[product]}{rep_ext[proposal]}<>服务费{svc_fee_total}元<>一共：{shebao_basic_total}元<>首次缴纳额外收取{city_info[shouci_fee]}元开户费"
                 }
             }, 
             {
