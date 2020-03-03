@@ -417,7 +417,11 @@
             "key":"wechat_purchase",
             "gated": true,
             "thread":"t_wechat_sale",
-            "req_info":["ss_purchase_for_month", "city"],
+            "base_menu_branch":true,
+            "req_info":[
+                ["ss_purchase_for_month", "DUMMY_SLOT"],
+                ["city", "city"]
+            ],
             "replies":["<微信链接>"]
         },
         "doublecheck_component_value": {

@@ -44,3 +44,5 @@ database.json
 dump.json
 
 errorlog.txt
+
+wechat_dev.py
