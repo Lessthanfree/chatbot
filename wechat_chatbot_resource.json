@@ -3,7 +3,8 @@
         "option_0":{
             "key": "option_0",
             "default_set": false,
-            "default_target": "NA",
+            "default_target": "NA",            
+            "action":"text_reply",
             "replies": []
         },
         "affirm": {
@@ -14,7 +15,8 @@
                 "yesno":"yes",
                 "reverse_yesno_slot": "no"
             },
-            "default_target": "NA",
+            "default_target": "NA",            
+            "action":"text_reply",
             "replies": []
         },
         "deny": {
@@ -25,14 +27,16 @@
                 "yesno":"no",
                 "reverse_yesno_slot": "yes"
             },
-            "default_target": "NA",
+            "default_target": "NA",            
+            "action":"text_reply",
             "replies": []
         },
         "greet": {
             "key": "100 greetings",
             "default_set": false,
             "humanify": true,
-            "default_target": "SAME_STATE",
+            "default_target": "SAME_STATE",            
+            "action":"text_reply",
             "replies": [
                 "您好 有什么能帮助您的？"
             ]
@@ -41,7 +45,8 @@
             "key": "complain",
             "default_set": true,
             "humanify": false,
-            "default_target": "SAME_STATE",
+            "default_target": "SAME_STATE",            
+            "action":"text_reply",
             "replies": [
                 "不好意思亲，本人是新手。我有做错了什么可以告诉我"
             ]
@@ -50,7 +55,8 @@
             "key": "1099 unknown",
             "default_set": true,
             "humanify": false,
-            "default_target": "SAME_STATE",
+            "default_target": "SAME_STATE",            
+            "action":"text_reply",
             "replies": [
                 "？？？","？"
             ]
@@ -59,20 +65,23 @@
             "key": "1000 no intent",
             "default_set": true,
             "humanify": false,
-            "default_target": "SAME_STATE",
+            "default_target": "SAME_STATE",            
+            "action":"text_reply",
             "replies": []
         },
         "inform":{
             "key": "inform",
             "default_set": true,
             "humanify": false,
-            "default_target": "SAME_STATE",
+            "default_target": "SAME_STATE",            
+            "action":"text_reply",
             "replies": []
         },
         "send_link":{
             "key": "send_link",
             "default_set": true,
-            "default_target": "SAME_STATE",
+            "default_target": "SAME_STATE",            
+            "action":"text_reply",
             "replies": [
                 "您好 有什么能帮助您的？",
                 "亲，有什么能帮助您的？"
@@ -82,7 +91,8 @@
             "key": "unsupported_request",
             "default_set": true,
             "humanify": false,
-            "default_target": "SAME_STATE",
+            "default_target": "SAME_STATE",            
+            "action":"text_reply",
             "replies": [
                 "抱歉哦亲😞，小店暂时不提供这项业务哦"
             ]
@@ -91,32 +101,37 @@
             "key": "107 doublecheck value",
             "default_set": true,
             "humanify": false,
-            "default_target": "doublecheck_component_value",
+            "default_target": "doublecheck_component_value",            
+            "action":"text_reply",
             "replies": []
         },
         "next_step": {
             "key": "next_step",
             "default_set": false,
-            "default_target": "NA",
+            "default_target": "NA",            
+            "action":"text_reply",
             "replies": []
         },
         "ask_can_topup_sb": {
             "key": "ask_can_topup_sb",
             "default_set": true,
-            "default_target": "inform_topup_sb",
+            "default_target": "inform_topup_sb",            
+            "action":"text_reply",
             "replies": []
         },
         "ask_can_topup_gjj": {
             "key": "ask_can_topup_gjj",
             "default_set": true,
-            "default_target": "inform_topup_gjj",
+            "default_target": "inform_topup_gjj",            
+            "action":"text_reply",
             "replies": []
         },
         "ask_can_pay_later": {
             "key": "ask_can_pay_later",
             "default_set": true,
             "humanify": false,
-            "default_target": "SAME_STATE",
+            "default_target": "SAME_STATE",            
+            "action":"text_reply",
             "replies": [
                 "不行，要先付款亲 😞"
             ]
@@ -124,20 +139,23 @@
         "ask_shebao_card_status": {
             "key": "ask_shebao_card_status",
             "default_set": true,
-            "default_target": "inform_shebao_card_status",
+            "default_target": "inform_shebao_card_status",            
+            "action":"text_reply",
             "replies": []
         },
         "ask_turnaround_time":{
             "key": "ask_turnaround_time",
             "default_set": true,
-            "default_target": "turnaround_time_crossroad",
+            "default_target": "turnaround_time_crossroad",            
+            "action":"text_reply",
             "replies": []
         },
         "query_bujiao": {
             "key": "query_bujiao",
             "default_set": true,
             "humanify": false,
-            "default_target": "SAME_STATE",
+            "default_target": "SAME_STATE",            
+            "action":"text_reply",
             "replies": [
                 "补缴不算连续的，也不算正常缴纳，可以算累计缴纳的月份"
             ]
@@ -146,19 +164,22 @@
             "key": "info_gjj_card",
             "default_set": true,
             "humanify": false,
-            "default_target": "inform_gjj_card",
+            "default_target": "inform_gjj_card",            
+            "action":"text_reply",
             "replies": []
         },
         "query_how_check_gjj_status": {
             "key": "info_how_check_gjj",
             "default_set": true,
-            "default_target": "inform_how_check_gjj",
+            "default_target": "inform_how_check_gjj",            
+            "action":"text_reply",
             "replies": []
         },
         "query_how_check_shebao_status": {
             "key": "info_how_check_shebao",
             "default_set": true,
-            "default_target": "inform_how_check_shebao",
+            "default_target": "inform_how_check_shebao",            
+            "action":"text_reply",
             "replies": [
                 "{rep_ext[how_check_shebao]}"
             ]
@@ -167,14 +188,16 @@
             "key": "info_multiple_locations",
             "default_set": true,
             "humanify": false,
-            "default_target": "SAME_STATE",
+            "default_target": "SAME_STATE",            
+            "action":"text_reply",
             "replies": ["不建议亲亲同时缴纳两个地区哦，全国联网数据会有问题哦"]
         },
         "query_pay_part_only": {
             "key": "query_pay_part_only",
             "default_set": true,
             "humanify": false,
-            "default_target": "SAME_STATE",
+            "default_target": "SAME_STATE",            
+            "action":"text_reply",
             "replies": [
                 "不可以哦亲 😞，必须5险一起缴纳哦"
             ]
@@ -182,7 +205,8 @@
         "query_pay_process": {
             "key": "112 query_pay_process",
             "default_set": true,
-            "default_target": "SAME_STATE",
+            "default_target": "SAME_STATE",            
+            "action":"text_reply",
             "replies": [
                 "缴纳流程：和客服明确缴纳城市以及缴纳月份，拍下链接付款---小程序提供资料---申报参保手续---手续办理成功发货---确认收货请注意：参保手续完成后，不可以申请退款！！！"
             ]
@@ -191,7 +215,8 @@
             "key": "inform_phone_number",
             "default_set": true,
             "humanify": true,
-            "default_target": "SAME_STATE",
+            "default_target": "SAME_STATE",            
+            "action":"text_reply",
             "replies": [
                 "亲亲在白天上班时间联系哦：4000801807"
             ]
@@ -200,7 +225,8 @@
             "key": "info_pregnant",
             "default_set": true,
             "humanify": false,
-            "default_target": "SAME_STATE",
+            "default_target": "SAME_STATE",            
+            "action":"text_reply",
             "replies": [
                 "怀孕的我们不接受代缴哦 😢"
             ]
@@ -208,45 +234,52 @@
         "query_req_resources": {
             "key": "114 ziliao query",
             "default_set": true,
-            "default_target": "inform_req_resources",
+            "default_target": "inform_req_resources",            
+            "action":"text_reply",
             "replies": []
         },
         "query_topup":{
             "key": "info_topup",
             "default_set": true,
-            "default_target": "SAME_STATE",
+            "default_target": "SAME_STATE",            
+            "action":"text_reply",
             "replies": ["补缴社保：补缴不算连续的，也不算正常缴纳，可以算累计缴纳的月份"]
         },
         "query_use_huabei":{
             "key":"info_use_huabei",
             "default_set": true,
-            "default_target": "SAME_STATE",
+            "default_target": "SAME_STATE",            
+            "action":"text_reply",
             "replies":["小店还没有开通哦，亲可以自己尝试下哦，如果可以付款就没有问题哈"]
         },
         "query_weixin": {
             "key": "info_weixin",
             "default_set": true,
-            "default_target": "inform_weixin",
+            "default_target": "inform_weixin",            
+            "action":"text_reply",
             "replies": []
         },
         "query_when_check_shebao_status": {
             "key": "info_when_check_shebao",
             "default_set": true,
-            "default_target": "inform_when_check_shebao",
+            "default_target": "inform_when_check_shebao",            
+            "action":"text_reply",
             "replies": []
         },
         "query_shebao_card": {
             "key": "info_shebao_card",
             "default_set": true,
             "humanify": false,
-            "default_target": "inform_shebao_card_process",
+            "default_target": "inform_shebao_card_process",            
+            "action":"text_reply",
             "replies": []
         },
         "query_shebao_components": {
             "key": "info_shebao_components",
             "default_set": true,
             "humanify": false,
-            "default_target": "SAME_STATE",
+            "default_target": "SAME_STATE",            
+            "action":"text_reply",
             "replies": [
                 "社保包括：养老保险、医疗保险、生育保险、工伤保险和失业保险"
             ]
@@ -255,7 +288,8 @@
             "key":"query_sick_light",
             "default_set": true,
             "humanify": false,
-            "default_target": "SAME_STATE",
+            "default_target": "SAME_STATE",            
+            "action":"text_reply",
             "replies":[
                 "亲，普通门诊可以在2个月后使用哦（限上海）"
             ]
@@ -264,7 +298,8 @@
             "key": "query_sick",
             "default_set": true,
             "humanify": false,
-            "default_target": "SAME_STATE",
+            "default_target": "SAME_STATE",            
+            "action":"text_reply",
             "replies": [
                 "亲，有大病不接受代缴哦"
             ]
@@ -273,14 +308,16 @@
             "key": "query_shengyubao",
             "default_set": true,
             "humanify": false,
-            "default_target": "SAME_STATE",
+            "default_target": "SAME_STATE",            
+            "action":"text_reply",
             "replies": ["亲，我们不办理生育津贴哦，也不提供任何材料哈"]
         },
         "daikuan": {
             "key": "daikuan (same as housing)",
             "default_set": true,
             "humanify": false,
-            "default_target": "SAME_STATE",
+            "default_target": "SAME_STATE",            
+            "action":"text_reply",
             "replies": [
                 "这个亲亲咨询下购房中介哦，小店只负责代缴哈"
             ]
@@ -289,7 +326,8 @@
             "key": "question_reliability",
             "default_set": true,
             "humanify": false,
-            "default_target": "SAME_STATE",
+            "default_target": "SAME_STATE",            
+            "action":"text_reply",
             "replies": [
                 "亲，小店是正规的人力资源公司哦，挂靠公司，不会有代缴痕迹哦",
                 "我们是上海专业的代缴公司政府认定的百佳诚信企业 放心有保障公司持续稳定经营了10年信誉卓著没有任何信用污点办理公积金社保签证居住证积分落户等手续都不会因为公司资质和信用产生任何问题"
@@ -299,25 +337,29 @@
             "key": "request_notify",
             "default_set": true,
             "humanify": false,
-            "default_target": "SAME_STATE",
+            "default_target": "SAME_STATE",            
+            "action":"text_reply",
             "replies": ["恩恩，有问题我们会及时联系您的"]
         },
         "inform_done":{
             "key": "182 inform_done",
             "default_set": false,
-            "default_target": "NA",
+            "default_target": "NA",            
+            "action":"text_reply",
             "replies": []
         },
         "purchase": {
             "key": "purchase",
             "default_set": false,
-            "default_target": "NA",
+            "default_target": "NA",            
+            "action":"text_reply",
             "replies": []
         },
         "pay_shui": {
             "key": "pay_shui",
             "default_set": true,
-            "default_target": "SAME_STATE",
+            "default_target": "SAME_STATE",            
+            "action":"text_reply",
             "replies": [
                 "小店不能补个税哦亲 😞"
             ]
@@ -325,14 +367,16 @@
         "goodbye": {
             "key": "195 goodbyes",
             "default_set": true,
-            "default_target": "goodbye",
+            "default_target": "goodbye",            
+            "action":"text_reply",
             "replies": []
         },
         "thankyou": {
             "key": "194 thankyou",
             "default_set": true,
             "humanify": false,
-            "default_target": "SAME_STATE",
+            "default_target": "SAME_STATE",            
+            "action":"text_reply",
             "replies": [
                 "不客气的亲 😊"
             ]
@@ -345,7 +389,8 @@
             "thread": "BASE",
             "is_menu": true,
             "humanify":false,
-            "req_info": "",
+            "req_info": "",            
+            "action":"text_reply",
             "replies": [
                 "请点击需要查询的内容：<>1。如何缴纳社保；<>2。社保缴纳费用；<>3。社保缴纳时间；<>4。缴纳所需材料；<>5。社保付费；<>6。获取验证码；<>选好了之后： <>0。返回菜单"
             ]
@@ -356,7 +401,8 @@
             "transition_state": true,
             "thread": "BASE",
             "humanify": false,
-            "req_info": [["laokehu_flag", "DEFAULT_SV"]],
+            "req_info": [["laokehu_flag", "DEFAULT_SV"]],            
+            "action":"text_reply",
             "replies": []
         },
         "push_xufei":{
@@ -365,7 +411,8 @@
             "transition_state": true,
             "thread": "BASE",
             "humanify": false,
-            "req_info": [["city", "city"]],
+            "req_info": [["city", "city"]],            
+            "action":"text_reply",
             "replies": ["{rep_ext[push_xufei_message]}"]
         },
         "city_crossroad":{
@@ -374,7 +421,8 @@
             "transition_state": true,
             "thread": "t_presale",
             "humanify": false,
-            "req_info": "",
+            "req_info": "",            
+            "action":"text_reply",
             "replies": ["亲是哪个城市呢？"]
         },
         "unsupported_city":{
@@ -382,14 +430,16 @@
             "gated": true,
             "thread": "BASE",
             "humanify": true,
-            "req_info": [["city","city"]],
+            "req_info": [["city","city"]],            
+            "action":"text_reply",
             "replies": ["不好意思 亲 我们不贷款{city}"]
         },
         "how_to_jiaona" : {
             "key" : "how_to_jiaona",
             "gated": false,
             "base_menu_branch": true,
-            "thread": "t_menu",
+            "thread": "t_menu",            
+            "action":"text_reply",
             "replies": [
                 "亲可以关注公众号“58社保”提交材料并支付，系统将自动生成服务单，缴纳成功后当前社保状态会显示“正常在缴”"
             ]
@@ -399,7 +449,8 @@
             "gated": true,
             "thread": "t_turnaround",
             "terminal_state": false,
-            "req_info": [["chosen_service", "DEFAULT_SV"]],
+            "req_info": [["chosen_service", "DEFAULT_SV"]],            
+            "action":"text_reply",
             "replies": []
         },
         "TMP_recv_info": {
@@ -408,7 +459,8 @@
             "transition_state": true,
             "thread": "NONE",
             "humanify": false,
-            "req_info": "",
+            "req_info": "",            
+            "action":"text_reply",
             "replies": [
                 "亲,{rep_ext[request_string]}"
             ]
@@ -419,10 +471,19 @@
             "thread":"t_wechat_sale",
             "base_menu_branch":true,
             "req_info":[
-                ["ss_purchase_for_month", "DUMMY_SLOT"],
-                ["city", "city"]
+                ["city", "city"],
+                ["要公积金","wantnot"],
+                ["要社保", "DEFAULT_SV"],
+                ["首次","reverse_yesno_slot"],
+                ["ss_purchase_for_month", "DUMMY_SLOT"]
             ],
-            "replies":["<微信链接>"]
+            "calcs": ["shebao_basic_calc"],
+            "action":"send_bill",
+            "replies":["{city_district}{rep_ext[product]}一共：{calc_ext[shebao_basic_total]}元"],
+            "payload":[
+                ["title","str","{city_district}{rep_ext[product]}"],
+                ["amount", "float", "{calc_ext[shebao_basic_total]}"]
+            ]
         },
         "doublecheck_component_value": {
             "key": "doublecheck_component_value",
@@ -443,7 +504,8 @@
             ],
             "calcs":[
                 "flag_component_value_match"
-            ],
+            ],            
+            "action":"text_reply",
             "replies": ["{rep_ext[doublecheck_info]}"]
         },
         "purchase_type_crossroad":{
@@ -461,7 +523,8 @@
                 "flag_purchase_cmi",
                 "flag_normal_pay_cmi",
                 "flag_bujiao_month_cmi"
-            ],
+            ],            
+            "action":"text_reply",
             "replies": []
         },
         "propose_plan": {
@@ -478,7 +541,8 @@
             ],
             "calcs": [
                 "shebao_basic_calc"
-            ],
+            ],            
+            "action":"text_reply",
             "replies": [
                 "{rep_ext[entire_plan_proposal]}"
             ]
@@ -489,7 +553,8 @@
             "thread": "NONE",
             "req_info": "",
             "deactivate_state": true,
-            "calcs":["flag_bill_settled"],
+            "calcs":["flag_bill_settled"],            
+            "action":"text_reply",
             "replies": [
                 "好的，谢谢光临 😘"
             ]
@@ -500,7 +565,8 @@
             "humanify": false,
             "base_menu_branch":true,
             "thread":"t_verification",
-            "default_target": "SAME_STATE",
+            "default_target": "SAME_STATE",            
+            "action":"text_reply",
             "replies": ["亲可以用我们的《58社保》小程序获取您的验证码"]
         },
         "month_crossroad":{
@@ -509,7 +575,8 @@
             "transition_state": true,
             "thread": "t_month",
             "humanify": false,
-            "req_info": [["ss_purchase_for_month","DUMMY_SLOT"]],
+            "req_info": [["ss_purchase_for_month","DUMMY_SLOT"]],            
+            "action":"text_reply",
             "replies": []
         },
         "inform_deadline_aslist":{
@@ -517,7 +584,8 @@
             "gated": true,
             "base_menu_branch":true,
             "thread": "t_deadline",
-            "req_info": [["city","city"]],
+            "req_info": [["city","city"]],            
+            "action":"text_reply",
             "replies":["{rep_ext[deadline_list_info]}"]
         },
         "inform_fahuo":{
@@ -525,7 +593,8 @@
             "gated": false,
             "thread": "t_fahuo",
             "terminal_state": true,
-            "req_info": [],
+            "req_info": [],            
+            "action":"text_reply",
             "replies":["亲，我们在参保成功后发货哦"]
         },
         "inform_fahuo_assure":{
@@ -533,7 +602,8 @@
             "gated": false,
             "thread": "t_fahuo",
             "terminal_state": true,
-            "req_info": [],
+            "req_info": [],            
+            "action":"text_reply",
             "replies":["亲，交易都是在平台上进行的，对于买家是很有保障的哦，这个您完全可以放心哈"]
         },
         "inform_gjj_card": {
@@ -541,7 +611,8 @@
             "gated": true,
             "thread": "t_gjj_card",
             "terminal_state": true,
-            "req_info": [["city","city"]],
+            "req_info": [["city","city"]],            
+            "action":"text_reply",
             "replies": [
                 "{rep_ext[gjj_card_process_info]}"
             ]
@@ -552,7 +623,8 @@
             "humanify": false,
             "thread": "t_howcheck",
             "terminal_state": true,
-            "req_info": [["city","city"]],
+            "req_info": [["city","city"]],            
+            "action":"text_reply",
             "replies": [
                 "{rep_ext[how_check_shebao]}"
             ]
@@ -562,7 +634,8 @@
             "gated": true,
             "thread": "t_howcheck",
             "terminal_state": true,
-            "req_info": [["city","city"]],
+            "req_info": [["city","city"]],            
+            "action":"text_reply",
             "replies": [
                 "{rep_ext[how_check_gjj]}"
             ]
@@ -571,7 +644,8 @@
             "key": "260 inform_how_pai",
             "gated": false,
             "thread": "t_pai",
-            "req_info": "",
+            "req_info": "",            
+            "action":"text_reply",
             "replies": [
                 "直接拍宝贝，然后通过weixin小程序（58人才服务中心）提交参保信息。参保完成后，直接通过小程序查看参保成功截图，简单可靠。"
             ]
@@ -581,7 +655,8 @@
             "gated": true,
             "thread": "t_req_resources",
             "base_menu_branch": true,
-            "req_info": [["city","city"]],
+            "req_info": [["city","city"]],            
+            "action":"text_reply",
             "replies": [
                 "{rep_ext[req_resource_info]}"
             ]
@@ -591,7 +666,8 @@
             "gated": true,
             "thread": "t_shebao_card",
             "terminal_state": true,
-            "req_info": [["city","city"]],
+            "req_info": [["city","city"]],            
+            "action":"text_reply",
             "replies": [
                 "{rep_ext[shebao_card_process_info]}"
             ]
@@ -601,7 +677,8 @@
             "gated": true,
             "thread": "t_shebao_card",
             "terminal_state": true,
-            "req_info": [["city","city"]],
+            "req_info": [["city","city"]],            
+            "action":"text_reply",
             "replies": [
                 "亲，{rep_ext[shebao_card_status_info]}"
             ]
@@ -616,7 +693,8 @@
                 ["city","city"],
                 ["ss_purchase_for_month","DUMMY_SLOT"]
             ],
-            "calcs":["flag_bujiao_month_cmi"],
+            "calcs":["flag_bujiao_month_cmi"],            
+            "action":"text_reply",
             "replies": [
                 "{rep_ext[topup_info]}"
             ]
@@ -626,7 +704,8 @@
             "gated": true,
             "thread": "t_topup",
             "terminal_state": true,
-            "req_info": [["city","city"]],
+            "req_info": [["city","city"]],            
+            "action":"text_reply",
             "replies": [
                 "亲，{rep_ext[topup_gjj_info]}"
             ]
@@ -646,7 +725,8 @@
             "req_info": [
                 ["ss_purchase_for_month","DUMMY_SLOT"],
                 ["city","city"]
-            ],
+            ],            
+            "action":"text_reply",
             "replies": [
                 "{rep_ext[pay_deadline_info]}"
             ]
@@ -657,7 +737,8 @@
             "thread": "t_weixin",
             "humanify": false,
             "terminal_state": true,
-            "req_info": [["city","city"]],
+            "req_info": [["city","city"]],            
+            "action":"text_reply",
             "replies": [
                 "{rep_ext[weixin_info]}"
             ]
@@ -667,7 +748,8 @@
             "gated": true,
             "thread": "t_whencheck",
             "terminal_state": true,
-            "req_info": [["city","city"]],
+            "req_info": [["city","city"]],            
+            "action":"text_reply",
             "replies": [
                 "{rep_ext[when_check_shebao]}"
             ]
@@ -677,7 +759,8 @@
             "gated": true,
             "thread": "t_xufei",
             "terminal_state": true,
-            "req_info": [["city","city"]],
+            "req_info": [["city","city"]],            
+            "action":"text_reply",
             "replies": [
                 "{rep_ext[xufei_info]}"
             ]
@@ -907,6 +990,7 @@
             {
                 "writeto": "product",
                 "states": [
+                    "wechat_purchase",
                     "propose_plan"
                 ],
                 "lookfor": [
@@ -1244,19 +1328,6 @@
                         "1":"是的亲 {rep_ext[component_val_correction]}",
                         "0":"不是啊亲 {rep_ext[component_val_correction]}",
                         "-1":"{rep_ext[component_val_correction]}"
-                    }
-                }
-            },
-            {
-                "writeto":"initplus_reply",
-                "states": ["initplus"],
-                "lookfor":[
-                    "bill_settled_flag"
-                ],
-                "if_value":{
-                    "bill_settled_flag":{
-                        "1":"",
-                        "DEFAULT":[""]
                     }
                 }
             }

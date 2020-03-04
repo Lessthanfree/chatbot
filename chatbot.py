@@ -116,20 +116,20 @@ class Chatbot():
             self.make_new_chat(chatid)
         return self.chat_dict[chatid]
 
-    # Returns a tuple of (text reply, intent breakdown, current info)
+    # Returns a tuple of (ResponseAction, intent breakdown, current info)
     def _get_reply_obj(self, chatID, msg, op_print):
         self.trigger_backup()
         curr_chat_mgr = self._switch_chat_manager(chatID)
         if DEBUG: print("Current chat manager is for", chatID)
         f_msg = self.clean_message(msg)
-        reply = curr_chat_mgr.respond_to_message(f_msg, op_print = op_print)
-        return reply
+        reply_tuple = curr_chat_mgr.respond_to_message(f_msg, op_print = op_print)
+        return reply_tuple
 
-    # Returns a string
-    def get_bot_reply(self, chatID, msg, op_print = True):
-        reply_obj = self._get_reply_obj(chatID, msg, op_print)
-        reply_text = reply_obj[0]
-        return reply_text
+    # Returns a ResponseAction
+    def get_bot_response(self, chatID, msg, op_print = True):
+        r_action, bd, curr_info = self._get_reply_obj(chatID, msg, op_print)
+        if op_print: print("<GET BOT REPLY> Current Info: {}".format(curr_info))
+        return r_action
 
     # Asks chatmanager to read the long history and parse selectively.
     def parse_transferred_messages(self, chatID, history):
@@ -145,8 +145,8 @@ if __name__ == "__main__":
     while 1:
         try:
             incoming_msg = input()
-            reply = bot.get_bot_reply("MyUserId",incoming_msg, op_print = False)
-            print("REPLY 机器人: ",reply)
+            response = bot.get_bot_response("MyUserId",incoming_msg, op_print = False)
+            print("BOT RESPONSE: ", response.tostring())
         except KeyboardInterrupt:
             print("Exiting...")
             exit()

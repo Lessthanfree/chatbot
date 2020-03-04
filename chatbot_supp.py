@@ -26,11 +26,10 @@ class SIP:
     def parse_state(self, state):
         self.state_obj = state.copy() # Prevent unintended side effects. States are dicts
         self.state_key = self.state_obj["key"]
-        self.gated_bool = self.state_obj.get("gated",False)
+        self.gated_flag = self.state_obj.get("gated",False)
         self.transition_state = self.state_obj.get(self.trans_state_flag,False)
-        self.state_slots = self.state_obj["req_info"] if self.gated_bool else []
+        self.state_slots = self.state_obj["req_info"] if self.gated_flag else []
         self.state_clears = self.state_obj.get("clear_info",[])
-        self.pending_state = ""
         self.deactivate = self.state_obj.get("deactivate_state", False) # HARDCODED
 
     def set_actions(self, action, pending_act = None):
@@ -44,7 +43,7 @@ class SIP:
         return self.state_obj
 
     def is_gated(self):
-        return self.gated_bool
+        return self.gated_flag
 
     # Returns a list of lists [name, type]
     def get_slots(self):
@@ -101,6 +100,53 @@ class Understanding:
 
     def printout(self):
         print("UNDERSTANDING OBJ PRINTOUT Intent: ", self.intent, " SIP: ", self.sip.toString())
+
+class ResponseAction:
+    textmsg_flag = "text_reply"
+    def __init__(self, state, reply_text = ""):
+        def add_payload_template(state):
+            if not self.is_pure_text():
+                self.payload_template = state.get("payload", [])
+            
+        self.action_type = state.get("action", self.textmsg_flag)
+        add_payload_template(state)
+        self.replytext = reply_text
+
+    # Extracts the relevant info and puts it into payload
+    # Payload template is a list of lists [k, val_type, key in info]
+    def absorb_info(self, information):
+        if self.is_pure_text():
+            return
+
+        new = {}
+        for k, val_type, template in self.payload_template:
+            payload_value = template.format(**information)
+            if val_type == "float":
+                payload_value = float(payload_value)
+            new[k] = payload_value
+        self.payload = new
+        return
+
+    def is_pure_text(self):
+        return self.action_type == self.textmsg_flag
+
+    def is_bill(self):
+        return self.action_type == "send_bill"
+
+    def get_type(self):
+        return self.action_type
+
+    def get_replytext(self):
+        return self.replytext # Evaluates to True if not blank
+
+    def get_payload(self):
+        return self.payload # Evaluates to True if not empty
+
+    def tostring(self):
+        out = "Text: <{}>".format(self.replytext)
+        if not self.is_pure_text():
+            out += "| Payload: {}".format(self.payload)
+        return out
 
 class ReqGatekeeper:
     def __init__(self, conds, default_slot_vals):
@@ -386,35 +432,6 @@ class Policy():
 
     def get_intents(self):
         return [self.s_intents, self.g_intents]
-
-CITIES = cbsv.CHINA_CITIES()
-class Customer:
-    def __init__(self, userID, accounts = -1, issues = -1):
-        self.userID = userID
-        self.city = ""
-        self.start_date = ""
-        if isinstance(issues,int): 
-            self.accounts = [] 
-        else: 
-            self.accounts = accounts
-        if isinstance(issues,int):
-            self.issues_list = []
-        else:
-            self.issues_list = issues
-        
-    def record_city(self,city):
-        assert city in CITIES
-        self.city = city
-
-    def add_issue(self, issue):
-        self.issues_list.append(issue)
-        # Check for duplicates?
-
-    def get_issues(self):
-        return self.issues_list
-
-    def get_accounts(self):
-        return self.accounts
 
 # Globally accessed object. Singleton but not really cuz it needs to be initalized
 class InfoVault():
@@ -749,7 +766,6 @@ class Calculator():
                     insert_entry(deet_key, pv, fname, table)
 
         self.outputs_lookup = table
-        print("OUTPUT DB", table)
         return
 
     # Main Callable function #
@@ -804,7 +820,6 @@ class Calculator():
             if not self.check_precalc_skip(fkey):
                 self.add_precalc(fkey)
                 self.new_resolve_formula(fkey, info) # This calls precalculate
-                
         return
 
     # Performs calculations and formats text message replies 

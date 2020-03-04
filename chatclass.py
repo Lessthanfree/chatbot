@@ -151,6 +151,7 @@ class ConvoThread:
     def get_prev_state(self):
         return self.state_history[-1]
 
+    # Returns state object
     def get_curr_state(self):
         return self.curr_state
 
@@ -229,6 +230,7 @@ class ChatManager:
         self.ztracker = ZoneTracker()
         self.INFORM_INT = pkeeper.GET_INFORM_INTENT() # TODO Not very good OOP
 
+    # Returns state object
     def _get_curr_state(self):
         return self.statethreader.get_curr_thread_state()
 
@@ -258,15 +260,16 @@ class ChatManager:
         self.goto_next_state(uds, msg, nums)
         
         calc_ext_dict = self._calculate()
-        reply, topup = self._fetch_reply(uds,calc_ext_dict)
+        r_action, topup = self._fetch_reply(uds,calc_ext_dict)
+        reply = r_action.get_replytext()
 
-        self._record_messages_in_chat(msg,reply)
+        self._record_messages_in_chat(msg, reply)
 
         self._post_process(uds, topup)
 
         curr_info = self._get_current_info()
-        if op_print: print("回复: \r\n'{}' \r\n智能理解:\r\n{} \r\n信息:{}".format(reply, NLP_bd, curr_info)) # Operational Printout
-        return (reply, NLP_bd, curr_info)
+        if op_print: print("回复: \r\n'{}' \r\n智能理解:\r\n{} \r\n信息:{}".format(r_action.tostring(), NLP_bd, curr_info)) # Operational Printout
+        return (r_action, NLP_bd, curr_info)
 
     def goto_next_state(self, understanding, msg, nums):
         sip = understanding.get_sip()
@@ -960,8 +963,8 @@ class ReplyGenerator:
         if SUPER_DEBUG: print("<GET_REPLY> INFO calc_ext:",info.get("calc_ext", {}), "rep_ext", info.get("rep_ext", {}))
         rdb = self.getreplydb(intent, curr_state, secondslot)
         infoplus = self._enhance_info(curr_state, info)
-        reply, topup = self.generate_reply_message(rdb, curr_state, infoplus)
-        return reply, topup
+        r_action, topup = self.generate_reply_message(rdb, curr_state, infoplus)
+        return r_action, topup
 
     def _enhance_info(self,curr_state,info):
         def _add_listmsgs(info):
@@ -1123,7 +1126,8 @@ class ReplyGenerator:
 
         return rdb
 
-    # Generates a reply. Purely a string
+    # Takes in the replydatabase, current_state_obj, info
+    # Returns a ResponseAction
     def generate_reply_message(self, rdb, curr_state, info):
         def rand_response(response_list):
             return random.choice(response_list)
@@ -1136,8 +1140,6 @@ class ReplyGenerator:
 
         def _announceify(msg):
             return self.announcer.add_announcements(msg,curr_state,info)
-
-        
 
         def add_newlines(msg):
             return msg.replace("<>", "\r\n")
@@ -1156,8 +1158,11 @@ class ReplyGenerator:
         final_msg = _humanify(final_msg)
 
         final_msg = add_newlines(final_msg)
+
+        r_action = ResponseAction(curr_state, reply_text = final_msg)
+        r_action.absorb_info(info)
         
-        return final_msg, announce_topup
+        return r_action, announce_topup
 
 # Deals only with text
 # Does not deal with state or information

@@ -43,12 +43,12 @@ class ChatbotServer(BaseHTTPRequestHandler):
         # Because its a reply, the from and to are swapped
         return reply.encode(ENCODING_USED)
 
-    def _get_bot_reply(self, info_dict):
-        uid = info_dict.get("FromUserName", "")
-        msg = info_dict.get("Content", "")
+    # Expects a ResponseAction
+    def _get_bot_response(self, post_info_dict):
+        uid = post_info_dict.get("FromUserName", "")
+        msg = post_info_dict.get("Content", "")
         logging.info("<SERVER GET BOT REPLY> USER <{}>:{}".format(uid, msg))
-        reply_text = self.chatbot.get_bot_reply(uid, msg)
-        return reply_text
+        return self.chatbot.get_bot_response(uid, msg)
         
     def _set_response(self):
         self.send_response(200)
@@ -96,7 +96,6 @@ class ChatbotServer(BaseHTTPRequestHandler):
             logging.info("GET request is from WeChat!")
             send_wechat_auth(req_dict)
             return
-
         
         self._set_response()
         http_get_response = "GET request for {}".format(self.path).encode(ENCODING_USED)
@@ -104,6 +103,11 @@ class ChatbotServer(BaseHTTPRequestHandler):
         self.wfile.write(http_get_response)
 
     def do_POST(self):
+        def send_post_request(req_info, cb_reply_str):
+            post_reply = self.format_reply_xml(request_info, chatbot_reply_str)
+            logging.info("POST reponse:\n{}".format(chatbot_reply_str))
+            self.wfile.write(post_reply)
+
         content_length = int(self.headers['Content-Length']) # <--- Gets the size of data
         post_data_raw = self.rfile.read(content_length) # <--- Gets the data itself
         request_info = decode_post(post_data_raw)
@@ -112,11 +116,11 @@ class ChatbotServer(BaseHTTPRequestHandler):
                 str(self.path), str(self.headers), request_info)
 
         self._set_response()
-        chatbot_reply_str = self._get_bot_reply(request_info)
-        post_reply = self.format_reply_xml(request_info, chatbot_reply_str)
-        logging.info("POST reponse:\n{}".format(chatbot_reply_str))
-        self.wfile.write(post_reply)
-
+        response_action = self._get_bot_response(request_info)
+        chatbot_reply_str = response_action.get_replytext()
+        
+        send_post_request(request_info, chatbot_reply_str)
+        
 def run(server_class=HTTPServer, handler_class=ChatbotServer, port=8080):
     logging.basicConfig(level=logging.INFO)
     server_address = ('', port)
