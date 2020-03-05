@@ -1077,13 +1077,20 @@ class ReplyGenerator:
                 vd = dive_for_values(lookout, enhanced, failzero=True) # Failzero true for rep ext
                 
                 if RF_DEBUG: print("<ENH INFO> TMP",tmp)
-
-                ifpr = tmp.get("if_present",{})
-                for deet in list(ifpr.keys()):
-                    enstr = get_reply_template(ifpr[deet])
+                add_txt_enh(target_key, tmp.get("baseline", "")) # Add baseline standard text content
+                
+                if_pr = tmp.get("if_present",{}) # Add text content if this variable is present or another if it is not
+                for deet in list(if_pr.keys()):
+                    p_branch, abs_branch = if_pr[deet]
+                    value_is_present = vd.get(deet, False)
+                    if value_is_present:
+                        branch = p_branch
+                    else:
+                        branch = abs_branch
+                    enstr = get_reply_template(branch)
                     add_txt_enh(target_key,enstr)
                 
-                ifvl = tmp.get("if_value",{})
+                ifvl = tmp.get("if_value",{}) # Add text content if this variable matches a certain value
                 enhance_if_vals(vd, ifvl, target_key)
         
         if RF_DEBUG: print("<ENH POST> Enhanced:", enhanced)

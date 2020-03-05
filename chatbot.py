@@ -145,7 +145,7 @@ if __name__ == "__main__":
     while 1:
         try:
             incoming_msg = input()
-            response = bot.get_bot_response("MyUserId",incoming_msg, op_print = False)
+            response = bot.get_bot_response("MyUserId",incoming_msg, op_print = True)
             print("BOT RESPONSE: ", response.tostring())
         except KeyboardInterrupt:
             print("Exiting...")

@@ -1,26 +1,11 @@
 {
     "COMMENTS":"File to decide state transition logic. Called policies. CONSIDER: Changing from list of pairs to dict",
     "crossroad_policies":{
-        "xufei_push_crossroad":[
-            "customer_status",{
-                "Active_Bill": "push_xufei",
-                "Active_NoBill": "push_xufei",
-                "Inactive_Bill": "purchase_type_crossroad",
-                "Inactive_NoBill": "purchase_type_crossroad",
-                "DEFAULT":"purchase_type_crossroad"
-            }  
-        ],
         "city_crossroad":[
             "city",{
                 "湖南": "unsupported_city",
                 "聊城": "unsupported_city",
-                "DEFAULT": "propose_plan"
-            }
-        ],
-        "purchase_type_crossroad":[
-            "purchase_cmi_flag",{
-                "still_can": "city_crossroad",
-                "too_late": "inform_user_pay_deadline"
+                "DEFAULT": "propose_normal_purchase"
             }
         ],
         "turnaround_time_crossroad": [
@@ -31,6 +16,10 @@
         ]
     },
     "class_policy_rules":{
+        "terminal_state":[
+            ["inform", "menu_base"],
+            ["option_0", "menu_base"]
+        ],
         "base_menu_branch":[
             ["inform", "menu_base"],
             ["option_0", "menu_base"]
@@ -39,12 +28,27 @@
     "initial_state":"menu_base",
     "policy_rules":{  
         "menu_base":[
+            ["option_1", "menu_purchase"],
+            ["option_2", "menu_check_status"],
+            ["option_3", "provide_verification_code"]
+        ],
+        "menu_purchase":[
             ["option_1", "how_to_jiaona"],
-            ["option_2", "purchase_type_crossroad"],
+            ["option_2", "menu_product_type"],
             ["option_3", "inform_deadline_aslist"],
             ["option_4", "inform_req_resources"],
             ["option_5", "wechat_purchase"],
-            ["option_6", "provide_verification_code"]
+            ["option_0", "menu_base"]
+        ],
+        "menu_product_type":[
+            ["option_1", "propose_normal_purchase"],
+            ["option_2", "propose_bujiao"],
+            ["option_0", "menu_purchase"]
+        ],
+        "menu_check_status":[
+            ["option_1", "inform_how_check_shebao"],
+            ["option_2", "inform_how_check_gjj"],
+            ["option_0", "menu_base"]
         ],
         "goodbye":[
             ["inform", "menu_base"]
