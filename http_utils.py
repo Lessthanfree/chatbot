@@ -4,42 +4,58 @@ import logging
 import wechat_dev as wd
 import time
 
-# Class to carry message contents and flags for special cases like starting chat.
+
+def response_to_xml(r_action, og_reqest_info):
+    if r_action.is_bill():
+        msgclass = WechatPaymentRequest(r_action)
+    else:
+        msgclass = WechatTextMessage(r_action, og_reqest_info)
+    xml = msgclass.to_xml()
+    return xml
+
+# Class to carry message contents.
 class WechatMessage():
-    def __init__(self, sender, contents):
-        self.sender = sender
-        self.contents = contents
-        self.chat_start_flag = False
-        
-    def is_chat_start(self):
-        return self.chat_start_flag
+    def to_xml(self):
+        pass
 
-    def _mark_chat_start(self):
-        self.chat_start_flag = True
-    
-    @staticmethod
-    def make_chat_start_msg(cls, sender, contents):
-        new = cls(sender, contents)
-        new._mark_chat_start()
-        return new
+class WechatTextMessage(WechatMessage):
+    def __init__(self, r_action, og_reqest_info):
+        self.r_action = r_action
+        self.og_req_info = og_reqest_info
 
-    def get_contents(self):
-        return self.contents
+    def to_xml(self):
+        msg_info = self.og_req_info
+        reply_content = self.r_action.get_replytext()
+        xml = (
+            "<xml>"
+            "<ToUserName><![CDATA[%s]]></ToUserName>"
+            "<FromUserName><![CDATA[%s]]></FromUserName>"
+            "<CreateTime>%s</CreateTime>"
+            "<MsgType><![CDATA[text]]></MsgType>"
+            "<Content><![CDATA[%s]]></Content>"
+            "</xml>"
+        ) % (
+        msg_info['FromUserName'], 
+        msg_info['ToUserName'],
+        time.gmtime(),
+        reply_content
+        )
+        # Because its a reply, the from and to are swapped
+        logging.info("POST reponse:\n{}".format(reply_content))
+        return xml
 
-class WechatPaymentRequest():
-    def __init__(self, title, amount, product_details, body=""):
-        self.rd = {}
-        
+class WechatPaymentRequest(WechatMessage):
+    def __init__(self, r_action, body=""):
+        self.rd = r_action.get_payload()
         assert(isinstance(amount,float) or isinstance(amount,int))
-        self.rd = {
-            "amount": amount,
-            "title": title,
+        auxiliary_info = {
             "body": body,
-            "p_details": product_details,
             "appid": wd.get_wechat_app_id(),
             "recv_acc_num": wd.get_recieving_acc_no(),
-            "order_num" = self._generate_order_number()
+            "order_num" : self._generate_order_number()
         }
+
+        self.rd.update(auxiliary_info)
 
     def set_notification_url(self, add):
         self.rd["notify_url"] = add
@@ -48,6 +64,7 @@ class WechatPaymentRequest():
     def _get_request_details(self):
         return self.rd
     
+    # Returns a string
     def _generate_order_number(self):
         int_time = int(time.time())
         onum = "ODR_" + str(int_time)
@@ -78,7 +95,7 @@ class WechatPaymentRequest():
 
         request_details = self.rd
         p_details = request_details.get("p_details",)
-        p_details = "<![CDATA[{ "goods_detail":[ { "goods_id":"iphone6s_16G", "wxpay_goods_id":"1001", "goods_name":"iPhone6s 16G", "quantity":1, "price":528800, "goods_category":"123456", "body":"苹果手机" }, { "goods_id":"iphone6s_32G", "wxpay_goods_id":"1002", "goods_name":"iPhone6s 32G", "quantity":1, "price":608800, "goods_category":"123789", "body":"苹果手机" } ] }]]>"
+        p_details = '<![CDATA[{ "goods_detail":[ { "goods_id":"iphone6s_16G", "wxpay_goods_id":"1001", "goods_name":"iPhone6s 16G", "quantity":1, "price":528800, "goods_category":"123456", "body":"苹果手机" }, { "goods_id":"iphone6s_32G", "wxpay_goods_id":"1002", "goods_name":"iPhone6s 32G", "quantity":1, "price":608800, "goods_category":"123789", "body":"苹果手机" } ] }]]>'
         xml_formatted = (
             "<xml>"
             "<appid>{appid}</appid>"

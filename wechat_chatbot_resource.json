@@ -482,7 +482,8 @@
             "replies":["{city_district}{rep_ext[product]}一共：{calc_ext[shebao_basic_total]}元"],
             "payload":[
                 ["title","str","{city_district}{rep_ext[product]}"],
-                ["amount", "float", "{calc_ext[shebao_basic_total]}"]
+                ["amount", "float", "{calc_ext[shebao_basic_total]}"],
+                ["product_details", "str", "{city_district}{rep_ext[product]}"]
             ]
         },
         "doublecheck_component_value": {

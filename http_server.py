@@ -2,7 +2,7 @@ import logging
 import time
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from http_utils import decode_post
+from http_utils import decode_post, response_to_xml
 from urllib import parse
 from chatbot import Chatbot
 
@@ -22,27 +22,15 @@ def start_chatbot():
     chatbot.start_bot(chatbot_resource_filename, backend_read=False)
     return chatbot
 
+def response_to_encoded_xml(r_action, og_request_info):
+    raw_xml = response_to_xml(r_action,og_request_info)
+    encoded = raw_xml.encode(ENCODING_USED)
+    return encoded
+
 class ChatbotServer(BaseHTTPRequestHandler):
     # This cannot be put in 
     chatbot = start_chatbot()
-    def format_reply_xml(self, msg_info, content):
-        reply = (
-            "<xml>"
-            "<ToUserName><![CDATA[%s]]></ToUserName>"
-            "<FromUserName><![CDATA[%s]]></FromUserName>"
-            "<CreateTime>%s</CreateTime>"
-            "<MsgType><![CDATA[text]]></MsgType>"
-            "<Content><![CDATA[%s]]></Content>"
-            "</xml>"
-        ) % (
-        msg_info['FromUserName'], 
-        msg_info['ToUserName'],
-        time.gmtime(),
-        content
-        )
-        # Because its a reply, the from and to are swapped
-        return reply.encode(ENCODING_USED)
-
+    
     # Expects a ResponseAction
     def _get_bot_response(self, post_info_dict):
         uid = post_info_dict.get("FromUserName", "")
@@ -103,23 +91,20 @@ class ChatbotServer(BaseHTTPRequestHandler):
         self.wfile.write(http_get_response)
 
     def do_POST(self):
-        def send_post_request(req_info, cb_reply_str):
-            post_reply = self.format_reply_xml(request_info, chatbot_reply_str)
-            logging.info("POST reponse:\n{}".format(chatbot_reply_str))
-            self.wfile.write(post_reply)
+        def send_post_request(req_info, encoded_content):
+            self._set_response()
+            self.wfile.write(encoded_content)
 
         content_length = int(self.headers['Content-Length']) # <--- Gets the size of data
         post_data_raw = self.rfile.read(content_length) # <--- Gets the data itself
-        request_info = decode_post(post_data_raw)
+        og_request_info = decode_post(post_data_raw)
 
         logging.info("POST request,\nPath: %s\nHeaders:\n%s\n\nBody:\n%s\n",
-                str(self.path), str(self.headers), request_info)
+                str(self.path), str(self.headers), og_request_info)
 
-        self._set_response()
-        response_action = self._get_bot_response(request_info)
-        chatbot_reply_str = response_action.get_replytext()
-        
-        send_post_request(request_info, chatbot_reply_str)
+        response_action = self._get_bot_response(og_request_info)
+        encoded = response_to_encoded_xml(response_action, og_request_info)
+        send_post_request(og_request_info, encoded)
         
 def run(server_class=HTTPServer, handler_class=ChatbotServer, port=8080):
     logging.basicConfig(level=logging.INFO)
