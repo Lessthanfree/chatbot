@@ -392,7 +392,7 @@
             "req_info": "",            
             "action":"text_reply",
             "replies": [
-                "{rep_ext[curr_city_readout]}请点击需要查询的内容：<>1。缴纳社保；<>2。查询资格；<>3。获取验证码；<>选好了之后： <>0。返回菜单"
+                "{rep_ext[curr_city_readout]}请点击需要查询的内容：<>1。缴纳社保；<>2。查询资格；<>3。获取验证码；<>4。换城市；<>选好了之后： <>0。返回菜单"
             ]
         },
         "menu_purchase":{
@@ -436,6 +436,22 @@
             "replies": [
                 "查询资格：<>请点击需要怎么样的：<>1。社保资格；<>2。公积金资格<>选好了之后： <>0。返回菜单"
             ]
+        },
+        "change_city":{
+            "key":"change_city",
+            "thread": "BASE",
+            "gated": true,
+            "req_info": [
+                ["city","city"]
+            ],
+            "base_menu_branch":true,
+            "pre_state_clear_info":[
+                "city",
+                "city_district",
+                "苏州区",
+                "北京农城"
+            ],
+            "replies":["换成：{city_district}<>想返回到上个菜单打个 0 字"]
         },
         "xufei_push_crossroad":{
             "key": "xufei_push_crossroad",
@@ -541,7 +557,7 @@
                 ["首次", "DEFAULT_SV"],
                 ["exclude_svc_fee","DEFAULT_SV"]
             ],
-            "clear_info":[
+            "post_state_clear_info":[
                 "given_amount"
             ],
             "calcs":[
@@ -833,7 +849,10 @@
         "msg_formats": [
             {
                 "writeto":"curr_city_readout",
-                "states":["menu_base"],
+                "states":[
+                    "menu_base", 
+                    "menu_purchase"
+                ],
                 "lookfor":["city_district"],
                 "baseline": "正选的地区：",
                 "if_present":{
@@ -865,6 +884,15 @@
                 }
             },
             {
+                "writeto": "ask_which_city",
+                "lookfor": [],
+                "states": [
+                    "TMP_recv_info",
+                    "change_city"
+                ],
+                "baseline": "您是哪个城市呢？ 北京 上海 广州 苏州 深圳 杭州 厦门 重庆 成都"
+            },
+            {
                 "writeto": "request_string",
                 "states": [
                     "TMP_recv_info"
@@ -874,7 +902,7 @@
                 ],
                 "if_value": {
                     "requested_info": {
-                        "city": ["您是哪个城市呢？ 北京 上海 广州 苏州 深圳 杭州 厦门 重庆 成都"],
+                        "city": ["{rep_ext[ask_which_city]}"],
                         "首次": ["之前有交过吗？","以前有代缴过吗？"],
                         "要公积金": "交公积金吗？",
                         "苏州区": "亲是苏州市区还是园区呢？",

@@ -29,7 +29,8 @@ class SIP:
         self.gated_flag = self.state_obj.get("gated",False)
         self.transition_state = self.state_obj.get(self.trans_state_flag,False)
         self.state_slots = self.state_obj["req_info"] if self.gated_flag else []
-        self.state_clears = self.state_obj.get("clear_info",[])
+        self.pre_state_clears = self.state_obj.get("pre_state_clear_info",[])
+        self.post_state_clears = self.state_obj.get("post_state_clear_info",[])
         self.deactivate = self.state_obj.get("deactivate_state", False) # HARDCODED
 
     def set_actions(self, action, pending_act = None):
@@ -50,10 +51,13 @@ class SIP:
         return self.state_slots.copy()
 
     def get_reqs(self):
-        return ReqGatekeeper.slots_to_reqs(self.state_slots)    
+        return ReqGatekeeper.slots_to_reqs(self.state_slots)  
 
-    def get_clears(self):
-        return self.state_clears.copy()
+    def get_pre_clears(self):
+        return self.pre_state_clears.copy()  
+
+    def get_post_clears(self):
+        return self.post_state_clears.copy()
 
     @classmethod
     def same_state(cls):

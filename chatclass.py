@@ -271,8 +271,13 @@ class ChatManager:
         if op_print: print("回复: \r\n'{}' \r\n智能理解:\r\n{} \r\n信息:{}".format(r_action.tostring(), NLP_bd, curr_info)) # Operational Printout
         return (r_action, NLP_bd, curr_info)
 
+    # Decides which state to advance to next.
+    # Contains a loop to handle traversing several crossroads seamlessly
     def goto_next_state(self, understanding, msg, nums):
         sip = understanding.get_sip()
+
+        self._general_preprocess(sip)
+        
         d_state_obj = self._sip_to_stateobj(sip)
         intent = understanding.get_orig_intent()
 
@@ -312,29 +317,14 @@ class ChatManager:
         ow_flag, next_state = self._xroad_policy_overwrite(state)
         if SUPER_DEBUG: print("<TRAVERSE CROSSROADS> OW flag:", ow_flag, "Next state:", next_state["key"])
         return (ow_flag, next_state)
-
-    # Makes sense of message.
-    # Calls policykeeper to get intent (NLP) and next state
-    # Calls gatekeeper to scan requirements
-    # Calls iparser to fill slots, with requirements from gatekeeper
-    # Takes in message text, returns (understanding object, nlp breakdown)
-    def _parse_message_overall(self,msg):
-        # Inital understanding
-        uds, bd, nums = self._policykeeper_parse(msg)
-        if DEBUG: print("Initial UDS:")
-        if DEBUG: uds.printout()
-        self.gatekeeper.scan_SIP(uds.get_sip()) # Used for pre-filling slots
-
-        # Mine message details. 
-        # This is after gatekeep because gatekeep sets the slots.
-        og_int = uds.get_orig_intent()
-        self._parse_message_details(msg, og_int, nums)
-
-        # Preprocess to fill slots with default vals
-        self._gatekeeper_preprocess()
-
-        return uds, bd
     
+    # Preprocessing information
+    # Clears the specified slots
+    def _general_preprocess(self, sip):
+        clearlist = sip.get_pre_clears()
+        print("<PREPROCESSING>", sip.toString(), "THINGS TO CLEAR:", clearlist)
+        self.push_detail_to_clear(clearlist)
+
     # Also converts samestate SIP to a state obj
     def _sip_to_stateobj(self, sip):
         if sip.is_same_state():
@@ -480,7 +470,7 @@ class ChatManager:
         self.push_detail_to_dm(topup)
 
         sip = uds.get_sip()
-        clearlist = sip.get_clears()
+        clearlist = sip.get_post_clears()
         self.push_detail_to_clear(clearlist)
         return 
 

@@ -30,7 +30,8 @@
         "menu_base":[
             ["option_1", "menu_purchase"],
             ["option_2", "menu_check_status"],
-            ["option_3", "provide_verification_code"]
+            ["option_3", "provide_verification_code"],
+            ["option_4", "change_city"]
         ],
         "menu_purchase":[
             ["option_1", "how_to_jiaona"],
