@@ -812,7 +812,7 @@ class Calculator():
         if frm == "":
             err = "<RESOLVE FORMULA> ERROR! No such formula:{}".format(fname)
             cu.log_error(err)
-            raise Exception("RESOLVE FORMULA ERROR")
+            raise Exception(err)
         return frm
 
     # Traces required variables and executes whatever produces the variables
