@@ -540,7 +540,8 @@
             "payload":[
                 ["title","str","{city_district}{rep_ext[product]}"],
                 ["amount", "float", "{calc_ext[shebao_basic_total]}"],
-                ["product_details", "str", "{city_district}{rep_ext[product]}"]
+                ["body", "str", "{city_district}{rep_ext[product]}付费"],
+                ["notify_url", "str", ""]
             ]
         },
         "doublecheck_component_value": {
@@ -775,27 +776,6 @@
             "action":"text_reply",
             "replies": [
                 "亲，{rep_ext[topup_gjj_info]}"
-            ]
-        },
-        "inform_user_pay_deadline": {
-            "key": "inform_user_pay_deadline",
-            "gated": true,
-            "thread": "t_pay_deadline",
-            "terminal_state": true,
-            "humanify":false,
-            "calcs": [
-                "get_payment_deadline_date",
-                "format_specified_month",
-                "flag_normal_pay_cmi",
-                "flag_bujiao_month_cmi"
-            ],
-            "req_info": [
-                ["ss_purchase_for_month","DUMMY_SLOT"],
-                ["city","city"]
-            ],            
-            "action":"text_reply",
-            "replies": [
-                "{rep_ext[pay_deadline_info]}"
             ]
         },
         "inform_weixin": {
@@ -1306,33 +1286,6 @@
                     "w_normal_cmi_flag":{
                         "1": "现在可以正常交",
                         "0": "现在来不及正常交"
-                    }
-                }
-            },
-            {
-                "writeto":"pay_deadline_info",
-                "states": ["inform_user_pay_deadline"],
-                "lookfor": [
-                    "ss_purchase_for_month",
-                    "spec_month",
-                    "w_normal_cmi_flag",
-                    ["rep_ext",[
-                        "topup_can_not_msg",
-                        "normal_pay_can_not_msg"
-                        ]
-                    ]
-                ],
-                "baseline": "{ss_purchase_for_month}",
-                "if_value": {
-                    "spec_month":{
-                        "1":{
-                            "w_normal_cmi_flag":{
-                                "1":"{rep_ext[normal_pay_can_not_msg]}",
-                                "0":"{rep_ext[normal_pay_can_not_msg]}，只{rep_ext[topup_can_not_msg]}"
-                            }
-                        },
-                        "0":"{rep_ext[normal_pay_can_not_msg]}",
-                        "2":"{rep_ext[topup_can_not_msg]}"
                     }
                 }
             },
