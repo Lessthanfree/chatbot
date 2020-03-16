@@ -137,6 +137,10 @@ class ResponseAction:
     def is_bill(self):
         return self.action_type == "send_bill"
 
+    def is_authreq(self):
+        return self.action_type == "send_authreq"
+
+
     def get_type(self):
         return self.action_type
 

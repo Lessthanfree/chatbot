@@ -3,12 +3,15 @@ import time
 import wechat_dev as wd
 import http_wx_auth as wxauth
 
-from http_utils import RequestSender
+from urllib import parse
+from http_utils import RequestSender, decode_post
 
 def response_to_xml(r_action, og_reqest_info):
     if r_action.is_bill():
         msgclass = WechatPaymentRequest(r_action, og_reqest_info)
         msgclass.get_wx_pay_request() # Internally resolves.
+    elif r_action.is_authreq():
+        msgclass = WeChatAuthMessage(r_action, og_reqest_info)
     else:
         msgclass = WechatTextMessage(r_action, og_reqest_info)
     xml = msgclass.to_wechat_reply_xml()
@@ -53,16 +56,19 @@ class WechatTextMessage(WechatMessage):
 class WeChatAuthMessage(WechatTextMessage):
     # super(WechatPaymentRequest, self).__init__(r_action, og_reqest_info) # Superclass initalizer for reference
     OPENID_URL_TEMPLATE = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={app_id}&redirect_uri={notify_url}&response_type=code&scope={scope}#wechat_redirect"
-    
     auth_scope = "snsapi_base" # Basic user info. Using snsapi_userinfo would ask for personal information.
+
     def init_extra(self):
         def build_url():
+            encoded_url = parse.quote_plus(wd.get_notify_url()) # From urllib
+            print("<WECHAT AUTH MSG BUILD URL>", encoded_url)
             params = {
                 "app_id": wd.get_wechat_app_id(),
-                "notify_url": wd.get_notify_url(),
+                "notify_url": encoded_url,
                 "scope": self.auth_scope
             }
             return self.OPENID_URL_TEMPLATE.format(**params)
+
         def insert_url(msg, url):
             return msg + "\r\n" + url
 

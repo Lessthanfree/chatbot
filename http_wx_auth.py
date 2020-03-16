@@ -1,6 +1,7 @@
 import hashlib
 import requests
 import time
+import urllib
 import wechat_dev as wd
 
 from http_utils import RequestSender, ENCODING_USED
@@ -11,7 +12,7 @@ def get_signature(payload, api_secret_key):
     def get_combined(payload):
         elements = []
         for param, val in payload.items():
-            str_entry = param + "=" + val + "&"
+            str_entry = param + "=" + str(val) + "&"
             elements.append(str_entry)
         elements.sort() # Sort in alphabetical order
 
@@ -19,7 +20,7 @@ def get_signature(payload, api_secret_key):
         for e in elements:
             combined += e
         
-        print("<GET COMBINED> COMBINED str output {}".format(combined[:-1]))
+        print("<SIGNATURE GET COMBINED> COMBINED str output {}".format(combined[:-1]))
         return combined[:-1] # Remove the last "&"
 
     def calculate_signature(payload_str, api_key):
@@ -43,6 +44,7 @@ class OpenIDMasterManager:
         return 1
 
 class OpenIDManager:
+    openid_req_url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid={app_id}&secret={secret}&code={code}&grant_type=authorization_code"
     def __init__(self):
         self.code_timer = 0
         self.code_recv_time = 0
@@ -57,7 +59,8 @@ class OpenIDManager:
         return (curr_time - self.code_recv_time > self.code_timer)
 
     def request_openid(self):
-        open_id_req_url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid={app_id}&secret={secret}&code={code}&grant_type=authorization_code".format(**open_id_req_info)
+        open_id_req_info = {} # TODO
+        self.openid_req_url.format(**open_id_req_info)
         response = self.sender.send_GET(open_id_req_url) # Response 
         response_contents = response.content.decode(ENCODING_USED)
         print("<OPENID REPLY>", response_contents)

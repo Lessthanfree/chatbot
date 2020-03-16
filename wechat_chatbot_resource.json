@@ -535,7 +535,7 @@
                 ["ss_purchase_for_month", "DUMMY_SLOT"]
             ],
             "calcs": ["shebao_basic_calc"],
-            "action":"send_bill",
+            "action":"send_authreq",
             "replies":["{city_district}{rep_ext[product]}一共：{calc_ext[shebao_basic_total]}元"],
             "payload":[
                 ["title","str","{city_district}{rep_ext[product]}"],
