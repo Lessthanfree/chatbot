@@ -2,7 +2,8 @@ import logging
 import time
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
-from http_utils import decode_post, response_to_xml
+from http_utils import decode_post
+from http_wx_message import response_to_xml
 from urllib import parse
 from chatbot import Chatbot
 
