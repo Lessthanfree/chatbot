@@ -1,37 +1,30 @@
 import logging
 import time
 
-from http.server import BaseHTTPRequestHandler, HTTPServer
-from http_utils import decode_post
-from http_wx_message import response_to_xml
-from urllib import parse
 from chatbot import Chatbot
-
-
+from http_auth_control import AuthController
+from http.server import BaseHTTPRequestHandler, HTTPServer
+from http_utils import decode_post, ENCODING_USED
+from http_wx_auth import OpenIDMasterManager
+from http_request_interpreter import RequestBoss
+from urllib import parse
 
 # ! NOTE ! http.server security is low
 
 # A server that recieves HTTP requests from the WeChat servers and breaks down the message to be fed into the chatbot.
 # Also sends messages back to the WeChat server to reply AND/OR sends a message to internal servers to trigger some action (log database info)
 
-ENCODING_USED = "utf-8"
-
 def start_chatbot():
     print("Starting the chatbot")
     chatbot_resource_filename = "wechat_chatbot_resource.json"
-    # print("disabled for now")
     chatbot = Chatbot()
-    chatbot.start_bot(chatbot_resource_filename, backend_read=False)
+    chatbot.start_bot(chatbot_resource_filename, backend_read=False) # Turn off backend read cuz no SQL to read
     return chatbot
-
-def response_to_encoded_xml(r_action, og_request_info):
-    raw_xml = response_to_xml(r_action,og_request_info)
-    encoded = raw_xml.encode(ENCODING_USED)
-    return encoded
 
 class ChatbotServer(BaseHTTPRequestHandler):
     # This cannot be put in 
     chatbot = start_chatbot()
+    rb = RequestBoss()
     
     # Expects a ResponseAction
     def _get_bot_response(self, post_info_dict):
@@ -44,53 +37,20 @@ class ChatbotServer(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Content-type', 'text/html')
         self.end_headers() # Also calls flush_headers()
-
-    # Puts all the url query arguments into a dict
-    def _get_url_dict(self):
-        # Because parse_qs creates the values as a list
-        def flatten_qd(qd):
-            out = {}
-            for k, v in qd.items():
-                if len(v) == 1:
-                    out[k] = v[0] 
-            return out
-
-        query = parse.urlparse(self.path).query # In a normal http request this is the stuff after the url
-        query_dict = parse.parse_qs(query)
-
-        d = flatten_qd(query_dict)
-        return d
     
-    def do_GET(self):
-        def is_from_wechat(req_dict):
-            wx_req_comp = ["signature", "timestamp", "nonce", "echostr"]
-            rd_keys = req_dict.keys()
-            for c in wx_req_comp:
-                if not c in rd_keys:
-                    logging.info("GET is not from WeChat. {} is missing".format(c))
-                    return False
-            return True
-            
-        def send_wechat_auth(req_dict):
-            # isolate echostr
-            echostr = req_dict.get("echostr")
-            print("Sending auth code: {}".format(echostr))
-            self._set_response()
-            auth_code = echostr.encode(ENCODING_USED)
-            self.wfile.write(auth_code)
+    def get_encoded_xml(self, response_action, og_request_info):
+        raw_xml = self.rb.get_response_xml(response_action, og_request_info)
+        encoded = raw_xml.encode(ENCODING_USED)
+        return encoded
 
-        req_dict = self._get_url_dict()
-        logging.info("GET request,\nPath: %s\nHeaders:\n%s\n", str(req_dict), str(self.headers))
-        
-        if is_from_wechat(req_dict):
-            logging.info("GET request is from WeChat!")
-            send_wechat_auth(req_dict)
-            return
-        
-        self._set_response()
-        http_get_response = "GET request for {}".format(self.path).encode(ENCODING_USED)
-        logging.info("GET response:\n{}".format(http_get_response))
-        self.wfile.write(http_get_response)
+    def do_GET(self):
+        logging.info("GET request for {}".format(self.path).encode(ENCODING_USED))
+        reply_flag, response_content = self.rb.interpret_get(self.path, self.headers)
+        if reply_flag:
+            self._set_response()
+            logging.info("GET response:\n{}".format(response_content))
+            response_content.encode(ENCODING_USED)
+            self.wfile.write(response_content)
 
     def do_POST(self):
         def send_post_request(req_info, encoded_content):
@@ -105,7 +65,7 @@ class ChatbotServer(BaseHTTPRequestHandler):
                 str(self.path), str(self.headers), og_request_info)
 
         response_action = self._get_bot_response(og_request_info)
-        encoded = response_to_encoded_xml(response_action, og_request_info)
+        encoded = self.get_encoded_xml(response_action, og_request_info)
         send_post_request(og_request_info, encoded)
         
 def run(server_class=HTTPServer, handler_class=ChatbotServer, port=8080):

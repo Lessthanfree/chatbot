@@ -6,31 +6,20 @@ import http_wx_auth as wxauth
 from urllib import parse
 from http_utils import RequestSender, decode_post
 
-def response_to_xml(r_action, og_reqest_info):
-    if r_action.is_bill():
-        msgclass = WechatPaymentRequest(r_action, og_reqest_info)
-        msgclass.get_wx_pay_request() # Internally resolves.
-    elif r_action.is_authreq():
-        msgclass = WeChatAuthMessage(r_action, og_reqest_info)
-    else:
-        msgclass = WechatTextMessage(r_action, og_reqest_info)
-    xml = msgclass.to_wechat_reply_xml()
-    return xml
-
 # Class to carry message contents.
 class WechatMessage():
     def to_wechat_reply_xml(self):
         pass
 
 class WechatTextMessage(WechatMessage):
-    def __init__(self, r_action, og_reqest_info):
+    def __init__(self, r_action, og_reqest_info, *extra_args):
         self.r_action = r_action
         self.reply_content = r_action.get_replytext()
         self.og_req_info = og_reqest_info
-        self.init_extra()
+        self.init_extra(extra_args)
 
     # Method to be overwritten. So that superclasses dont have to overwrite init.
-    def init_extra(self):
+    def init_extra(self, extra_args):
         pass
 
     def to_wechat_reply_xml(self):
@@ -55,31 +44,36 @@ class WechatTextMessage(WechatMessage):
 
 class WeChatAuthMessage(WechatTextMessage):
     # super(WechatPaymentRequest, self).__init__(r_action, og_reqest_info) # Superclass initalizer for reference
-    OPENID_URL_TEMPLATE = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={app_id}&redirect_uri={notify_url}&response_type=code&scope={scope}#wechat_redirect"
+    OPENID_URL_TEMPLATE = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={app_id}&redirect_uri={notify_url}&response_type=code&scope={scope}&state={state_id}#wechat_redirect"
     auth_scope = "snsapi_base" # Basic user info. Using snsapi_userinfo would ask for personal information.
 
-    def init_extra(self):
-        def build_url():
-            encoded_url = parse.quote_plus(wd.get_notify_url()) # From urllib
+    def init_extra(self, extra_args):
+        def build_url(state_id):
+            encoded_url = parse.quote_plus(wd.get_openid_notify_url()) # urllib's parse encodes the url
             print("<WECHAT AUTH MSG BUILD URL>", encoded_url)
             params = {
                 "app_id": wd.get_wechat_app_id(),
                 "notify_url": encoded_url,
-                "scope": self.auth_scope
+                "scope": self.auth_scope,
+                "state_id": state_id
             }
             return self.OPENID_URL_TEMPLATE.format(**params)
 
         def insert_url(msg, url):
             return msg + "\r\n" + url
 
-        final_url = build_url()
+        if not len(extra_args) == 1:
+            raise Exception("WeChatAuthMessage expected 1 argument, got {}".format(extra_args))
+        
+        state_id = extra_args[0]
+        final_url = build_url(state_id)
         self.reply_content = insert_url(self.reply_content, final_url)
 
 
 class WechatPaymentRequest(WechatTextMessage):
     SIGN_TYPE = "MD5"
     TRADE_TYPE = "JSAPI" # JSAPI is for WeChat apps. Others are for (native apps) and WEB
-    def init_extra(self):
+    def init_extra(self, extra_args):
         self.request_data = self.r_action.get_payload()
         amount = self.request_data.get("amount", "")
         assert(isinstance(amount,float) or isinstance(amount,int))
@@ -89,7 +83,7 @@ class WechatPaymentRequest(WechatTextMessage):
             "order_num" : self._generate_order_number(),
             "notify_url": wd.get_notify_url(),
             "nonce_str": self._generate_nonce_str(),
-            "open_id": wxauth.get_open_id(),
+            "open_id": self.curr_open_id,
             "reciept": "Y",
             "trade_type": self.TRADE_TYPE,
             "spbill_create_ip": wd.get_spbillip(),
@@ -104,6 +98,9 @@ class WechatPaymentRequest(WechatTextMessage):
     # Not sure why they need the IP
     def set_spbill_ip(self, ip):
         self.request_data["spbill_create_ip"] = ip
+
+    def set_openid(self, openid):
+        self.curr_open_id = openid
 
     def _get_request_data(self):
         return self.request_data
