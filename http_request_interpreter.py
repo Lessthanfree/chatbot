@@ -3,7 +3,7 @@ import wechat_dev as wd
 
 from http_auth_control import AuthController
 from http_wx_message import WeChatAuthMessage, WechatTextMessage, WechatPaymentRequest
-from http_utils import RequestSender, ENCODING_USED, url_path_to_dict, get_req_sender
+from http_utils import RequestSender, ENCODING_USED, url_path_to_dict, get_req_sender, get_ip_from_header
 
 
 # Called boss because it tells other people what to do. 
@@ -12,6 +12,7 @@ class RequestBoss:
     def __init__(self):
         self.auth_ctrl = AuthController()
         self.sender = RequestSender()
+        self.redirect_map = {}
 
     # The follow up is 
     # Not A message to the user WechatTextMessage
@@ -22,11 +23,18 @@ class RequestBoss:
         r_action, og_req_info = self.auth_ctrl.pop_callback_info(state_id)
         print(og_req_info)
         open_id = self.auth_ctrl.auth_fetch_open_id(state_id)
-        wx_pay_req = WechatPaymentRequest(r_action, og_req_info, open_id)
+        spbill_ip = self.auth_ctrl.pop_ip(state_id)
+        wx_pay_req = WechatPaymentRequest(r_action, og_req_info, open_id, spbill_ip)
         wx_response = wx_pay_req.get_wx_pay_request() # Includes sending a request to Wechat servers
         return wx_response
 
-    def _capture_info_for_callback(self, user_ID, r_action, request_info):
+    def _capture_redirect_url(self, state_id, url):
+        self.redirect_map[state_id] = url
+    
+    def _get_redirect_url(self, state_id):
+        return self.redirect_map.get(state_id, False)
+
+    def _capture_purchase_callback_info(self, user_ID, r_action, request_info):
         self.auth_ctrl.stash_callback_info(user_ID, r_action, request_info)
 
     def interpret_get(self, path, headers):
@@ -72,18 +80,23 @@ class RequestBoss:
         elif is_openid_callback(path):
             capture_openid(request_dict)
             return "normal", ""
+
         elif "redir" in path:
-            return ("redirect", "You should be redirected")
+            state_id = request_dict.get(wd.REDIRECT_CALLBACK_PARAM_NAME)
+            self.auth_ctrl.stash_ip(state_id, headers)
+            final_target_url = self._get_redirect_url(state_id) # Captured during authreq
+            return ("redirect", final_target_url)
         else:
             return False, ""
 
-    def get_response_xml(self, r_action, og_reqest_info):
+    def interpret_post(self, r_action, og_reqest_info):
         user_ID = get_req_sender(og_reqest_info)
         if r_action.is_authreq():
             # If an openID authentication is needed
             state_id = self.auth_ctrl.generate_state_id(user_ID)
             msgclass = WeChatAuthMessage(r_action, og_reqest_info, state_id)
-            self._capture_info_for_callback(user_ID, r_action, og_reqest_info)
+            self._capture_redirect_url(state_id, msgclass.get_redirect_url())
+            self._capture_purchase_callback_info(user_ID, r_action, og_reqest_info)
         else:
             msgclass = WechatTextMessage(r_action, og_reqest_info)
 

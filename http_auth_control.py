@@ -3,6 +3,7 @@ import hashlib
 import time
 
 from random import randint
+from http_utils import get_ip_from_header
 from http_wx_message import WeChatAuthMessage, WechatTextMessage, WechatPaymentRequest
 from http_customer_manager import CustomerMaster
 
@@ -77,6 +78,7 @@ class AuthController:
 
     def capture_open_id(self, state, openid):
         self.cust_master.log_open_id(state, openid)
+        
 
     def auth_fetch_open_id(self, state_id):
         if not self._state_id_exists(state_id):
@@ -96,3 +98,10 @@ class AuthController:
         if not user_ID in self.user_callbacks.keys():
             raise Exception("User {} does not have callback information".format(user_ID))
         return self.user_callbacks.get(user_ID)
+
+    def stash_ip(self, state_id, header_dict):
+        ip_addr = get_ip_from_header(header_dict)
+        self.cust_master.stash_ip(state_id, ip_addr)
+
+    def pop_ip(self, state_id):
+        return self.cust_master.get_ip(state_id)

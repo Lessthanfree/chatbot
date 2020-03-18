@@ -13,6 +13,9 @@ class CustomerMaster:
 
     def spawn_manager(self, state_id):
         self.managers[state_id] = CustomerManager()
+        return self.talk_to_manager(state_id)
+    
+    def talk_to_manager(self, state_id):
         return self.managers[state_id]
 
     def _state_exists(self, state_id):
@@ -22,18 +25,36 @@ class CustomerMaster:
 
     def log_open_id(self, state_id, openid):
         if self._state_exists(state_id):
-            logging.error("Manager {} already exists. Overwriting".format(state_id))
-        curr_mgr = self.spawn_manager(state_id)
+            logging.error("Manager {} already exists. Overwriting openID".format(state_id))
+            curr_mgr = self.talk_to_manager(state_id)
+        else:
+            curr_mgr = self.spawn_manager(state_id)
         curr_mgr.set_open_id(openid)
         return
 
     def fetch_open_id(self, state_id):
+        if not self._state_exists(state_id):
+            logging.error("Tried to fetch OpenID but Manager with state <{}> not found".format(state_id))
+            return False
+        curr_manager = self.managers.get(state_id)
+        open_id = curr_manager.get_open_id()
+        return open_id
+    
+    def stash_ip(self, state_id, ip):
         if self._state_exists(state_id):
-            curr_manager = self.managers.get(state_id)
-            open_id = curr_manager.get_open_id()
-            return open_id
-        logging.error("Tried to fetch OpenID but Manager with state <{}> not found".format(state_id))
-        return False
+            logging.error("Manager {} already exists. Overwriting IP".format(state_id))
+            curr_mgr = self.talk_to_manager(state_id)
+        else:
+            curr_mgr = self.spawn_manager(state_id)
+        curr_mgr.set_ip(ip)
+        return
+    
+    def get_ip(self, state_id):
+        if not self._state_exists(state_id):
+            logging.error("Tried to fetch IP but Manager with state <{}> not found".format(state_id))
+            return False
+        mgr = self.talk_to_manager(state_id)
+        return mgr.get_ip()
 
 # Manages customer details.
 # Including OpenID and username.
@@ -65,3 +86,9 @@ class CustomerManager:
 
     def set_open_id(self, openid):
         self.openid = openid
+
+    def set_ip(self, ip):
+        self.ip_address = ip
+    
+    def get_ip(self):
+        return self.ip_address

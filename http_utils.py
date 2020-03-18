@@ -55,6 +55,12 @@ def get_req_sender(r):
         raise Exception("Request {} has no FromUserName".format(r))
     return rsp
 
+# Takes in a dict
+def get_ip_from_header(header_dict):
+    print("HEADERS", list(header_dict.items()))
+    ip = header_dict["X-Forwarded-For"]
+    return ip
+
 ############# DATA UTILITIES #############
 # Wechat can send data in the form of XML or JSON.
 # Takes in a string of bytes (encoded)

@@ -48,7 +48,7 @@ class WeChatAuthMessage(WechatTextMessage):
     auth_scope = "snsapi_base" # Basic user info. Using snsapi_userinfo would ask for personal information.
 
     def init_extra(self, extra_args):
-        def build_url(state_id):
+        def build_callback_url(state_id):
             encoded_url = parse.quote_plus(wd.get_openid_notify_url()) # urllib's parse encodes the url
             print("<WECHAT AUTH MSG BUILD URL>", encoded_url)
             params = {
@@ -66,17 +66,22 @@ class WeChatAuthMessage(WechatTextMessage):
             raise Exception("WeChatAuthMessage expected 1 argument, got {}".format(extra_args))
         
         state_id = extra_args[0]
-        final_url = build_url(state_id)
-        self.reply_content = insert_url(self.reply_content, final_url)
+        self.redirect_url = build_callback_url(state_id)
 
+        inital_url = wd.get_redirect_url(state_id)
+        self.reply_content = insert_url(self.reply_content, inital_url)
+
+    def get_redirect_url(self):
+        return self.redirect_url
 
 class WechatPaymentRequest(WechatTextMessage):
     SIGN_TYPE = "MD5"
     TRADE_TYPE = "JSAPI" # JSAPI is for WeChat apps. Others are for (native apps) and WEB
     def init_extra(self, extra_args):
-        if not len(extra_args) == 1:
-            raise Exception("WechatPaymentRequest expects 1 extra argument, got {}".format(extra_args))
-        open_id = extra_args[0]
+        if not len(extra_args) == 2:
+            raise Exception("WechatPaymentRequest expects 2 extra arguments, got {}".format(extra_args))
+        open_id, spbill_ip_addr = extra_args
+
         self.request_data = self.r_action.get_payload()
         amount = self.request_data.get("total_fee", "")
         assert(isinstance(amount,float) or isinstance(amount,int))
@@ -89,7 +94,7 @@ class WechatPaymentRequest(WechatTextMessage):
             "out_trade_no": self._generate_out_trade_num(),
             "receipt": "Y",
             "trade_type": self.TRADE_TYPE,
-            "spbill_create_ip": wd.get_spbillip(),
+            "spbill_create_ip": spbill_ip_addr,
             "sign_type": self.SIGN_TYPE
         }
 
@@ -98,7 +103,6 @@ class WechatPaymentRequest(WechatTextMessage):
     def set_notify_url(self, add):
         self.request_data["notify_url"] = add
 
-    # Not sure why they need the IP
     def set_spbill_ip(self, ip):
         self.request_data["spbill_create_ip"] = ip
 

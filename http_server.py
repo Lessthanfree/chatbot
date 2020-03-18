@@ -4,7 +4,6 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib import parse
 
 from chatbot import Chatbot
-from http_auth_control import AuthController
 from http_request_interpreter import RequestBoss
 from http_utils import ENCODING_USED, decode_post
 
@@ -42,8 +41,8 @@ class ChatbotServer(BaseHTTPRequestHandler):
         self.send_header('Location', redirect_url)
         self.end_headers() # Also calls flush_headers()
     
-    def get_encoded_xml(self, response_action, og_request_info):
-        raw_xml = self.rb.get_response_xml(response_action, og_request_info)
+    def get_encoded_xml(self, response_action, post_req_info):
+        raw_xml = self.rb.interpret_post(response_action, post_req_info)
         encoded = raw_xml.encode(ENCODING_USED)
         return encoded
 
@@ -54,14 +53,12 @@ class ChatbotServer(BaseHTTPRequestHandler):
         if reply_flag == "normal":
             self._set_response()
             logging.info("GET response:\n{}".format(response_content))
-            response_content.encode(ENCODING_USED)
-            self.wfile.write(response_content)
+            e_content = response_content.encode(ENCODING_USED)
+            self.wfile.write(e_content)
 
         elif reply_flag == "redirect":
-            url = "http://apdomname.ap.ngrok.io/?name=bradley_booper&blop=you"
-            self._set_redirect_response(url)
-            # response_content.encode(ENCODING_USED)
-            
+            logging.info("Redirecting GET request")
+            self._set_redirect_response(response_content)            
 
     def do_POST(self):
         def send_post_request(req_info, encoded_content):
@@ -70,14 +67,14 @@ class ChatbotServer(BaseHTTPRequestHandler):
 
         content_length = int(self.headers['Content-Length']) # <--- Gets the size of data
         post_data_raw = self.rfile.read(content_length) # <--- Gets the data itself
-        og_request_info = decode_post(post_data_raw)
+        post_req_info = decode_post(post_data_raw)
 
         logging.info("POST request,\nPath: %s\nHeaders:\n%s\n\nBody:\n%s\n",
-                str(self.path), str(self.headers), og_request_info)
+                str(self.path), str(self.headers), post_req_info)
 
-        response_action = self._get_bot_response(og_request_info)
-        encoded = self.get_encoded_xml(response_action, og_request_info)
-        send_post_request(og_request_info, encoded)
+        response_action = self._get_bot_response(post_req_info)
+        encoded = self.get_encoded_xml(response_action, post_req_info)
+        send_post_request(post_req_info, encoded)
         
 def run(server_class=HTTPServer, handler_class=ChatbotServer, port=8080):
     logging.basicConfig(level=logging.INFO)
