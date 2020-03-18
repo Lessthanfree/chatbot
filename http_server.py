@@ -1,13 +1,12 @@
 import logging
 import time
+from http.server import BaseHTTPRequestHandler, HTTPServer
+from urllib import parse
 
 from chatbot import Chatbot
 from http_auth_control import AuthController
-from http.server import BaseHTTPRequestHandler, HTTPServer
-from http_utils import decode_post, ENCODING_USED
-from http_wx_auth import OpenIDMasterManager
 from http_request_interpreter import RequestBoss
-from urllib import parse
+from http_utils import ENCODING_USED, decode_post
 
 # ! NOTE ! http.server security is low
 
@@ -37,6 +36,11 @@ class ChatbotServer(BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Content-type', 'text/html')
         self.end_headers() # Also calls flush_headers()
+
+    def _set_redirect_response(self, redirect_url):
+        self.send_response(303)
+        self.send_header('Location', redirect_url)
+        self.end_headers() # Also calls flush_headers()
     
     def get_encoded_xml(self, response_action, og_request_info):
         raw_xml = self.rb.get_response_xml(response_action, og_request_info)
@@ -46,11 +50,18 @@ class ChatbotServer(BaseHTTPRequestHandler):
     def do_GET(self):
         logging.info("GET request for {}".format(self.path).encode(ENCODING_USED))
         reply_flag, response_content = self.rb.interpret_get(self.path, self.headers)
-        if reply_flag:
+        
+        if reply_flag == "normal":
             self._set_response()
             logging.info("GET response:\n{}".format(response_content))
             response_content.encode(ENCODING_USED)
             self.wfile.write(response_content)
+
+        elif reply_flag == "redirect":
+            url = "http://apdomname.ap.ngrok.io/?name=bradley_booper&blop=you"
+            self._set_redirect_response(url)
+            # response_content.encode(ENCODING_USED)
+            
 
     def do_POST(self):
         def send_post_request(req_info, encoded_content):

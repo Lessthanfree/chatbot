@@ -538,8 +538,7 @@
             "action":"send_authreq",
             "replies":["{city_district}{rep_ext[product]}一共：{calc_ext[shebao_basic_total]}元"],
             "payload":[
-                ["title","str","{city_district}{rep_ext[product]}"],
-                ["amount", "float", "{calc_ext[shebao_basic_total]}"],
+                ["total_fee", "float", "{calc_ext[shebao_basic_total]}"],
                 ["body", "str", "{city_district}{rep_ext[product]}付费"],
                 ["notify_url", "str", ""]
             ]

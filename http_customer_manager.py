@@ -6,35 +6,6 @@ import wechat_dev as wd
 
 from http_utils import RequestSender, ENCODING_USED
 
-# Takes in dict, api key as string
-# Returns a string
-def get_signature(payload, api_secret_key):
-    def get_combined(payload):
-        elements = []
-        for param, val in payload.items():
-            str_entry = param + "=" + str(val) + "&"
-            elements.append(str_entry)
-        elements.sort() # Sort in alphabetical order
-
-        combined = ""
-        for e in elements:
-            combined += e
-        
-        print("<SIGNATURE GET COMBINED> COMBINED str output {}".format(combined[:-1]))
-        return combined[:-1] # Remove the last "&"
-
-    def calculate_signature(payload_str, api_key):
-        temp_str = payload_str + "&key=" + api_key # Adding api_key to the string to be hashed
-        
-        # Hash using MD5
-        hashed = hashlib.md5(temp_str.encode())
-        signature = hashed.hexdigest().upper()
-        print("SIGNATURE {}".format(signature))
-        return signature
-
-    payload_str = get_combined(payload)
-    return calculate_signature(payload_str, api_secret_key)
-
 # Manages the Managers
 class CustomerMaster:
     def __init__(self):
@@ -58,7 +29,8 @@ class CustomerMaster:
 
     def fetch_open_id(self, state_id):
         if self._state_exists(state_id):
-            open_id = self.managers.get(state_id)
+            curr_manager = self.managers.get(state_id)
+            open_id = curr_manager.get_open_id()
             return open_id
         logging.error("Tried to fetch OpenID but Manager with state <{}> not found".format(state_id))
         return False

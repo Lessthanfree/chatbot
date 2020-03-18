@@ -14,19 +14,20 @@ class RequestBoss:
         self.sender = RequestSender()
 
     # The follow up is 
-    # A message to the user? WechatTextMessage?
-    # A WeChatPayment Request
+    # Not A message to the user WechatTextMessage
+    # A WeChatPayment Request !
     def send_auth_followup_message(self, state_id):
         # Sender sends a POST request to WeChat
         # Uses info captured previously for auth message.
-        og_req_info = self.auth_ctrl.pop_callback_info(state_id)
+        r_action, og_req_info = self.auth_ctrl.pop_callback_info(state_id)
         print(og_req_info)
-        wx_pay_req = WechatPaymentRequest()
-        self.sender.send_POST(wechat_url)
-        pass
+        open_id = self.auth_ctrl.auth_fetch_open_id(state_id)
+        wx_pay_req = WechatPaymentRequest(r_action, og_req_info, open_id)
+        wx_response = wx_pay_req.get_wx_pay_request() # Includes sending a request to Wechat servers
+        return wx_response
 
-    def _capture_info_for_callback(self, user_ID, request_info):
-        self.auth_ctrl.stash_callback_info(user_ID, request_info)
+    def _capture_info_for_callback(self, user_ID, r_action, request_info):
+        self.auth_ctrl.stash_callback_info(user_ID, r_action, request_info)
 
     def interpret_get(self, path, headers):
         def is_from_wechat(req_dict):
@@ -53,7 +54,7 @@ class RequestBoss:
             
             if open_id and state_id:
                 self.auth_ctrl.capture_open_id(state_id, open_id)
-            return
+                self.send_auth_followup_message(state_id) # Triggers sending the POST request to Wechat
 
         def get_wechat_echo_auth(req_dict):
             # isolate echostr
@@ -62,35 +63,27 @@ class RequestBoss:
             print("Sending auth code: {}".format(echostr))
             return echostr
 
-        def build_wx_payment_request():
-            pass
-
         request_dict = url_path_to_dict(path)
         logging.info("GET request,\nPath: %s\nHeaders:\n%s\n", str(request_dict), str(headers))
         
         if is_from_wechat(request_dict):
-            return True, get_wechat_echo_auth(request_dict)
+            return "normal", get_wechat_echo_auth(request_dict)
 
         elif is_openid_callback(path):
             capture_openid(request_dict)
-            return False, ""
+            return "normal", ""
+        elif "redir" in path:
+            return ("redirect", "You should be redirected")
         else:
             return False, ""
 
     def get_response_xml(self, r_action, og_reqest_info):
         user_ID = get_req_sender(og_reqest_info)
-        if r_action.is_bill():
-            open_id = self.auth_ctrl.auth_fetch_open_id(user_ID)
-            # If its a bill
-            msgclass = WechatPaymentRequest(r_action, og_reqest_info)
-            msgclass.set_openid(open_id)
-            msgclass.get_wx_pay_request()
-
-        elif r_action.is_authreq():
+        if r_action.is_authreq():
             # If an openID authentication is needed
             state_id = self.auth_ctrl.generate_state_id(user_ID)
             msgclass = WeChatAuthMessage(r_action, og_reqest_info, state_id)
-            self._capture_info_for_callback(user_ID, og_reqest_info)
+            self._capture_info_for_callback(user_ID, r_action, og_reqest_info)
         else:
             msgclass = WechatTextMessage(r_action, og_reqest_info)
 

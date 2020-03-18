@@ -1,7 +1,7 @@
 import logging
 import time
 import wechat_dev as wd
-import http_wx_auth as wxauth
+import http_auth_control as auth_ctrl
 
 from urllib import parse
 from http_utils import RequestSender, decode_post
@@ -74,17 +74,20 @@ class WechatPaymentRequest(WechatTextMessage):
     SIGN_TYPE = "MD5"
     TRADE_TYPE = "JSAPI" # JSAPI is for WeChat apps. Others are for (native apps) and WEB
     def init_extra(self, extra_args):
+        if not len(extra_args) == 1:
+            raise Exception("WechatPaymentRequest expects 1 extra argument, got {}".format(extra_args))
+        open_id = extra_args[0]
         self.request_data = self.r_action.get_payload()
-        amount = self.request_data.get("amount", "")
+        amount = self.request_data.get("total_fee", "")
         assert(isinstance(amount,float) or isinstance(amount,int))
         auxiliary_info = {
             "appid": wd.get_wechat_app_id(),
             "mch_id": wd.get_recieving_acc_no(),
-            "order_num" : self._generate_order_number(),
             "notify_url": wd.get_notify_url(),
             "nonce_str": self._generate_nonce_str(),
-            "open_id": self.curr_open_id,
-            "reciept": "Y",
+            "open_id": open_id,
+            "out_trade_no": self._generate_out_trade_num(),
+            "receipt": "Y",
             "trade_type": self.TRADE_TYPE,
             "spbill_create_ip": wd.get_spbillip(),
             "sign_type": self.SIGN_TYPE
@@ -105,15 +108,12 @@ class WechatPaymentRequest(WechatTextMessage):
     def _get_request_data(self):
         return self.request_data
     
-    # Returns a string
-    def _generate_order_number(self):
-        int_time = int(time.time())
-        onum = "ODR_" + str(int_time)
-        return onum
-
     # Random string i assume for hashing purposes
     def _generate_nonce_str(self):
         return "1add1a30ac87aa2db72f57a2375d8fec"
+
+    def _generate_out_trade_num(self):
+        return auth_ctrl.get_out_trade_number()
 
     # Add the signature to the payload dict
     def _add_signature(self):
@@ -122,7 +122,7 @@ class WechatPaymentRequest(WechatTextMessage):
 
     def _generate_signature(self):
         api_k = wd.get_secret_key()
-        return wxauth.get_signature(self._get_request_data(), api_k)
+        return auth_ctrl.get_signature(self._get_request_data(), api_k)
 
     def _add_to_reply_content(self, addition):
         TOKEN = "<>"
@@ -145,14 +145,14 @@ class WechatPaymentRequest(WechatTextMessage):
 
             self._add_to_reply_content(content)
             return
-        wx_pay_link_reply = self._request_pay_link()
+        wx_pay_link_reply = self._send_request_pay_link()
         wx_pl_dict = decode_post(wx_pay_link_reply)
         logging.info("<RESPONSE_TO_XML> PAY REQUEST RESPONSE {}".format(wx_pl_dict))
         add_data_to_reply_content(wx_pl_dict)
-        return
+        return wx_pl_dict
 
     # Sends a request to WX api for a pay link. Should get back a confirmation message of success or fail.
-    def _request_pay_link(self):
+    def _send_request_pay_link(self):
         url = wd.get_api_url()
         sender = RequestSender()
         reponse_obj = sender.send_POST(url, self.to_payment_xml())
@@ -181,10 +181,9 @@ class WechatPaymentRequest(WechatTextMessage):
         
         xml_formatted = "<xml>"
         for param_name, param_val in self._get_request_data().items():
-            entry = "<{0}>{1}</{0}>".format(param_name, param_val) # XML entry format
-            xml_formatted += entry
+            xml_formatted += "<{0}>{1}</{0}>".format(param_name, param_val) # XML entry format
         xml_formatted += "</xml>"
-        print("XML FORMATTED MESSAGE", xml_formatted)
+        logging.info(("PAYMENT XML FORMATTED:", xml_formatted))
         return xml_formatted
 
 # Template of a successful reply from WeChat
