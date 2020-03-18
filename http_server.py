@@ -37,7 +37,7 @@ class ChatbotServer(BaseHTTPRequestHandler):
         self.end_headers() # Also calls flush_headers()
 
     def _set_redirect_response(self, redirect_url):
-        self.send_response(303)
+        self.send_response(303) # Code: "See Other". 301 does not work, because it just changes the subdomain.
         self.send_header('Location', redirect_url)
         self.end_headers() # Also calls flush_headers()
     
@@ -47,7 +47,7 @@ class ChatbotServer(BaseHTTPRequestHandler):
         return encoded
 
     def do_GET(self):
-        logging.info("GET request for {}".format(self.path).encode(ENCODING_USED))
+        logging.debug("GET request for {}".format(self.path).encode(ENCODING_USED))
         reply_flag, response_content = self.rb.interpret_get(self.path, self.headers)
         
         if reply_flag == "normal":
@@ -76,18 +76,22 @@ class ChatbotServer(BaseHTTPRequestHandler):
         encoded = self.get_encoded_xml(response_action, post_req_info)
         send_post_request(post_req_info, encoded)
         
+
+# The main function to run a server for real
 def run(server_class=HTTPServer, handler_class=ChatbotServer, port=8080):
-    logging.basicConfig(level=logging.INFO)
+    logging_level = logging.INFO # Others include logging.DEBUG, logging.WARNING 
+
+    logging.basicConfig(level=logging_level)
     server_address = ('', port)
     httpd = server_class(server_address, handler_class)
-    logging.info('Starting httpd on {}...\n'.format(server_address))
+    logging.info('Starting http server on {}...\n'.format(server_address))
     try:
         print("Serving forever...")
         httpd.serve_forever()
     except KeyboardInterrupt:
         pass
     httpd.server_close()
-    logging.info('Stopping httpd...\n')
+    logging.critical('Stopping http server...\n')
 
 if __name__ == '__main__':
     from sys import argv

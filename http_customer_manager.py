@@ -25,7 +25,7 @@ class CustomerMaster:
 
     def log_open_id(self, state_id, openid):
         if self._state_exists(state_id):
-            logging.error("Manager {} already exists. Overwriting openID".format(state_id))
+            logging.warning("Manager {} already exists. Overwriting openID".format(state_id))
             curr_mgr = self.talk_to_manager(state_id)
         else:
             curr_mgr = self.spawn_manager(state_id)
@@ -34,7 +34,7 @@ class CustomerMaster:
 
     def fetch_open_id(self, state_id):
         if not self._state_exists(state_id):
-            logging.error("Tried to fetch OpenID but Manager with state <{}> not found".format(state_id))
+            logging.critical("Tried to fetch OpenID but Manager with state <{}> not found".format(state_id))
             return False
         curr_manager = self.managers.get(state_id)
         open_id = curr_manager.get_open_id()
@@ -42,7 +42,7 @@ class CustomerMaster:
     
     def stash_ip(self, state_id, ip):
         if self._state_exists(state_id):
-            logging.error("Manager {} already exists. Overwriting IP".format(state_id))
+            logging.warning("Manager {} already exists. Overwriting IP".format(state_id))
             curr_mgr = self.talk_to_manager(state_id)
         else:
             curr_mgr = self.spawn_manager(state_id)
@@ -51,7 +51,7 @@ class CustomerMaster:
     
     def get_ip(self, state_id):
         if not self._state_exists(state_id):
-            logging.error("Tried to fetch IP but Manager with state <{}> not found".format(state_id))
+            logging.critical("Tried to fetch IP but Manager with state <{}> not found".format(state_id))
             return False
         mgr = self.talk_to_manager(state_id)
         return mgr.get_ip()
@@ -78,7 +78,7 @@ class CustomerManager:
         self.openid_req_url.format(**open_id_req_info)
         response = self.sender.send_GET(self.openid_req_url) # Response 
         response_contents = response.content.decode(ENCODING_USED)
-        print("<OPENID REPLY>", response_contents)
+        logging.debug("OPENID Request response: {}".format(response_contents))
         return
 
     def get_open_id(self):

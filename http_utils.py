@@ -30,7 +30,6 @@ def html_msg_to_dict(hmsg):
     hmsg = hmsg + "'"
     hmsg_str = "{" + hmsg + "}"
     c_dict = eval(hmsg_str)
-    print("CDICT", c_dict)
     return c_dict
 
 # Puts all the url query arguments into a dict
@@ -57,7 +56,7 @@ def get_req_sender(r):
 
 # Takes in a dict
 def get_ip_from_header(header_dict):
-    print("HEADERS", list(header_dict.items()))
+    logging.debug("HEADERS {}".format(list(header_dict.items())))
     ip = header_dict["X-Forwarded-For"]
     return ip
 
@@ -97,7 +96,7 @@ def decode_post_xml(xml_data_string):
 
 def decode_post_json(data_string):
     data_d = eval(data_string)
-    print("IS dict:", isinstance(data_d, dict))
+    print("<DECODE POST JSON>\r\nIS dict:", isinstance(data_d, dict))
     print("IS set:", isinstance(data_d, set))
     return data_d 
 

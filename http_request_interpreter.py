@@ -20,11 +20,11 @@ class RequestBoss:
     def send_auth_followup_message(self, state_id):
         # Sender sends a POST request to WeChat
         # Uses info captured previously for auth message.
-        r_action, og_req_info = self.auth_ctrl.pop_callback_info(state_id)
-        print(og_req_info)
-        open_id = self.auth_ctrl.auth_fetch_open_id(state_id)
-        spbill_ip = self.auth_ctrl.pop_ip(state_id)
-        wx_pay_req = WechatPaymentRequest(r_action, og_req_info, open_id, spbill_ip)
+        r_action, og_post_req_info = self.auth_ctrl.pop_callback_info(state_id)
+        logging.debug("Cache retrieved POST Request info {}".format(og_post_req_info))
+        open_id = self.auth_ctrl.auth_fetch_open_id(state_id) # Given by WeChat after opening the auth link
+        spbill_ip = self.auth_ctrl.pop_ip(state_id) # Captured when user is redirected to our domain
+        wx_pay_req = WechatPaymentRequest(r_action, og_post_req_info, open_id, spbill_ip)
         wx_response = wx_pay_req.get_wx_pay_request() # Includes sending a request to Wechat servers
         return wx_response
 
@@ -43,7 +43,7 @@ class RequestBoss:
             rd_keys = req_dict.keys()
             for c in wx_req_comp:
                 if not c in rd_keys:
-                    logging.info("GET is not WeChat Auth. {} is missing".format(c))
+                    logging.warning("GET is not WeChat Auth. {} is missing".format(c))
                     return False
             return True
 
@@ -67,8 +67,8 @@ class RequestBoss:
         def get_wechat_echo_auth(req_dict):
             # isolate echostr
             echostr = req_dict.get("echostr")
-            logging.info("<DO GET> GET request is WeChat Auth. Sending reply")
-            print("Sending auth code: {}".format(echostr))
+            logging.debug("<DO GET> GET request is WeChat Auth. Sending reply")
+            logging.debug("Sending auth code: {}".format(echostr))
             return echostr
 
         request_dict = url_path_to_dict(path)
