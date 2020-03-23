@@ -4,6 +4,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib import parse
 
 from chatbot import Chatbot
+from http_files_utils import get_file_as_bytes
 from http_request_interpreter import RequestBoss
 from http_utils import ENCODING_USED, decode_post
 
@@ -31,7 +32,21 @@ class ChatbotServer(BaseHTTPRequestHandler):
         logging.info("<SERVER GET BOT REPLY> USER <{}>:{}".format(uid, msg))
         return self.chatbot.get_bot_response(uid, msg)
         
-    def _set_response(self):
+    def _default_GET_response(self):
+        # This is the default GET that will return any file
+        filestrem = get_file_as_bytes(self.path)
+        if not filestrem:
+            self._set_not_found_response()
+            return
+
+        self._set_text_response()
+        self.wfile.write(filestrem) # Filestream is already encoded
+
+    def _set_not_found_response(self):
+        self.send_response(404)
+        self.end_headers()
+
+    def _set_text_response(self):
         self.send_response(200)
         self.send_header('Content-type', 'text/html')
         self.end_headers() # Also calls flush_headers()
@@ -50,19 +65,23 @@ class ChatbotServer(BaseHTTPRequestHandler):
         logging.debug("GET request for {}".format(self.path).encode(ENCODING_USED))
         reply_flag, response_content = self.rb.interpret_get(self.path, self.headers)
         
-        if reply_flag == "normal":
-            self._set_response()
+        if reply_flag == "text":
+            self._set_text_response()
             logging.info("GET response:\n{}".format(response_content))
             e_content = response_content.encode(ENCODING_USED)
             self.wfile.write(e_content)
 
         elif reply_flag == "redirect":
             logging.info("Redirecting GET request")
-            self._set_redirect_response(response_content)            
+            self._set_redirect_response(response_content)    
+        
+        else:        
+            logging.info("<no_action> Calling the default GET response:\n{}".format(response_content))
+            self._default_GET_response()            
 
     def do_POST(self):
         def send_post_request(req_info, encoded_content):
-            self._set_response()
+            self._set_text_response()
             self.wfile.write(encoded_content)
 
         content_length = int(self.headers['Content-Length']) # <--- Gets the size of data

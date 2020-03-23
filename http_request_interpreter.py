@@ -43,7 +43,7 @@ class RequestBoss:
             rd_keys = req_dict.keys()
             for c in wx_req_comp:
                 if not c in rd_keys:
-                    logging.warning("GET is not WeChat Auth. {} is missing".format(c))
+                    logging.debug("GET is not WeChat Auth. {} is missing".format(c))
                     return False
             return True
 
@@ -75,19 +75,22 @@ class RequestBoss:
         logging.info("GET request,\nPath: %s\nHeaders:\n%s\n", str(request_dict), str(headers))
         
         if is_from_wechat(request_dict):
-            return "normal", get_wechat_echo_auth(request_dict)
+            return "text", get_wechat_echo_auth(request_dict)
 
         elif is_openid_callback(path):
             capture_openid(request_dict)
-            return "normal", ""
+            logging.debug("GET request is openid callback")
+            return "no_action", ""
 
         elif "redir" in path:
             state_id = request_dict.get(wd.REDIRECT_CALLBACK_PARAM_NAME)
             self.auth_ctrl.stash_ip(state_id, headers)
             final_target_url = self._get_redirect_url(state_id) # Captured during authreq
             return ("redirect", final_target_url)
+
         else:
-            return False, ""
+            logging.debug("Ordinary GET request")
+            return "no_action", ""
 
     def interpret_post(self, r_action, og_reqest_info):
         user_ID = get_req_sender(og_reqest_info)

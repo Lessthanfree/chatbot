@@ -4,7 +4,6 @@ import time
 
 from random import randint
 from http_utils import get_ip_from_header
-from http_wx_message import WeChatAuthMessage, WechatTextMessage, WechatPaymentRequest
 from http_customer_manager import CustomerMaster
 
 # Takes in dict, api key as string
