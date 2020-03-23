@@ -46,3 +46,5 @@ dump.json
 errorlog.txt
 
 wechat_dev.py
+
+*.txt

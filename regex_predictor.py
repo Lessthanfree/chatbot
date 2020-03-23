@@ -1,5 +1,8 @@
 import re
 
+# Dud predictor class to replace NLP_Predictor for WeChat.
+# Only returns "inform"
+
 class Regex_Predictor:
     def predict(self, raw_msg):
         pred_dict = {}
