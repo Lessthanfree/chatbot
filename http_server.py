@@ -34,14 +34,21 @@ class ChatbotServer(BaseHTTPRequestHandler):
         return self.chatbot.get_bot_response(uid, msg)
         
     def _default_GET_response(self):
-        # This is the default GET that will return any file
-        filestrem = get_file_as_bytes(self.path)
-        if not filestrem:
-            self._set_not_found_response()
-            return
+        INDEX_PAGE_PATH = "/index.html"
+        # Empty path = "/"
+        if len(self.path) > 1:
+            # This is the default GET that will return any file as text
+            filestrem = get_file_as_bytes(self.path)
+            if not filestrem:
+                self._set_not_found_response()
+                return            
 
-        self._set_text_response()
-        self.wfile.write(filestrem) # Filestream is already encoded
+            self._set_text_response()
+            self.wfile.write(filestrem) # Filestream is already encoded
+
+        else:
+            # Returns redirect to index.html
+            self._set_redirect_response(INDEX_PAGE_PATH)
 
     def _set_not_found_response(self):
         self.send_response(404)
