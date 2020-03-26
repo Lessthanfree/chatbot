@@ -1,2 +1,0 @@
-model_checkpoint_path: "D:\\chatbot\\test_NLU\\model1\\_step_543_epochs_100.ckpt"
-all_model_checkpoint_paths: "D:\\chatbot\\test_NLU\\model1\\_step_543_epochs_100.ckpt"
