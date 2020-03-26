@@ -102,7 +102,7 @@ def run(server_class=HTTPServer, handler_class=ChatbotServer, port=8080):
     logging_level = logging.INFO # Others include logging.DEBUG, logging.WARNING 
 
     logging.basicConfig(level=logging_level)
-    server_address = ('', port)
+    server_address = ('0.0.0.0', port)
     httpd = server_class(server_address, handler_class)
     logging.info('Starting http server on {}...\n'.format(server_address))
     try:
