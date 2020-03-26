@@ -1,6 +1,7 @@
 # All Chat related Classes
 
-import cbsv
+import chatbot.cbsv
+import chatbot.chatbot_be
 import copy
 import os
 import re
@@ -8,10 +9,9 @@ import random
 import string
 import logging
 
-import chatbot_be
 from datetime import datetime
-from chatbot_supp import *
-from chatbot_utils import dive_for_dot_values, dive_for_values, cbround, dotpop, get_yearmonth
+from chatbot.chatbot_supp import *
+from chatbot.chatbot_utils import dive_for_dot_values, dive_for_values, cbround, dotpop, get_yearmonth
 
 SUPER_DEBUG = 0
 DEBUG = 1

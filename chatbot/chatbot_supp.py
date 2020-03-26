@@ -1,7 +1,7 @@
-import cbsv
 import re
 import copy
-import chatbot_utils as cu
+import chatbot.cbsv as cbsv
+import chatbot.chatbot_utils as cu
 
 SUPER_DEBUG = 0
 DEBUG = 1

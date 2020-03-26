@@ -5,8 +5,8 @@ from copy import deepcopy
 from decimal import Decimal
 from datetime import datetime
 
-from cbsv import read_json, dump_to_json, check_file_exists, CHINA_CITIES
-from cb_sql import MSSQL_readwriter
+from chatbot.cbsv import read_json, dump_to_json, check_file_exists, CHINA_CITIES
+from chatbot.cb_sql import MSSQL_readwriter
 
 
 dbfolder = "userdata"

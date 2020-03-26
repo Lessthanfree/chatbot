@@ -1,9 +1,10 @@
 import logging
 import time
+
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib import parse
 
-from chatbot import Chatbot
+from chatbot.chatbot import Chatbot # Defined in ./chatbot
 from http_files_utils import get_file_as_bytes
 from http_request_interpreter import RequestBoss
 from http_utils import ENCODING_USED, decode_post
@@ -16,9 +17,9 @@ from http_utils import ENCODING_USED, decode_post
 def start_chatbot():
     print("Starting the chatbot")
     chatbot_resource_filename = "wechat_chatbot_resource.json"
-    chatbot = Chatbot()
-    chatbot.start_bot(chatbot_resource_filename, backend_read=False) # Turn off backend read cuz no SQL to read
-    return chatbot
+    local_chatbot = Chatbot()
+    local_chatbot.start_bot(chatbot_resource_filename, backend_read=False) # Turn off backend read cuz no SQL to read
+    return local_chatbot
 
 class ChatbotServer(BaseHTTPRequestHandler):
     # This cannot be put in 
@@ -105,7 +106,7 @@ def run(server_class=HTTPServer, handler_class=ChatbotServer, port=8080):
     httpd = server_class(server_address, handler_class)
     logging.info('Starting http server on {}...\n'.format(server_address))
     try:
-        print("Serving forever...")
+        print("Serving forever on localhost:{}...".format(port))
         httpd.serve_forever()
     except KeyboardInterrupt:
         pass

@@ -1,10 +1,9 @@
 import re
-import cbsv
 import threading
-from initalizers import master_initalize
-from chatbot_supp import *
-from chatclass import *
-from chatbot_be import DatabaseRunner
+from chatbot.initalizers import master_initalize
+from chatbot.chatbot_supp import *
+from chatbot.chatclass import *
+from chatbot.chatbot_be import DatabaseRunner
 
 DEBUG = 0
 

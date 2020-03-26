@@ -1,10 +1,11 @@
 import json
 import os
-from cbsv import read_json
-# from embedding.nlp_api import NLP_Predictor
-from chatbot_supp import SIP, Policy, InfoVault, InfoParser, ReqGatekeeper, Humanizer, Calculator, Announcer, ListPrinter
-from chatclass import DetailManager, ReplyGenerator, PolicyKeeper
-from regex_predictor import Regex_Predictor
+import logging
+
+from chatbot.cbsv import read_json
+from chatbot.chatbot_supp import SIP, Policy, InfoVault, InfoParser, ReqGatekeeper, Humanizer, Calculator, Announcer, ListPrinter
+from chatbot.chatclass import DetailManager, ReplyGenerator, PolicyKeeper
+from chatbot.regex_predictor import Regex_Predictor
 
 def init_calculator(jdata):
     formulae = jdata["formulae"]
@@ -159,14 +160,15 @@ def init_replygen(jdata, inf):
     return ReplyGenerator(FORMAT_DB,hz,an,lp,DEFAULT_RESPONSE)
 
 
-def master_initalize(filename = "chatbot_resource.json"):
+def master_initalize(resource_filename = "chatbot_resource.json"):
     # INTENTS = jdata["intents"]
     # STATE_KEYS = jdata["state_keys"]
     # MATCH_DB = jdata["match_db"]
-    direct = os.getcwd()
+    direct = os.path.dirname(os.path.realpath(__file__)) # Not using cwd because this is called from another directory
 
-    print("<master initalize> reading from ",filename)
-    jdata = read_json(filename)
+    logging.info("<master initalize> reading from " + resource_filename)
+    jdata_filepath = os.path.join(direct,resource_filename)
+    jdata = read_json(jdata_filepath)
     pr_filepath = os.path.join(direct,jdata["policy_data_location"])
     pdata = read_json(pr_filepath)
     si_filepath = os.path.join(direct,jdata["sideinfo_location"])

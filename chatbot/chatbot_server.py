@@ -4,7 +4,7 @@
 import sys
 import socketio
 from aiohttp import web
-from chatbot import Chatbot
+from chatbot.chatbot import Chatbot
 
 # This file opens a server that is a front for the chatbot. 
 # Right now it defaults to localhost:8080 due to aiohttp

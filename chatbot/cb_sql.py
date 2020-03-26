@@ -2,7 +2,7 @@
 import os
 import pymssql as msql # Ignore the error message from this. But it means this is lib incompatible with Python 3.8 and above.
 import threading
-import chatbot_utils as cu
+import chatbot.chatbot_utils as cu
 # from localfiles.details import get_read_details, get_write_details
 
 def get_read_details():
