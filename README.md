@@ -1,17 +1,22 @@
 > # **Project Q!i@a#n$N%i^u Chatbot**
 
 ## Project Dependencies
+Core
+- pymssql<3.0
+- urllib3
+- requests
+
+NLP/QN:
 - tensorflow (2.0.0)
 - pywin32
 - Jpype1
 - jieba
 - pandas
 - keras
-- pymssql<3.0
-- aiohttp
-- python-socketio
 - Java >8
 - jdk 12.0.2
+- aiohttp
+- python-socketio
 
 ## Key Features to be built for
 - Calculate product price
