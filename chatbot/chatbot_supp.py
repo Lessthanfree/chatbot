@@ -2,6 +2,7 @@ import re
 import copy
 import chatbot.cbsv as cbsv
 import chatbot.chatbot_utils as cu
+import logging
 
 SUPER_DEBUG = 0
 DEBUG = 1
@@ -140,7 +141,6 @@ class ResponseAction:
     def is_authreq(self):
         return self.action_type == "send_authreq"
 
-
     def get_type(self):
         return self.action_type
 
@@ -175,41 +175,42 @@ class ReqGatekeeper:
 
     def get_slots(self):        
         return self.slots.copy()
-
+    
     def _get_slots_name_list(self, sl):
         return list(map(lambda x: x[0],sl))
 
     def get_slot_names(self):
         return self._get_slots_name_list(self.get_slots())
 
-    def get_default_slots(self):
-        slots = self.get_slots()
-        out = list(filter(lambda x: x[1] == self.def_slot_flag,slots))
-        return out
+    # def get_default_slots(self):
+    #     slots = self.get_slots()
+    #     out = list(filter(lambda x: x[1] == self.def_slot_flag,slots))
+    #     return out
 
-    def get_def_slot_names(self):
-        return self._get_slots_name_list(self.get_default_slots())
+    # def get_def_slot_names(self):
+    #     return self._get_slots_name_list(self.get_default_slots())
 
     def is_gated(self):
         return self.gate_closed
 
-    def _add_cond_reqs(self, info):
-        # Additional reqs
+    def _add_cond_req_slots(self, info):
+        # Additional reqs slot addition
         for detail, conditions in self.conds.items():
             fetch = cu.dive_for_values([detail,],info,DEBUG=1)
             if len(fetch) > 0:
                 for c in conditions:
-                    val, slots_list = c
+                    val, slots_list = c # value to be matched against, list of slots to add
                     fetched = list(fetch.values())
-                    if SUPER_DEBUG: print("<CONDITIONAL REQS>f,fval,val",fetch, fetched,val) 
                     if fetched[0] == val:
                         for slot in slots_list:
-                            if not slot[0] in self.get_slot_names():
-                                if DEBUG: print("<CONDITIONAL REQS> Update COND slots: ", slot)
+                            # Only add if slot does not exist
+                            if not slot[0] in info and not slot[0] in self.get_slot_names():
+                                logging.debug("<CONDITIONAL REQS> Update COND slots: {}".format(slot))
                                 self.slots.append(slot)
                         break
 
     @classmethod
+    # Returns a list of strings of the names of slots.
     def slots_to_reqs(cls, slots):
         def getname(s):
             return s[0]
@@ -219,14 +220,11 @@ class ReqGatekeeper:
         if DEBUG: print("<slots_to_reqs> return:", reqlist)
         return reqlist  
 
+    # Only used for printing purposes
     def get_requirements(self):
         return self.requirements.copy()
 
-    def scan_SIP(self, sip):
-        so = sip.get_state_obj()
-        return self.scan_state_obj(so)
-
-    def scan_state_obj(self, state_obj):
+    def scan_state_obj(self, state_obj, info):
         if "gated" not in state_obj:
             return
 
@@ -235,13 +233,15 @@ class ReqGatekeeper:
             return
        
         self.close_gate()
-        self.slots = slots
+        self.slots = slots.copy()
+        self._add_cond_req_slots(info)
         if DEBUG: print("<SCAN STATE OBJ> slots:",slots)
         self.requirements = ReqGatekeeper.slots_to_reqs(self.slots)      
 
+    # This iterates through the slots and removes every entry that already has a value, leaving the slots that are missing values
     def _get_unfilled_slots(self, info):
-        slots = self.get_slots()
-        uf_slots = slots.copy()
+        self._add_cond_req_slots(info) # Adding slots now because information may have changed
+        uf_slots = self.get_slots() # get_slots returns a copy already
         for s in uf_slots.copy():
             detail = s[0]
             if detail in info:
@@ -260,9 +260,7 @@ class ReqGatekeeper:
             unfilled_slots = []
 
         else:
-            self._add_cond_reqs(info)
-
-            if SUPER_DEBUG: print("<TRY GATE> Trying with info:",info, "required:",self.get_requirements())
+            # if SUPER_DEBUG: print("<TRY GATE> Trying with info:",info, "required:",self.get_requirements())
             # for catgry in list(info.keys()):
             unfilled_slots = self._get_unfilled_slots(info)
 

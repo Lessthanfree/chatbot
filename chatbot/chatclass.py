@@ -367,7 +367,7 @@ class ChatManager:
         self.statethreader.move_forward(state)
 
     def _get_slots_from_state(self, stateobj):
-        self.gatekeeper.scan_state_obj(stateobj)
+        self.gatekeeper.scan_state_obj(stateobj, self._get_current_info())
 
     def _try_gatekeeper_gate(self):
         curr_info = self._get_current_info()
