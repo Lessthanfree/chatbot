@@ -1,7 +1,7 @@
 import logging
 import time
 
-from http.server import BaseHTTPRequestHandler, HTTPServer
+from http.server import BaseHTTPRequestHandler, HTTPServer, SimpleHTTPRequestHandler
 from urllib import parse
 
 from chatbot.chatbot import Chatbot # Defined in ./chatbot
@@ -21,7 +21,7 @@ def start_chatbot():
     local_chatbot.start_bot(chatbot_resource_filename, backend_read=False) # Turn off backend read cuz no SQL to read
     return local_chatbot
 
-class ChatbotServer(BaseHTTPRequestHandler):
+class ChatbotServer(SimpleHTTPRequestHandler):
     # This cannot be put in 
     chatbot = start_chatbot()
     rb = RequestBoss()
@@ -37,14 +37,25 @@ class ChatbotServer(BaseHTTPRequestHandler):
         INDEX_PAGE_PATH = "/index.html"
         # Empty path = "/"
         if len(self.path) > 1:
-            # This is the default GET that will return any file as text
-            filestrem = get_file_as_bytes(self.path)
-            if not filestrem:
+            if "/" in self.path[1:]:
+                # Don't let people dig around in subdirectories
                 self._set_not_found_response()
-                return            
+            else:
+                # If its a txt
+                if ".txt" in self.path:
+                    filename = self.path.split("/")[1] # Get whatever is after the backslash
+                    print("Forcing download of text file: %s" % filename)
+                    logging.debug("Retrieving file: %s" % filename)
+                    byte_stream = get_file_as_bytes(filename)
+                    f_length = len(byte_stream)
+                    self._set_txt_file_response(filename, f_length)
+                    self.wfile.write(byte_stream)
 
-            self._set_text_response()
-            self.wfile.write(filestrem) # Filestream is already encoded
+                else:
+                    # Use the default
+                    super().do_GET()
+                
+                # logging.debug("HEADERS", self.headers)
 
         else:
             # Returns redirect to index.html
@@ -54,9 +65,17 @@ class ChatbotServer(BaseHTTPRequestHandler):
         self.send_response(404)
         self.end_headers()
 
+    # Response is text or html
     def _set_text_response(self):
         self.send_response(200)
         self.send_header('Content-type', 'text/html')
+        self.end_headers() # Also calls flush_headers()
+
+    def _set_txt_file_response(self, filename, file_length):
+        self.send_response(200)
+        self.send_header('Content-type', 'text')
+        self.send_header('Content-Length', file_length)
+        self.send_header('Content-Disposition', 'attachment; filename=%s' % filename)
         self.end_headers() # Also calls flush_headers()
 
     def _set_redirect_response(self, redirect_url):

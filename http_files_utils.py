@@ -7,7 +7,7 @@ def _read_file(filepath, byte_limit = 1024):
     return read
 
 def get_file_as_bytes(relative_filepath):
-    full_path = os.getcwd() + relative_filepath # Comes with a / in front which messes up os.path.join
+    full_path = os.path.join(os.getcwd(), relative_filepath)
     logging.debug("<get file as bytes> Full path: " + str(full_path))
     if not os.path.isfile(full_path):
         logging.warning("File not found {}".format(full_path))
