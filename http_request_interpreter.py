@@ -38,7 +38,7 @@ class RequestBoss:
         self.auth_ctrl.stash_callback_info(user_ID, r_action, request_info)
 
     def interpret_get(self, path, headers):
-        def is_from_wechat(req_dict):
+        def is_wechat_echo_msg(req_dict):
             wx_req_comp = ["signature", "timestamp", "nonce", "echostr"]
             rd_keys = req_dict.keys()
             for c in wx_req_comp:
@@ -48,8 +48,9 @@ class RequestBoss:
             return True
 
         def is_openid_callback(path):
-            first_subdomain = path.split("/")[1]
-            return wd.get_openid_subdomain() in first_subdomain
+            r = wd.get_openid_subdomain() in path
+            if r: logging.warn("Request with path: <%s> is an openid_callback" % path)
+            return r
             
         def capture_openid(req_dict):
             logging.info("GET is WX OpenID callback")
@@ -74,15 +75,16 @@ class RequestBoss:
         request_dict = url_path_to_dict(path)
         logging.info("GET request,\nPath: %s\nHeaders:\n%s\n", str(request_dict), str(headers))
         
-        if is_from_wechat(request_dict):
+        if is_wechat_echo_msg(request_dict):
             return "text", get_wechat_echo_auth(request_dict)
 
         elif is_openid_callback(path):
             capture_openid(request_dict)
             logging.debug("GET request is openid callback")
-            return "no_action", ""
+            return "redirect", "callback_landing.html"
 
         elif "redir" in path:
+            logging.debug("GET request is a redir (a callback from WeChat openid Auth)")
             state_id = request_dict.get(wd.REDIRECT_CALLBACK_PARAM_NAME)
             self.auth_ctrl.stash_ip(state_id, headers)
             final_target_url = self._get_redirect_url(state_id) # Captured during authreq
