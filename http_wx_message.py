@@ -6,6 +6,8 @@ import http_auth_control as auth_ctrl
 from urllib import parse
 from http_utils import RequestSender, decode_post
 
+NONCE_STR = "1add1a30ac87aa2db72f57a2375d8fec"
+
 # Class to carry message contents.
 class WechatMessage():
     def to_wechat_reply_xml(self):
@@ -114,7 +116,7 @@ class WechatPaymentRequest(WechatTextMessage):
     
     # Random string i assume for hashing purposes
     def _generate_nonce_str(self):
-        return "1add1a30ac87aa2db72f57a2375d8fec"
+        return NONCE_STR
 
     def _generate_out_trade_num(self):
         return auth_ctrl.get_out_trade_number()
@@ -137,6 +139,7 @@ class WechatPaymentRequest(WechatTextMessage):
         def add_data_to_reply_content(data):
             return_flag = data.get("return_code")
             return_msg = data.get("return_msg")
+            logging.warn("RETURN FLAG IS %s with msg: %s" % (return_flag, return_msg))
             if return_flag == "FAIL":
                 content = "联系失败"
             elif return_flag == "SUCCESS":
@@ -151,6 +154,7 @@ class WechatPaymentRequest(WechatTextMessage):
             return
         wx_pay_link_reply = self._send_request_pay_link()
         wx_pl_dict = decode_post(wx_pay_link_reply)
+        logging.critical("<GET_WX_PAY_REQUEST> PAY REQUEST RESPONSE {}".format(wx_pl_dict))
         logging.info("<RESPONSE_TO_XML> PAY REQUEST RESPONSE {}".format(wx_pl_dict))
         add_data_to_reply_content(wx_pl_dict)
         return wx_pl_dict

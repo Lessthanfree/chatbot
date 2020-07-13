@@ -1,0 +1,7 @@
+# Files to ignore when building docker image
+/embedding
+/chatlogs
+/test_label
+/testing_server
+/.vscode
+QNPlugin.py

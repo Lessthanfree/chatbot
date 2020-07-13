@@ -23,10 +23,6 @@ from keras.preprocessing.sequence import pad_sequences
 
 # model_filename = 'embedding/241019_1600_model.h5'
 model_filename = rootpath+'API_model.h5'
-w2v_filepath = "/Users/davidgoh/Desktop/sgns.weibo.bigram-char.bz2"
-VDLIMIT = 60000 #35000 includes gongjijin
-
-USE_WORD2VECTOR = False
 
 DEBUG = False
 
@@ -47,10 +43,7 @@ class NLP_Predictor:
         self.ignore_chars = {" ", ",", ":", "：", "。", "，"}
         self.unknown_token_val = 0
         self._load_jsons()
-        if USE_WORD2VECTOR: 
-            self.w2v = get_vector_dict(w2v_filepath, limit = VDLIMIT)  
-        else: 
-            self.w2v = list(self.word2int.keys())
+        self.w2v = list(self.word2int.keys())
 
         print("Finished initalizing Predictor")
 
@@ -69,7 +62,6 @@ class NLP_Predictor:
     def _buildWordToInt(self):
         w2v = self.w2v
         count = 0
-        if USE_WORD2VECTOR: count = 1
         d = {}
         for c in w2v:
             if not c in d:

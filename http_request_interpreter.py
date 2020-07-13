@@ -14,11 +14,12 @@ class RequestBoss:
         self.sender = RequestSender()
         self.redirect_map = {}
 
-    # The follow up is 
+    # The follow up is to WeChat's API
     # Not A message to the user WechatTextMessage
     # A WeChatPayment Request !
     def send_auth_followup_message(self, state_id):
-        # Sender sends a POST request to WeChat
+        logging.critical("SENDING AUTH FOLLOWUP")
+        # Sends a POST request to WeChat
         # Uses info captured previously for auth message.
         r_action, og_post_req_info = self.auth_ctrl.pop_callback_info(state_id)
         logging.debug("Cache retrieved POST Request info {}".format(og_post_req_info))
@@ -53,7 +54,7 @@ class RequestBoss:
             return r
             
         def capture_openid(req_dict):
-            logging.info("GET is WX OpenID callback")
+            logging.warn("Capturing OPENID")
             open_id = req_dict.get("code", False)
             state_id = req_dict.get("state", False)
             if not open_id:
@@ -64,6 +65,9 @@ class RequestBoss:
             if open_id and state_id:
                 self.auth_ctrl.capture_open_id(state_id, open_id)
                 self.send_auth_followup_message(state_id) # Triggers sending the POST request to Wechat
+            else:
+                logging.error("Did not send followup. One of the following is missing:")
+                logging.error("OPENID {}| STATEID {}".format(open_id, state_id))
 
         def get_wechat_echo_auth(req_dict):
             # isolate echostr
@@ -73,14 +77,14 @@ class RequestBoss:
             return echostr
 
         request_dict = url_path_to_dict(path)
-        logging.info("GET request,\nPath: %s\nHeaders:\n%s\n", str(request_dict), str(headers))
+        logging.info("Recieved a GET request,\nPath: %s\nHeaders:\n%s\n", str(request_dict), str(headers))
         
         if is_wechat_echo_msg(request_dict):
             return "text", get_wechat_echo_auth(request_dict)
 
         elif is_openid_callback(path):
+            logging.warn("GET request is WX OpenID callback")
             capture_openid(request_dict)
-            logging.debug("GET request is openid callback")
             return "redirect", "callback_landing.html"
 
         elif "redir" in path:

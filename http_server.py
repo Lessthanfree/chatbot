@@ -14,6 +14,8 @@ from http_utils import ENCODING_USED, decode_post
 # A server that recieves HTTP requests from the WeChat servers and breaks down the message to be fed into the chatbot.
 # Also sends messages back to the WeChat server to reply AND/OR sends a message to internal servers to trigger some action (log database info)
 
+DEFAULT_PORT = 8081
+
 def start_chatbot():
     print("Starting the chatbot")
     chatbot_resource_filename = "wechat_chatbot_resource.json"
@@ -124,7 +126,7 @@ class ChatbotServer(SimpleHTTPRequestHandler):
         
 
 # The main function to run a server for real
-def run(server_class=HTTPServer, handler_class=ChatbotServer, port=8080):
+def run(server_class=HTTPServer, handler_class=ChatbotServer, port=DEFAULT_PORT):
     logging_level = logging.INFO # Others include logging.DEBUG, logging.WARNING 
 
     logging.basicConfig(level=logging_level)

@@ -1,12 +1,13 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import logging
 
+response = "TEXT RESPONSE"
 class MyHttpServer(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
         self.send_header('Content-type', 'text/html')
         self.end_headers() # Also calls flush_headers()
-        encoded_content = "TEXT RESPONSE".encode("utf-8")
+        encoded_content = response.encode("utf-8")
         self.wfile.write(encoded_content)
 
 def run(server_class=HTTPServer, handler_class=MyHttpServer, port=8080):
@@ -24,4 +25,8 @@ def run(server_class=HTTPServer, handler_class=MyHttpServer, port=8080):
     httpd.server_close()
     logging.critical('Stopping http server...\n')
 
-run()
+if __name__ == "__main__":
+    portused = input("Set the port number:\n")
+    response = input("Set the response:\n")
+    run(port=int(portused))
+
